@@ -271,12 +271,30 @@ está em [`mapping/schema_map.yaml`](mapping/schema_map.yaml); os pontos mais im
 
 O State of Data Brazil é conduzido pela Data Hackers em parceria com a Bain & Company:
 
-| Nome | Cargo |
-|---|---|
-| **Gabriel Lages** · [@gabrielclages](https://github.com/gabrielclages) | Diretor de Data & Analytics na Hotmart e cofundador da comunidade Data Hackers |
-| **Paulo Vasconcellos** | Principal Data Scientist na Hotmart e cofundador da comunidade Data Hackers |
-| **Monique Femme** | Head of Community Management da comunidade Data Hackers |
-| **Felipe Fiamozzini** | Expert Associate Partner na Bain & Company |
+<table>
+  <tr>
+    <td align="center" valign="top" width="25%">
+      <a href="https://github.com/gabrielclages"><img src="docs/assets/team/gabriel-lages.png" width="120" alt="Gabriel Lages" /></a><br />
+      <a href="https://github.com/gabrielclages"><b>Gabriel Lages</b></a><br />
+      <sub>Diretor de Data &amp; Analytics na Hotmart e cofundador da comunidade Data Hackers</sub>
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="docs/assets/team/paulo-vasconcellos.png" width="120" alt="Paulo Vasconcellos" /><br />
+      <b>Paulo Vasconcellos</b><br />
+      <sub>Principal Data Scientist na Hotmart e cofundador da comunidade Data Hackers</sub>
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="docs/assets/team/monique-femme.png" width="120" alt="Monique Femme" /><br />
+      <b>Monique Femme</b><br />
+      <sub>Head of Community Management da comunidade Data Hackers</sub>
+    </td>
+    <td align="center" valign="top" width="25%">
+      <img src="docs/assets/team/felipe-fiamozzini.png" width="120" alt="Felipe Fiamozzini" /><br />
+      <b>Felipe Fiamozzini</b><br />
+      <sub>Expert Associate Partner na Bain &amp; Company</sub>
+    </td>
+  </tr>
+</table>
 
 ## ⚖️ Licença
 
