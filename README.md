@@ -274,23 +274,23 @@ O State of Data Brazil é conduzido pela Data Hackers em parceria com a Bain & C
 <table>
   <tr>
     <td align="center" valign="top" width="25%">
-      <a href="https://github.com/gabrielclages"><img src="docs/assets/team/gabriel-lages.png" width="120" alt="Gabriel Lages" /></a><br />
-      <a href="https://github.com/gabrielclages"><b>Gabriel Lages</b></a><br />
+      <a href="https://www.linkedin.com/in/gabrielclages/"><img src="docs/assets/team/gabriel-lages.png" width="120" alt="Gabriel Lages" /></a><br />
+      <a href="https://www.linkedin.com/in/gabrielclages/"><b>Gabriel Lages</b></a><br />
       <sub>Diretor de Data &amp; Analytics na Hotmart e cofundador da comunidade Data Hackers</sub>
     </td>
     <td align="center" valign="top" width="25%">
-      <img src="docs/assets/team/paulo-vasconcellos.png" width="120" alt="Paulo Vasconcellos" /><br />
-      <b>Paulo Vasconcellos</b><br />
+      <a href="https://www.linkedin.com/in/paulovasconcellos/"><img src="docs/assets/team/paulo-vasconcellos.png" width="120" alt="Paulo Vasconcellos" /></a><br />
+      <a href="https://www.linkedin.com/in/paulovasconcellos/"><b>Paulo Vasconcellos</b></a><br />
       <sub>Principal Data Scientist na Hotmart e cofundador da comunidade Data Hackers</sub>
     </td>
     <td align="center" valign="top" width="25%">
-      <img src="docs/assets/team/monique-femme.png" width="120" alt="Monique Femme" /><br />
-      <b>Monique Femme</b><br />
+      <a href="https://www.linkedin.com/in/moniquefemme/"><img src="docs/assets/team/monique-femme.png" width="120" alt="Monique Femme" /></a><br />
+      <a href="https://www.linkedin.com/in/moniquefemme/"><b>Monique Femme</b></a><br />
       <sub>Head of Community Management da comunidade Data Hackers</sub>
     </td>
     <td align="center" valign="top" width="25%">
-      <img src="docs/assets/team/felipe-fiamozzini.png" width="120" alt="Felipe Fiamozzini" /><br />
-      <b>Felipe Fiamozzini</b><br />
+      <a href="https://www.linkedin.com/in/felipe-fiamozzini-5457839/"><img src="docs/assets/team/felipe-fiamozzini.png" width="120" alt="Felipe Fiamozzini" /></a><br />
+      <a href="https://www.linkedin.com/in/felipe-fiamozzini-5457839/"><b>Felipe Fiamozzini</b></a><br />
       <sub>Expert Associate Partner na Bain &amp; Company</sub>
     </td>
   </tr>
