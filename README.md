@@ -2,6 +2,16 @@
   <img width="1920" alt="Pesquisa State of Data Brazil 2027 — Data Hackers, Vector e Bain & Company. Responda a pesquisa de 19 de outubro a 8 de dezembro de 2026 em www.stateofdata.com.br" src="docs/assets/state-of-data-brazil-2027.png" />
 </a>
 
+<div align="center">
+
+[![Responda a pesquisa: stateofdata.com.br](https://img.shields.io/badge/Responda_a_pesquisa-stateofdata.com.br-7b2ff7?style=for-the-badge)](https://www.stateofdata.com.br)
+[![YouTube](https://img.shields.io/badge/YouTube-Data_Hackers-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/@datahackers)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Data_Hackers-0A66C2?style=for-the-badge)](https://www.linkedin.com/company/data-hackers/)
+[![Podcast no Spotify](https://img.shields.io/badge/Podcast-Data_Hackers-1DB954?style=for-the-badge&logo=spotify&logoColor=white)](https://open.spotify.com/show/1oMIHOXsrLFENAeM743g93)
+[![Newsletter](https://img.shields.io/badge/Newsletter-datahackers.news-111111?style=for-the-badge)](https://www.datahackers.news)
+
+</div>
+
 <br/>
 <br/>
 
