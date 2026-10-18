@@ -269,14 +269,14 @@ está em [`mapping/schema_map.yaml`](mapping/schema_map.yaml); os pontos mais im
 
 ## 👥 Quem faz a pesquisa
 
-O State of Data Brazil é conduzido pela Data Hackers, com:
+O State of Data Brazil é conduzido pela Data Hackers em parceria com a Bain & Company:
 
-- **Gabriel Lages** · [@gabrielclages](https://github.com/gabrielclages)
-- **Monique Femme**
-- **Paulo Vasconcellos**
-- **Felipe Fiamozzini**
-
-E com a equipe da Bain & Company, parceira desde 2021.
+| Nome | Cargo |
+|---|---|
+| **Gabriel Lages** · [@gabrielclages](https://github.com/gabrielclages) | Diretor de Data & Analytics na Hotmart e cofundador da comunidade Data Hackers |
+| **Paulo Vasconcellos** | Principal Data Scientist na Hotmart e cofundador da comunidade Data Hackers |
+| **Monique Femme** | Head of Community Management da comunidade Data Hackers |
+| **Felipe Fiamozzini** | Expert Associate Partner na Bain & Company |
 
 ## ⚖️ Licença
 
