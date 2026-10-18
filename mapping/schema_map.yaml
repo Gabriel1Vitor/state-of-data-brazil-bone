@@ -98,7 +98,7 @@ fields:
       "2025-2026": "1.e_experiencia_profissional_prejudicada"
     notes: "Respondida quase só por mulheres e pessoas não brancas; texto multi-seleção separado por vírgula."
   estado:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('P5', 'living_state')"
       "2021": "('P1_e_a ', 'uf onde mora')"
@@ -108,9 +108,11 @@ fields:
       "2025-2026": "1.i.1_uf_onde_mora"
     notes: >-
       Sigla da UF. A pesquisa não pergunta a cidade. Estados com poucas respostas são
-      anonimizados (só a região aparece). Em 2019 os valores são nomes de estado.
+      anonimizados (só a região aparece). Em 2019 o CSV traz "São Paulo (SP)"; a base
+      harmonizada converte para a sigla ("SP"), como nas outras edições (confirmado em
+      2026-10-18).
   regiao:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('D1', 'living_macroregion')"
       "2021": "('P1_e_b ', 'Regiao onde mora')"
@@ -118,7 +120,11 @@ fields:
       "2023": "('P1_i_2 ', 'Regiao onde mora')"
       "2024-2025": "1.i.2_regiao_onde_mora"
       "2025-2026": "1.i.2_regiao_onde_mora"
-    notes: "2019 usa 'Região Sudeste' etc. e só tem Sudeste/Sul; 2021 tem a categoria 'Exterior'."
+    notes: >-
+      2019 escreve "Região Sudeste" (a base harmonizada converte para "Sudeste") e só tem
+      Sudeste e Sul: as outras regiões foram anonimizadas e ficam em branco (337 respostas).
+      2019 entra no campo, mas comparações de região com 2019 precisam dessa ressalva
+      (confirmado em 2026-10-18). 2021 tem a categoria "Exterior".
   formacao_nivel:
     status: proposed
     columns:
@@ -162,7 +168,7 @@ fields:
       "2025-2026": "2.c_numero_de_funcionarios"
     notes: "2021 escreve 'Acima de 3000'; a partir de 2022 'Acima de 3.000'. Há um rótulo com erro 'de 501 a 100' (= 501 a 1.000)."
   cargo_atual:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('D6', 'anonymized_role')"
       "2021": "('P2_f ', 'Cargo Atual')"
@@ -174,8 +180,10 @@ fields:
       Opções mudam por edição. 2021: "Analista de BI/BI Analyst/Analytics Engineer" numa
       opção só; Analytics Engineer separado a partir de 2022. 2022–2023 juntam Engenheiro
       e Arquiteto de Dados; 2024+ separam. Nas análises, Arquiteto é somado a Engenheiro.
+      2019 usa o cargo anonimizado (D6), comparável com as outras edições pelos mesmos
+      grupos (confirmado em 2026-10-18).
   tempo_experiencia_dados:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('P17', 'time_experience_data_science')"
       "2021": "('P2_i ', 'Quanto tempo de experiência na área de dados você tem?')"
@@ -186,7 +194,8 @@ fields:
     notes: >-
       Faixas mudam: 2019/2021 usam 2–3, 4–5, 6–10 anos; 2022 usa 3–4, 4–6, 7–10; 2023
       mistura 4–6 e 5–6; 2024+ usa 3–4, 5–6, 7–10. Grupos comparáveis: <1, 1–2, 3–6,
-      7–10, 10+ (2021 fica aproximado: 2–5 e 6–10).
+      7–10, 10+ (2019 e 2021 ficam aproximados: 2–5 e 6–10). Grupos confirmados em
+      2026-10-18.
   satisfeito_empresa:
     status: proposed
     columns:
@@ -259,12 +268,16 @@ fields:
 # prefixo (ou dentro da tupla, em 2021–2023).
 multiselect:
   linguagens_trabalho:
-    status: proposed
+    status: confirmed
     prefix: { "2019": "('P21'", "2021": "('P4_d_", "2022": "('P4_d_", "2023": "('P4_d_", "2024-2025": "4.d.", "2025-2026": null }
+    labels:  # 2019 convertido para os rótulos de 2024/25
+      "2019": { "sql_": "SQL", "r": "R", "python": "Python", "c_c++_c#": "C/C++/C#", "dotnet": ".NET", "java": "Java", "julia": "Julia", "sas_stata": "SAS/Stata", "visual_basic_vba": "Visual Basic/VBA", "scala": "Scala", "matlab": "Matlab", "php": "PHP", "no_listed_languages": "Não utilizo nenhuma das linguagens listadas" }
     notes: "2025/26 ('4.c.') pergunta linguagens PREFERIDAS — não comparável; deixado como null."
   cloud_trabalho:
-    status: proposed
+    status: confirmed
     prefix: { "2019": "('P25'", "2021": "('P4_g_", "2022": null, "2023": "('P4_h_", "2024-2025": "4.h.", "2025-2026": "4.e." }
+    labels:  # 2019 convertido para os rótulos de 2024/25; null = sem equivalente, fica de fora
+      "2019": { "aws": "Amazon Web Services (AWS)", "gcp": "Google Cloud (GCP)", "azure": "Azure (Microsoft)", "ibm": "IBM", "on_premise_servers": "Servidores On Premise/Não utilizamos Cloud", "cloud_própria": "Cloud Própria", "other": null }
     fixes:
       "2023": { "Azure (Microsoft)": "Amazon Web Services (AWS)", "Amazon Web Services (AWS)": "Google Cloud (GCP)", "Google Cloud (GCP)": "Azure (Microsoft)" }
     text_column:
@@ -274,12 +287,14 @@ multiselect:
       contra a cloud preferida). 2022: as colunas binárias 'P4_h_1..3' são a cloud
       PREFERIDA em one-hot; o uso real está no texto de 'text_column'.
   bi_trabalho:
-    status: proposed
+    status: confirmed
     prefix: { "2019": "('P27'", "2021": "('P4_h_", "2022": null, "2023": "('P4_j_", "2024-2025": "4.j.", "2025-2026": "4.g." }
+    labels:  # 2019 convertido para os rótulos de 2024/25; null = sem equivalente, fica de fora
+      "2019": { "microsoft_powerbi": "Microsoft PowerBI", "qlik_view_qlik_sense": "Qlik View/Qlik Sense", "tableau": "Tableau", "metabase": "Metabase", "superset": "Superset", "redash": "Redash", "looker": "Looker", "google_data_studio": "Looker Studio(Google Data Studio)", "sap_business_objects": "SAP Business Objects/SAP Analytics", "oracle_business_intelligence": "Oracle Business Intelligence", "only_excel_gsheets": "Fazemos todas as análises utilizando apenas Excel ou planilhas do google", "no_bi_tool_at_work": "Não utilizo nenhuma ferramenta de BI no trabalho", "microstrategy": null, "ibm_analytics_cognos": null, "birst": null, "other": null }
     notes: "2022: só ~200 respostas no dataset ('P4_i_*'); deixado como null."
 
 methodology_notes:
-  - "2019: faixa salarial termina em 'Acima de R$ 25.001'; não há pergunta de senioridade Jr/Pl/Sr. Só gênero, desemprego e poucas outras perguntas são comparáveis."
+  - "2019: faixa salarial termina em 'Acima de R$ 25.001' e não há pergunta de senioridade Jr/Pl/Sr. São comparáveis: gênero, situação de trabalho (desemprego), estado, região (com ressalva), formação, porte da empresa, cargo, tempo de experiência (em grupos) e as perguntas de múltipla escolha de linguagens, cloud e BI (rótulos convertidos para o formato de 2024/25)."
   - "2025/26: novo nível 'Especialista/Staff+' tira do grupo Sênior parte das pessoas mais experientes; para comparar Sênior com anos anteriores, some Sênior + Staff+."
   - "2021: não há perguntas de cor/raça nem de PCD (começam em 2022)."
   - "Salário: valores em faixas; use mediana/quartis interpolados dentro da faixa (scripts/sod/stats.py). Para valores reais, use o IPCA de novembro de cada edição (data/reference/ipca_mensal.json)."

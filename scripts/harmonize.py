@@ -27,9 +27,12 @@ def build():
     df["cargo_grupo"] = df["cargo_atual"].map(derive.cargo_grupo)
     df["porte_grupo"] = df["tamanho_empresa"].map(derive.porte_grupo)
     df["setor_grupo"] = df["setor_empresa"].map(derive.setor_grupo)
-    # 2019 tem outras categorias de cargo/experiência; os grupos derivados só valem de 2021 em diante
-    for c in ["experiencia_grupo", "cargo_grupo", "vinculo"]:
-        df.loc[df.edicao == "2019", c] = None
+    # 2019: estado vem como "São Paulo (SP)" e região como "Região Sudeste"
+    e19 = df.edicao == "2019"
+    df.loc[e19, "estado"] = df.loc[e19, "estado"].str.extract(r"\(([A-Z]{2})\)$", expand=False)
+    df.loc[e19, "regiao"] = df.loc[e19, "regiao"].str.replace("Região ", "", regex=False)
+    # 2019 não pergunta onde fica a empresa: o vínculo só é derivado de 2021 em diante
+    df.loc[e19, "vinculo"] = None
     return df
 
 

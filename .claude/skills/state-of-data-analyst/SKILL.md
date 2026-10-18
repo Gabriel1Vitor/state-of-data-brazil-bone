@@ -110,8 +110,11 @@ denominador quem marcou pelo menos uma opção.
   juniores). Uma mediana geral pode subir mesmo com todos os níveis caindo. Antes de
   concluir sobre o mercado, confira por nível e por experiência.
 - **Informe o N** de cada edição e grupo. Sinalize grupos pequenos.
-- **2019** só é comparável em poucas perguntas (gênero, situação de trabalho). Não há
-  nível Jr/Pl/Sr e a faixa salarial vai só até R$ 25k.
+- **2019** usou outro questionário. Não há nível Jr/Pl/Sr e a faixa salarial vai só até
+  R$ 25k, então 2019 fica fora de comparações de salário e senioridade. São comparáveis:
+  gênero, situação de trabalho, estado, formação, porte da empresa, cargo, tempo de
+  experiência (em grupos) e linguagens, cloud e BI (já convertidos para os rótulos
+  recentes). Região também, com a ressalva de que 2019 só identifica Sudeste e Sul.
 - **Staff+** só existe em 2025/26. Para comparar Sênior com anos anteriores, some Sênior + Staff+.
 - Campos com `status: proposed` podem ser usados; se a conclusão depender de um deles,
   diga isso nas ressalvas.

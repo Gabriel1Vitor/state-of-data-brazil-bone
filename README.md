@@ -307,7 +307,7 @@ está em [`mapping/schema_map.yaml`](mapping/schema_map.yaml); os pontos mais im
 
 - **A amostra não é aleatória.** São as pessoas que responderam à pesquisa, e o perfil muda a cada ano (por exemplo, cada vez menos juniores). Compare dentro de grupos (nível, experiência) antes de tirar conclusões sobre o mercado.
 - **O salário vem em faixas**, e a mais alta ("acima de R$ 40k") não tem teto.
-- **2019 usou outro questionário:** não tem nível Júnior/Pleno/Sênior, e a faixa salarial vai só até R$ 25k.
+- **2019 usou outro questionário:** não tem nível Júnior/Pleno/Sênior, e a faixa salarial vai só até R$ 25k. Gênero, estado, formação, cargo, experiência, linguagens, cloud e BI são comparáveis; região também, mas 2019 só identifica Sudeste e Sul.
 - **Especialista/Staff+** existe só a partir de 2025/26 e tira do grupo Sênior parte das pessoas mais bem pagas.
 - **Correções nos dados:** em 2023, as colunas de cloud estão com os rótulos trocados; em 2022, as colunas binárias de cloud registram a cloud preferida, não a usada. As funções de `scripts/sod/` já tratam esses casos.
 

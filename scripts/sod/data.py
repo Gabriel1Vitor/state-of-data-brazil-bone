@@ -65,7 +65,8 @@ def multiselect(ed, name):
     """Colunas binárias de uma pergunta multi-seleção, com os rótulos já corrigidos.
 
     Retorna None se a pergunta não for comparável naquela edição (prefixo null no
-    schema). Linhas que não marcaram nenhuma opção ficam com zeros: use
+    schema). Os rótulos seguem o formato das edições recentes: as edições antigas são
+    convertidas pelo mapa `labels` do schema, e opções sem equivalente ficam de fora. Linhas que não marcaram nenhuma opção ficam com zeros: use
     `answered = df.sum(axis=1) > 0` como denominador.
     """
     spec = schema()["multiselect"][name]
@@ -76,10 +77,15 @@ def multiselect(ed, name):
     cols = [c for c in df.columns if c.startswith(prefix)
             and not re.match(r"\('P4_[a-z]_[a-z]_", c)]  # 2021 tem subperguntas aninhadas
     fixes = (spec.get("fixes") or {}).get(ed, {})
+    labels = (spec.get("labels") or {}).get(ed, {})  # rótulos antigos -> formato recente
     out = {}
     for c in cols:
         lab = _option_label(c, prefix)
         lab = fixes.get(lab, lab)
+        if lab in labels:
+            if labels[lab] is None:  # opção sem equivalente nas edições recentes
+                continue
+            lab = labels[lab]
         v = df[c].fillna(0).astype(float)
         out[lab] = np.maximum(out[lab], v) if lab in out else v
     return pd.DataFrame(out)
