@@ -15,19 +15,17 @@
 
 <div align="center">
 
-[![Dados: CC BY-NC-SA 4.0](https://img.shields.io/badge/dados-CC%20BY--NC--SA%204.0-ef9421?style=flat-square)](#%EF%B8%8F-licença)
-[![Código: MIT](https://img.shields.io/badge/código-MIT-1c5cab?style=flat-square)](LICENSE)
-![Respostas](https://img.shields.io/badge/respostas%20(todos%20os%20anos)-22.686-1c5cab?style=flat-square)
-![Edições](https://img.shields.io/badge/edições-2019%20a%202025%2F26-1c5cab?style=flat-square)
-[![Kaggle](https://img.shields.io/badge/Kaggle-datahackers-20BEFF?style=flat-square&logo=kaggle&logoColor=white)](https://www.kaggle.com/datahackers)
-[![Claude Code skill](https://img.shields.io/badge/Claude%20Code-skill-d97757?style=flat-square)](.claude/skills/state-of-data-analyst/SKILL.md)
-![Última atualização](https://img.shields.io/github/last-commit/data-hackers-br/state-of-data-brazil?label=atualizado&style=flat-square)
+[![Kaggle: 6 datasets](https://img.shields.io/badge/Kaggle-6%20datasets-20BEFF?style=flat-square&logo=kaggle&logoColor=white)](https://www.kaggle.com/datahackers)
+[![Respostas: 22.686 somando 2019 a 2025/26](https://img.shields.io/badge/Respostas-22.686-1c5cab?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nd2hpdGUnPjxyZWN0IHg9JzMnIHk9JzEzJyB3aWR0aD0nNCcgaGVpZ2h0PSc4JyByeD0nMScvPjxyZWN0IHg9JzEwJyB5PSc4JyB3aWR0aD0nNCcgaGVpZ2h0PScxMycgcng9JzEnLz48cmVjdCB4PScxNycgeT0nMycgd2lkdGg9JzQnIGhlaWdodD0nMTgnIHJ4PScxJy8%2BPC9zdmc%2B&logoColor=white)](#-datasets-no-kaggle)
+[![Claude Code: skill](https://img.shields.io/badge/Claude%20Code-skill-d97757?style=flat-square&logo=claude&logoColor=white)](.claude/skills/state-of-data-analyst/SKILL.md)
+[![Dados: CC BY-NC-SA 4.0](https://img.shields.io/badge/Dados-CC%20BY--NC--SA%204.0-ef9421?style=flat-square&logo=creativecommons&logoColor=white)](#%EF%B8%8F-licença)
+[![Código: MIT](https://img.shields.io/badge/C%C3%B3digo-MIT-3da639?style=flat-square&logo=opensourceinitiative&logoColor=white)](LICENSE)
 
-[![Responda a pesquisa: stateofdata.com.br](https://img.shields.io/badge/Responda_a_pesquisa-stateofdata.com.br-7b2ff7?style=flat-square)](https://www.stateofdata.com.br)
-[![YouTube](https://img.shields.io/badge/YouTube-Data_Hackers-FF0000?style=flat-square&logo=youtube&logoColor=white)](https://www.youtube.com/@datahackers)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Data_Hackers-0A66C2?style=flat-square)](https://www.linkedin.com/company/data-hackers/)
-[![Podcast no Spotify](https://img.shields.io/badge/Podcast-Data_Hackers-1DB954?style=flat-square&logo=spotify&logoColor=white)](https://open.spotify.com/show/1oMIHOXsrLFENAeM743g93)
-[![Newsletter](https://img.shields.io/badge/Newsletter-datahackers.news-111111?style=flat-square)](https://www.datahackers.news)
+[![Pesquisa 2027: responda em stateofdata.com.br](https://img.shields.io/badge/Pesquisa%202027-responda-7b2ff7?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nbm9uZScgc3Ryb2tlPSd3aGl0ZScgc3Ryb2tlLXdpZHRoPScyLjInIHN0cm9rZS1saW5lY2FwPSdyb3VuZCcgc3Ryb2tlLWxpbmVqb2luPSdyb3VuZCc%2BPHJlY3QgeD0nNCcgeT0nMycgd2lkdGg9JzE2JyBoZWlnaHQ9JzE4JyByeD0nMicvPjxwYXRoIGQ9J004IDEybDMgMyA1LTYnLz48L3N2Zz4%3D&logoColor=white)](https://www.stateofdata.com.br)
+[![Newsletter: datahackers.news](https://img.shields.io/badge/Newsletter-datahackers.news-111111?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCcgZmlsbD0nbm9uZScgc3Ryb2tlPSd3aGl0ZScgc3Ryb2tlLXdpZHRoPScyLjInIHN0cm9rZS1saW5lam9pbj0ncm91bmQnPjxyZWN0IHg9JzMnIHk9JzUnIHdpZHRoPScxOCcgaGVpZ2h0PScxNCcgcng9JzInLz48cGF0aCBkPSdNMyA3bDkgNiA5LTYnLz48L3N2Zz4%3D&logoColor=white)](https://www.datahackers.news)
+[![Podcast no Spotify](https://img.shields.io/badge/Podcast-Spotify-1DB954?style=flat-square&logo=spotify&logoColor=white)](https://open.spotify.com/show/1oMIHOXsrLFENAeM743g93)
+[![YouTube: @datahackers](https://img.shields.io/badge/YouTube-%40datahackers-FF0000?style=flat-square&logo=youtube&logoColor=white)](https://www.youtube.com/@datahackers)
+[![LinkedIn: Data Hackers](https://img.shields.io/badge/LinkedIn-Data%20Hackers-0A66C2?style=flat-square&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAyNCAyNCc%2BPHJlY3Qgd2lkdGg9JzI0JyBoZWlnaHQ9JzI0JyByeD0nNCcgZmlsbD0nd2hpdGUnLz48dGV4dCB4PSc0LjUnIHk9JzE4LjUnIGZvbnQtZmFtaWx5PSdBcmlhbCxIZWx2ZXRpY2Esc2Fucy1zZXJpZicgZm9udC13ZWlnaHQ9JzcwMCcgZm9udC1zaXplPScxNScgZmlsbD0nIzBBNjZDMic%2BaW48L3RleHQ%2BPC9zdmc%2B&logoColor=white)](https://www.linkedin.com/company/data-hackers/)
 
 </div>
 
