@@ -1,5 +1,5 @@
 <a href="https://www.stateofdata.com.br">
-  <img width="1920" alt="Pesquisa State of Data Brazil 2027 — Data Hackers, Vector e Bain & Company. Responda a pesquisa de 19 de outubro a 8 de dezembro de 2026 em www.stateofdata.com.br" src="docs/assets/state-of-data-brazil-2027.png" />
+  <img width="1200" alt="Pesquisa State of Data Brazil | Skill — Data Hackers e Bain & Company. Dados da pesquisa, 2019 a 2026. www.stateofdata.com.br" src="docs/assets/state-of-data-brazil-skill.png" />
 </a>
 
 <br/>
