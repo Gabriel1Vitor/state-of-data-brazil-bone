@@ -108,8 +108,8 @@ def compute():
         if "Não utilizo" in s: return "Não usa"
         if "empresa em que trabalho paga" in s: return "Empresa paga"
         if "pago do meu próprio bolso" in s: return "Paga do próprio bolso"
-        if "gratuitas" in s: return "Só gratuitas"
         if "Copilot" in s or "AI para código" in s: return "Só IA de código"
+        if "gratuitas" in s: return "Só gratuitas"
     AIK = ["Empresa paga", "Paga do próprio bolso", "Só IA de código", "Só gratuitas", "Não usa"]
     out["ai"], out["ai_code"] = {}, []
     for y in ["2023", "2024/25", "2025/26"]:
