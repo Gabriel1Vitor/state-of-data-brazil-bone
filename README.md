@@ -140,12 +140,13 @@ Análises feitas com a skill, publicadas em **https://data-hackers-br.github.io/
 
 ## 🚀 Como usar
 
-### Com o Claude Code
+### Com um agente de IA (Claude Code, Codex e outros)
 
-Você precisa do [Claude Code](https://claude.com/claude-code) e de Python 3.9 ou mais
-recente. Os dados já vêm junto: **não é preciso conta nem token do Kaggle**.
+Você precisa de um agente como o [Claude Code](https://claude.com/claude-code) ou o
+[Codex](https://github.com/openai/codex), e de Python 3.9 ou mais recente. Os dados vêm do
+próprio repositório: **não é preciso conta nem token do Kaggle**.
 
-#### Opção 1: instalar como plugin
+#### Opção 1: instalar como plugin do Claude Code
 
 Funciona em qualquer pasta, sem clonar o repositório:
 
@@ -163,7 +164,50 @@ Depois, em qualquer sessão do Claude Code:
 Na primeira análise, a skill cria um ambiente Python próprio (pandas, numpy e pyyaml) em
 `~/.claude/plugins/data/`. Para receber versões novas: `claude plugin update state-of-data-brazil@data-hackers`.
 
-#### Opção 2: clonar o repositório
+#### Opção 2: instalar com `npx skills`
+
+O [`skills`](https://github.com/vercel-labs/skills) é um instalador de skills que funciona
+com Claude Code, Codex, Cursor, GitHub Copilot e outros agentes. Precisa do Node.js:
+
+```bash
+npx skills add data-hackers-br/state-of-data-brazil
+```
+
+Com chave SSH configurada no GitHub, também funciona assim:
+
+```bash
+npx skills add git@github.com:data-hackers-br/state-of-data-brazil.git
+```
+
+O instalador pergunta para quais agentes instalar e se a skill vale só para o projeto
+atual ou para todos (`-g`). Ele copia apenas a pasta da skill. Por isso, na primeira
+análise, a skill baixa uma cópia do repositório público (cerca de 80 MB, uma única vez)
+em `~/.cache/state-of-data-brazil` e cria ali o ambiente Python. Para atualizar os dados:
+`git -C ~/.cache/state-of-data-brazil pull`.
+
+#### Opção 3: usar no Codex
+
+Instale a skill para o Codex com o mesmo instalador, para todos os seus projetos:
+
+```bash
+npx skills add data-hackers-br/state-of-data-brazil -a codex -g
+```
+
+Ela fica em `~/.agents/skills/state-of-data-analyst/`, onde o Codex procura skills. Sem
+o Node.js, dá para copiar essa pasta manualmente do repositório
+(`.claude/skills/state-of-data-analyst/`) para `~/.agents/skills/`.
+
+No Codex, chame a skill pelo nome ou só faça a pergunta: o Codex escolhe a skill quando o
+assunto bate com a descrição dela.
+
+```
+$state-of-data-analyst como evoluiu o salário de cientistas de dados por nível desde 2021?
+```
+
+Na primeira análise, a skill precisa de acesso à rede para baixar os dados. Se o Codex
+estiver com a rede bloqueada, ele vai pedir permissão para rodar o `git clone`.
+
+#### Opção 4: clonar o repositório
 
 Melhor se você quiser ver o código, mexer no mapeamento ou contribuir:
 
@@ -188,7 +232,7 @@ A skill lê os dados locais, usa o mapeamento de colunas entre edições e as fu
 `scripts/sod/`, e responde com os números, o tamanho de cada amostra e as ressalvas de
 metodologia.
 
-### Sem o Claude Code
+### Sem agente de IA
 
 A base harmonizada é um CSV comum, com uma linha por respondente:
 
