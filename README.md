@@ -1,5 +1,5 @@
-<a href="https://data-hackers-br.github.io/state-of-data-brazil/">
-  <img width="1280" alt="State of Data Brazil: Data Hackers × Bain & Company. 6 edições, 22.686 respostas somando todos os anos, dados abertos + skill para Claude Code" src="docs/assets/banner.svg" />
+<a href="https://www.stateofdata.com.br">
+  <img width="1920" alt="Pesquisa State of Data Brazil 2027 — Data Hackers, Vector e Bain & Company. Responda a pesquisa de 19 de outubro a 8 de dezembro de 2026 em www.stateofdata.com.br" src="docs/assets/state-of-data-brazil-2027.png" />
 </a>
 
 <br/>
