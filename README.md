@@ -143,7 +143,29 @@ Análises feitas com a skill, publicadas em **https://data-hackers-br.github.io/
 ### Com o Claude Code
 
 Você precisa do [Claude Code](https://claude.com/claude-code) e de Python 3.9 ou mais
-recente. Os dados já estão no repositório: **não é preciso conta nem token do Kaggle**.
+recente. Os dados já vêm junto: **não é preciso conta nem token do Kaggle**.
+
+#### Opção 1: instalar como plugin
+
+Funciona em qualquer pasta, sem clonar o repositório:
+
+```bash
+claude plugin marketplace add data-hackers-br/state-of-data-brazil
+claude plugin install state-of-data-brazil@data-hackers
+```
+
+Depois, em qualquer sessão do Claude Code:
+
+```
+/state-of-data-brazil:state-of-data-analyst como evoluiu o salário de cientistas de dados por nível desde 2021?
+```
+
+Na primeira análise, a skill cria um ambiente Python próprio (pandas, numpy e pyyaml) em
+`~/.claude/plugins/data/`. Para receber versões novas: `claude plugin update state-of-data-brazil@data-hackers`.
+
+#### Opção 2: clonar o repositório
+
+Melhor se você quiser ver o código, mexer no mapeamento ou contribuir:
 
 ```bash
 git clone https://github.com/data-hackers-br/state-of-data-brazil.git
@@ -153,7 +175,7 @@ pip install -r requirements.txt
 claude
 ```
 
-Dentro do Claude Code, chame a skill com a sua pergunta:
+Dentro do Claude Code, na pasta do repositório, chame a skill com a sua pergunta:
 
 ```
 /state-of-data-analyst como evoluiu o salário de cientistas de dados por nível desde 2021?
@@ -208,6 +230,7 @@ stats.deflator("2021")                # fator para levar R$ de 2021 a R$ de nov/
 | [`scripts/reports/`](scripts/reports/) e [`reports/templates/`](reports/templates/) | Cálculos e páginas dos relatórios |
 | [`docs/`](docs/) | Site dos relatórios (GitHub Pages) |
 | [`.claude/skills/state-of-data-analyst/`](.claude/skills/state-of-data-analyst/SKILL.md) | A skill do Claude Code |
+| [`.claude-plugin/`](.claude-plugin/) | Manifesto do plugin e do marketplace `data-hackers` |
 
 Para regenerar a base e os relatórios: `python scripts/build_reports.py`.
 

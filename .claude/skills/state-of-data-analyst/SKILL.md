@@ -18,8 +18,20 @@ argument-hint: "<pergunta sobre carreira/salários na área de dados no Brasil>"
 
 # State of Data Brazil — Analyst
 
-Esta skill trabalha **só** com as 6 edições do State of Data Brazil que estão em
-`data/raw/`. Não busque nem baixe outros datasets.
+Esta skill trabalha **só** com as 6 edições do State of Data Brazil que vêm junto com
+ela, em `data/raw/`. Não busque nem baixe outros datasets.
+
+## Onde estão os arquivos
+
+A skill funciona de dois jeitos, e os caminhos mudam:
+
+- **Instalada como plugin:** a raiz é `${CLAUDE_PLUGIN_ROOT}` (o Claude Code substitui
+  esse texto pelo caminho real). Use-a como `RAIZ` em todos os caminhos abaixo.
+- **No repositório clonado:** o caminho do item anterior não é substituído e continua
+  começando com cifrão e chaves. Nesse caso, a raiz é o diretório do projeto aberto.
+
+Todos os caminhos desta skill (`data/`, `scripts/`, `mapping/`) são relativos à `RAIZ`.
+Nunca escreva arquivos dentro da `RAIZ` no modo plugin: ela é substituída a cada atualização.
 
 | Edição  | Chave       | Arquivo                                          | Respostas |
 |---------|-------------|--------------------------------------------------|-----------|
@@ -34,11 +46,14 @@ Não existe edição 2020 (a pesquisa pulou esse ano).
 
 ## Antes de começar
 
-1. Use o Python do ambiente do projeto (`.venv/bin/python`, ou `python3` com
-   `pip install -r requirements.txt` feito). Se as dependências faltarem, peça ao
-   usuário para rodar a instalação do README.
-2. Se `data/harmonized/state_of_data_harmonized.csv` não existir, gere com
-   `python scripts/harmonize.py`.
+1. **Python com pandas, numpy e pyyaml.**
+   - No repositório clonado: use `.venv/bin/python` (ou `python3`, se as dependências
+     já estiverem instaladas). Se faltarem, peça ao usuário para rodar a instalação do README.
+   - No modo plugin: use um ambiente próprio em `${CLAUDE_PLUGIN_DATA}/venv`, que sobrevive
+     a atualizações. Se ele não existir, avise o usuário que vai criá-lo e rode
+     `python3 -m venv "${CLAUDE_PLUGIN_DATA}/venv" && "${CLAUDE_PLUGIN_DATA}/venv/bin/pip" install -r "${CLAUDE_PLUGIN_ROOT}/requirements.txt"`.
+2. A base harmonizada já vem pronta em `data/harmonized/state_of_data_harmonized.csv`.
+   Só no repositório clonado, se ela não existir, gere com `python scripts/harmonize.py`.
 3. Leia `mapping/schema_map.yaml` — em especial `methodology_notes` e as `notes` dos
    campos que a pergunta envolve. Ele lista as armadilhas conhecidas dos dados.
 
@@ -57,7 +72,7 @@ canônicos do schema e colunas derivadas prontas:
 Para código novo, prefira importar as funções em vez de reescrever a lógica:
 
 ```python
-import sys; sys.path.insert(0, "scripts")
+import sys; sys.path.insert(0, "<RAIZ>/scripts")
 from harmonize import build          # base harmonizada em memória
 from sod import data, derive, stats  # data.raw(ed), data.multiselect(ed, nome), stats.median(df), stats.deflator(ano)
 ```
@@ -88,8 +103,9 @@ denominador quem marcou pelo menos uma opção.
 - Campos com `status: proposed` podem ser usados; se a conclusão depender de um deles,
   diga isso nas ressalvas.
 
-Salve gráficos e arquivos de trabalho em `data/scratch/` (ignorado pelo git). Se o
-usuário quiser algo apresentável, siga a skill `dataviz` antes de montar o gráfico.
+Salve gráficos e arquivos de trabalho em `data/scratch/` no repositório clonado (ignorado
+pelo git), ou numa pasta `state-of-data/` no diretório atual do usuário, no modo plugin.
+Se o usuário quiser algo apresentável, siga a skill `dataviz` antes de montar o gráfico.
 
 ### 4. Resumir
 Feche em português: principais achados com os números, a tendência mais forte e as
@@ -97,10 +113,12 @@ ressalvas metodológicas relevantes. A amostra não é aleatória: é quem respo
 pesquisa da Data Hackers, o que pode enviesar pelo canal de divulgação.
 
 ## Nova edição da pesquisa
-Quando sair uma edição nova, o usuário pode baixá-la do Kaggle (manualmente ou pelo
-servidor MCP `kaggle`, configurado em `.mcp.json`) para `data/raw/<ano>/`. Depois:
-adicionar a edição em `editions:` no schema, mapear as colunas de cada campo (confirmando
-os casos ambíguos) e rodar `python scripts/harmonize.py`.
+Isso vale só para quem mantém o repositório clonado. Quando sair uma edição nova, baixe-a
+do Kaggle para `data/raw/<ano>/`, manualmente ou pelo servidor MCP do Kaggle
+(`claude mcp add --transport http kaggle https://www.kaggle.com/mcp`, com o token pessoal
+em escopo `local`, nunca no git). Depois: adicione a edição em `editions:` no schema,
+mapeie as colunas de cada campo (confirmando os casos ambíguos) e rode
+`python scripts/harmonize.py`.
 
 ## Regras
 - Nunca invente valores de coluna ou estatística: leia sempre dos arquivos.

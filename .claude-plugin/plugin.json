@@ -1,0 +1,14 @@
+{
+  "name": "state-of-data-brazil",
+  "displayName": "State of Data Brazil",
+  "description": "Analisa as 6 edições do State of Data Brazil (Data Hackers + Bain & Company, 2019 a 2025/26): salários, carreira, modelo de trabalho, tecnologias, IA generativa e diversidade na área de dados no Brasil. Dados incluídos, colunas harmonizadas entre edições e correção pelo IPCA.",
+  "author": {
+    "name": "Data Hackers",
+    "url": "https://datahackers.com.br"
+  },
+  "homepage": "https://data-hackers-br.github.io/state-of-data-brazil/",
+  "repository": "https://github.com/data-hackers-br/state-of-data-brazil",
+  "license": "MIT",
+  "keywords": ["data-hackers", "state-of-data", "brasil", "salarios", "mercado-de-dados", "survey", "kaggle"],
+  "skills": ["./.claude/skills/"]
+}

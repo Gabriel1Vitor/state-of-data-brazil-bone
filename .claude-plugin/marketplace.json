@@ -1,0 +1,15 @@
+{
+  "name": "data-hackers",
+  "description": "Plugins da Data Hackers para Claude Code",
+  "owner": {
+    "name": "Data Hackers",
+    "url": "https://datahackers.com.br"
+  },
+  "plugins": [
+    {
+      "name": "state-of-data-brazil",
+      "source": "./",
+      "description": "Analisa as 6 edições do State of Data Brazil com os dados já incluídos: salários, carreira, modelo de trabalho, tecnologias, IA generativa e diversidade."
+    }
+  ]
+}
