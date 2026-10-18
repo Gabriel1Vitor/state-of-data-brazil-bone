@@ -425,25 +425,7 @@ bem-vindos.
 
 ### Contribuidores ♥️
 
-Obrigado a quem já contribuiu com o projeto:
-
-<table>
-  <tr>
-    <td align="center" valign="top" width="25%">
-      <a href="https://github.com/gabrielclages"><img src="https://github.com/gabrielclages.png?size=200" width="96" alt="Gabriel Lages" /></a><br />
-      <a href="https://github.com/gabrielclages"><b>Gabriel Lages</b></a><br />
-      <sub>Revisão e confirmação do mapeamento de colunas das 6 edições (<a href="https://github.com/data-hackers-br/state-of-data-brazil/pull/1">#1</a>)</sub>
-    </td>
-    <td align="center" valign="top" width="25%">
-      <a href="https://github.com/leonsolon"><img src="https://github.com/leonsolon.png?size=200" width="96" alt="Leon Silva" /></a><br />
-      <a href="https://github.com/leonsolon"><b>Leon Silva</b></a><br />
-      <sub>Categorias de IA no Radar (<a href="https://github.com/data-hackers-br/state-of-data-brazil/pull/2">#2</a>), ressalva da faixa salarial aberta (<a href="https://github.com/data-hackers-br/state-of-data-brazil/pull/3">#3</a>) e uso da skill no Codex e no Claude sem rede (<a href="https://github.com/data-hackers-br/state-of-data-brazil/pull/4">#4</a>)</sub>
-    </td>
-  </tr>
-</table>
-
-Quer aparecer aqui? Veja como contribuir acima. A lista completa de commits está em
-[contributors](https://github.com/data-hackers-br/state-of-data-brazil/graphs/contributors).
+![Contribuidores](https://contrib.rocks/image?repo=data-hackers-br/state-of-data-brazil)
 
 ---
 
