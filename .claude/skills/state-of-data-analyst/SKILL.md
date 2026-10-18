@@ -12,11 +12,11 @@ description: >
   pesquisa Data Hackers, ver evolução de salários/cargos/modelo de trabalho na área de
   dados no Brasil, ou cruzar informações entre os anos da pesquisa.
 
-user-invokable: true
+user-invocable: true
 argument-hint: "<pergunta sobre carreira/salários na área de dados no Brasil>"
 ---
 
-# State of Data Brazil — Analyst
+# State of Data Brazil — Analista
 
 Esta skill trabalha **só** com as 6 edições do State of Data Brazil do repositório
 [data-hackers-br/state-of-data-brazil](https://github.com/data-hackers-br/state-of-data-brazil).
@@ -32,14 +32,29 @@ chama de `RAIZ`. Descubra a `RAIZ` nesta ordem e use a primeira que se aplicar:
    ele é a `RAIZ`. Não escreva arquivos dentro dela: ela é trocada a cada atualização.
 2. **Repositório clonado:** se o projeto aberto contém `mapping/schema_map.yaml` e
    `scripts/sod/`, a `RAIZ` é a pasta do projeto.
-3. **Skill instalada sozinha** (por `npx skills`, no Codex ou copiando só esta pasta):
+3. **Repositório anexado** (por exemplo, no Claude pelo navegador): se o usuário
+   forneceu o ZIP deste repositório, extraia-o na pasta de trabalho da sessão e use
+   como `RAIZ` a pasta interna que contém `mapping/schema_map.yaml`, `scripts/sod/`
+   e `data/`. O ZIP do GitHub tem uma pasta externa `state-of-data-brazil-<revisão>`;
+   não confunda a pasta de extração com a raiz do projeto. Reutilize uma extração
+   válida já disponível na sessão, sem baixar outra cópia.
+4. **Skill instalada sozinha** (por `npx skills`, no Codex ou copiando só esta pasta):
    a `RAIZ` é `~/.cache/state-of-data-brazil`. Se ela não existir, avise o usuário que vai
    baixar uma cópia do repositório público (cerca de 80 MB, uma única vez) e rode
    `git clone --depth 1 https://github.com/data-hackers-br/state-of-data-brazil.git ~/.cache/state-of-data-brazil`.
    Sem `git`, baixe e descompacte
    `https://github.com/data-hackers-br/state-of-data-brazil/archive/refs/heads/main.zip` no
-   mesmo lugar. Se o ambiente bloquear acesso à rede, peça ao usuário para liberar ou para
-   rodar o comando. Para atualizar os dados depois: `git -C ~/.cache/state-of-data-brazil pull`.
+   mesmo lugar, deixando `mapping/`, `scripts/` e `data/` diretamente dentro da
+   pasta de cache. Se o ambiente bloquear acesso à rede, explique o bloqueio e peça
+   o ZIP como anexo ou indique como executar a análise localmente. Não repita
+   tentativas de download sem uma mudança nas condições. Para atualizar um cache
+   clonado com Git: `git -C ~/.cache/state-of-data-brazil pull`; se veio de ZIP,
+   use uma nova extração.
+
+Antes de analisar, confirme que a `RAIZ` contém `mapping/schema_map.yaml`,
+`scripts/sod/` e os arquivos de dados necessários. Uma pasta de cache existente,
+mas incompleta, não basta. Se faltar algum arquivo, informe o que falta para
+continuar com a cópia completa do repositório.
 
 Todos os caminhos citados daqui em diante são relativos à `RAIZ`.
 
@@ -57,6 +72,12 @@ Não existe edição 2020 (a pesquisa pulou esse ano).
 ## Antes de começar
 
 1. **Python com pandas, numpy e pyyaml.**
+   - Com repositório anexado: primeiro confira se o Python do ambiente já importa
+     `pandas`, `numpy` e `yaml`; para gráficos, confira também `matplotlib`.
+     Reutilize esse interpretador quando as dependências estiverem disponíveis.
+     Não crie um ambiente vazio que exija downloads em uma sessão sem rede.
+     Se faltar uma biblioteca, informe qual é e indique a instalação local com
+     `requirements.txt`; o ZIP traz os dados e o código, não as dependências Python.
    - No repositório clonado: use `.venv/bin/python` (ou `python3`, se as dependências
      já estiverem instaladas). Se faltarem, peça ao usuário para rodar a instalação do README.
    - No modo plugin: use um ambiente próprio em `${CLAUDE_PLUGIN_DATA}/venv`, que sobrevive
@@ -117,8 +138,13 @@ denominador quem marcou pelo menos uma opção.
   diga isso nas ressalvas.
 
 Salve gráficos e arquivos de trabalho em `data/scratch/` no repositório clonado (ignorado
-pelo git). Nos outros modos, use uma pasta `state-of-data/` no diretório atual do usuário.
-Se o usuário quiser algo apresentável, siga a skill `dataviz` antes de montar o gráfico.
+pelo git). No navegador, use a pasta de saídas oferecida pelo ambiente e disponibilize
+os arquivos para download. Nos demais modos, use uma pasta `state-of-data/` no diretório
+atual do usuário.
+Se o usuário quiser algo apresentável e a skill `dataviz` estiver disponível, siga-a
+antes de montar o gráfico. Ela é opcional: se não estiver disponível, use Matplotlib,
+com título, unidades, N por grupo, fonte e ressalvas relevantes. Confira a imagem
+gerada para evitar rótulos sobrepostos ou cortados.
 
 ### 4. Resumir
 Feche em português: principais achados com os números, a tendência mais forte e as

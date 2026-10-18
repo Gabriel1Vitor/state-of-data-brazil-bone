@@ -8,7 +8,7 @@
 <div align="center">
   <strong>Os dados abertos do State of Data Brazil, a maior pesquisa sobre o mercado de dados e IA no Brasil.
   <br />
-  Seis edições harmonizadas numa base só, e uma skill para o Claude Code que responde perguntas cruzando os anos.</strong>
+  Seis edições harmonizadas numa base só, e uma skill para Claude Code, Codex e outros agentes que responde perguntas cruzando os anos.</strong>
   <br />
   <br />
 </div>
@@ -40,7 +40,7 @@ Este repositório reúne **as 6 edições publicadas**, com 22.686 respostas som
 anos, e as colunas **harmonizadas entre as edições**: a mesma pergunta pode ter nomes e opções diferentes em cada edição, e aqui isso
 já está resolvido. Junto vêm funções prontas para salário em faixas e correção pela
 inflação, e a skill **`/state-of-data-analyst`**, para quem quiser explorar os dados
-conversando com o Claude Code.
+conversando com Claude Code, Codex ou Claude pelo navegador.
 
 ## 🤝 Um projeto Data Hackers + Bain & Company
 
@@ -142,9 +142,10 @@ Análises feitas com a skill, publicadas em **https://data-hackers-br.github.io/
 
 ### Com um agente de IA (Claude Code, Codex e outros)
 
-Você precisa de um agente como o [Claude Code](https://claude.com/claude-code) ou o
-[Codex](https://github.com/openai/codex), e de Python 3.9 ou mais recente. Os dados vêm do
-próprio repositório: **não é preciso conta nem token do Kaggle**.
+Para uso local, você precisa de um agente como o [Claude Code](https://claude.com/claude-code)
+ou o [Codex](https://github.com/openai/codex), e de Python 3.9 ou mais recente. Para uso
+no navegador, veja a opção 5. Os dados vêm do próprio repositório: **não é preciso
+conta nem token do Kaggle**.
 
 #### Opção 1: instalar como plugin do Claude Code
 
@@ -204,8 +205,10 @@ assunto bate com a descrição dela.
 $state-of-data-analyst como evoluiu o salário de cientistas de dados por nível desde 2021?
 ```
 
-Na primeira análise, a skill precisa de acesso à rede para baixar os dados. Se o Codex
-estiver com a rede bloqueada, ele vai pedir permissão para rodar o `git clone`.
+Na primeira análise, a skill precisa de acesso à rede para baixar os dados e as
+dependências que faltarem. Se o ambiente estiver sem rede, você pode fornecer o
+repositório completo já baixado e um Python com as dependências de `requirements.txt`
+instaladas. A skill reutiliza essa cópia local.
 
 #### Opção 4: clonar o repositório
 
@@ -231,6 +234,34 @@ Dentro do Claude Code, na pasta do repositório, chame a skill com a sua pergunt
 A skill lê os dados locais, usa o mapeamento de colunas entre edições e as funções de
 `scripts/sod/`, e responde com os números, o tamanho de cada amostra e as ressalvas de
 metodologia.
+
+O clone já contém a skill em `.claude/skills/`, reconhecida pelo Claude Code. Para
+usá-la no Codex, faça também a instalação da opção 3; clonar o repositório, por si só,
+não instala a skill no catálogo do Codex.
+
+#### Opção 5: usar no Claude pelo navegador
+
+Quando sua conta oferecer importação de skills e execução de código Python:
+
+1. Baixe o arquivo [`SKILL.md`](https://raw.githubusercontent.com/data-hackers-br/state-of-data-brazil/main/.claude/skills/state-of-data-analyst/SKILL.md).
+2. Nas configurações de personalização do Claude, importe o arquivo na área de
+   skills e ative `state-of-data-analyst`.
+3. Abra uma conversa e peça uma análise usando a skill. Se o ambiente de execução
+   não conseguir acessar o GitHub, baixe o [ZIP do repositório](https://github.com/data-hackers-br/state-of-data-brazil/archive/refs/heads/main.zip)
+   pelo seu navegador e anexe-o à conversa. A skill usará os arquivos extraídos.
+
+Exemplo com o ZIP anexado:
+
+```text
+Use a skill state-of-data-analyst e o repositório ZIP anexado para comparar o salário
+real de Júnior e Sênior em 2021 e 2025/26. Informe os tamanhos das amostras e as
+ressalvas de comparação. Gere um gráfico PNG para download.
+```
+
+O ZIP inclui os dados e o código, mas as bibliotecas Python ainda precisam estar
+disponíveis no ambiente. A skill verifica as dependências antes de analisar. A skill
+`dataviz` é opcional; sem ela, os gráficos podem ser feitos com Matplotlib, que já
+consta em `requirements.txt`.
 
 ### Sem agente de IA
 
@@ -273,7 +304,7 @@ stats.deflator("2021")                # fator para levar R$ de 2021 a R$ de nov/
 | [`scripts/harmonize.py`](scripts/harmonize.py) | Gera a base harmonizada |
 | [`scripts/reports/`](scripts/reports/) e [`reports/templates/`](reports/templates/) | Cálculos e páginas dos relatórios |
 | [`docs/`](docs/) | Site dos relatórios (GitHub Pages) |
-| [`.claude/skills/state-of-data-analyst/`](.claude/skills/state-of-data-analyst/SKILL.md) | A skill do Claude Code |
+| [`.claude/skills/state-of-data-analyst/`](.claude/skills/state-of-data-analyst/SKILL.md) | Skill compartilhada por Claude Code, Codex e Claude no navegador |
 | [`.claude-plugin/`](.claude-plugin/) | Manifesto do plugin e do marketplace `data-hackers` |
 
 Para regenerar a base e os relatórios: `python scripts/build_reports.py`.
