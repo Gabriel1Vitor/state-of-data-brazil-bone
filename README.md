@@ -2,7 +2,7 @@
 
 As **6 edições do State of Data Brazil** (2019 a 2025/26), a maior pesquisa sobre o
 mercado de trabalho em dados e IA no Brasil, feita pela [Data Hackers](https://datahackers.com.br)
-em parceria com a Bain & Company. São mais de 22 mil respostas, com as colunas
+em parceria com a Bain & Company. São mais de 22 mil respostas somando todos os anos, com as colunas
 **harmonizadas entre edições**, e uma skill para o [Claude Code](https://claude.com/claude-code)
 que responde perguntas cruzando os anos.
 
