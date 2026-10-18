@@ -17,6 +17,7 @@ EXPERIENCIA = ["Menos de 1 ano", "1 a 2 anos", "3 a 6 anos", "7 a 10 anos", "Mai
 
 
 def gestor_bool(s):
+    """Sim/não gravado como 1/0, 1.0/0.0 ou True/False, conforme a edição -> booleano."""
     return s.map({1: True, 0: False, 1.0: True, 0.0: False, True: True, False: False})
 
 

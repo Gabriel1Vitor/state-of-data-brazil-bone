@@ -61,7 +61,7 @@ fields:
       "2025-2026": "2.d_atua_como_gestor"
     notes: "0/1 na maioria das edições; em 2022 vem como True/False."
   genero:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('P2', 'gender')"
       "2021": "('P1_b ', 'Genero')"
@@ -69,8 +69,12 @@ fields:
       "2023": "('P1_b ', 'Genero')"
       "2024-2025": "1.b_genero"
       "2025-2026": "1.b_genero"
+    notes: >-
+      2019 entra no campo, com ressalva: o dataset de 2019 só tem Masculino e Feminino
+      (outras respostas foram mascaradas na anonimização). Comparações de gênero com
+      2019 devem citar isso (confirmado em 2026-10-18).
   raca:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": null
@@ -79,7 +83,7 @@ fields:
       "2024-2025": "1.c_cor/raca/etnia"
       "2025-2026": "1.c_cor/raca/etnia"
   pcd:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": null
@@ -88,7 +92,7 @@ fields:
       "2024-2025": "1.d_pcd"
       "2025-2026": "1.d_pcd"
   experiencia_prejudicada:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": null
@@ -98,7 +102,7 @@ fields:
       "2025-2026": "1.e_experiencia_profissional_prejudicada"
     notes: "Respondida quase só por mulheres e pessoas não brancas; texto multi-seleção separado por vírgula."
   estado:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('P5', 'living_state')"
       "2021": "('P1_e_a ', 'uf onde mora')"
@@ -108,9 +112,11 @@ fields:
       "2025-2026": "1.i.1_uf_onde_mora"
     notes: >-
       Sigla da UF. A pesquisa não pergunta a cidade. Estados com poucas respostas são
-      anonimizados (só a região aparece). Em 2019 os valores são nomes de estado.
+      anonimizados (só a região aparece). Em 2019 o CSV traz "São Paulo (SP)"; a base
+      harmonizada converte para a sigla ("SP"), como nas outras edições (confirmado em
+      2026-10-18).
   regiao:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('D1', 'living_macroregion')"
       "2021": "('P1_e_b ', 'Regiao onde mora')"
@@ -118,9 +124,13 @@ fields:
       "2023": "('P1_i_2 ', 'Regiao onde mora')"
       "2024-2025": "1.i.2_regiao_onde_mora"
       "2025-2026": "1.i.2_regiao_onde_mora"
-    notes: "2019 usa 'Região Sudeste' etc. e só tem Sudeste/Sul; 2021 tem a categoria 'Exterior'."
+    notes: >-
+      2019 escreve "Região Sudeste" (a base harmonizada converte para "Sudeste") e só tem
+      Sudeste e Sul: as outras regiões foram anonimizadas e ficam em branco (337 respostas).
+      2019 entra no campo, mas comparações de região com 2019 precisam dessa ressalva
+      (confirmado em 2026-10-18). 2021 tem a categoria "Exterior".
   formacao_nivel:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('P8', 'degreee_level')"
       "2021": "('P1_h ', 'Nivel de Ensino')"
@@ -129,7 +139,7 @@ fields:
       "2024-2025": "1.l_nivel_de_ensino"
       "2025-2026": "1.l_nivel_de_ensino"
   situacao_trabalho:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('P10', 'job_situation')"
       "2021": "('P2_a ', 'Qual sua situação atual de trabalho?')"
@@ -140,9 +150,9 @@ fields:
     notes: >-
       Inclui "Vivo no Brasil e trabalho remoto para empresa de fora do Brasil" e
       "Vivo fora do Brasil e trabalho para empresa de fora do Brasil" (a partir de 2021).
-      2019 escreve "Empregado (CTL)".
+      Rótulos antigos convertidos para o formato recente em value_maps (confirmado em 2026-10-18).
   setor_empresa:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": "('P2_b ', 'Setor')"
@@ -150,9 +160,12 @@ fields:
       "2023": "('P2_b ', 'Setor')"
       "2024-2025": "2.b_setor"
       "2025-2026": "2.b_setor"
-    notes: "2019 só tem setor anonimizado (D4). 'Consultoria' vira 'Área de Consultoria' a partir de 2022."
+    notes: >-
+      2019 só tem setor anonimizado (D4) e fica fora do campo. As opções de 2021 são
+      convertidas para as de 2022 em diante em value_maps; "Serviços" e "Logística" não
+      existem mais e viram "Outra Opção" (confirmado em 2026-10-18).
   tamanho_empresa:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('P12', 'workers_number')"
       "2021": "('P2_c ', 'Numero de Funcionarios')"
@@ -160,9 +173,12 @@ fields:
       "2023": "('P2_c ', 'Numero de Funcionarios')"
       "2024-2025": "2.c_numero_de_funcionarios"
       "2025-2026": "2.c_numero_de_funcionarios"
-    notes: "2021 escreve 'Acima de 3000'; a partir de 2022 'Acima de 3.000'. Há um rótulo com erro 'de 501 a 100' (= 501 a 1.000)."
+    notes: >-
+      Faixas iguais em todas as edições; a grafia é padronizada para a de 2022 em diante
+      ("Acima de 3.000") e o rótulo com erro "de 501 a 100" vira "de 501 a 1.000", em
+      value_maps (confirmado em 2026-10-18).
   cargo_atual:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('D6', 'anonymized_role')"
       "2021": "('P2_f ', 'Cargo Atual')"
@@ -174,8 +190,10 @@ fields:
       Opções mudam por edição. 2021: "Analista de BI/BI Analyst/Analytics Engineer" numa
       opção só; Analytics Engineer separado a partir de 2022. 2022–2023 juntam Engenheiro
       e Arquiteto de Dados; 2024+ separam. Nas análises, Arquiteto é somado a Engenheiro.
+      2019 usa o cargo anonimizado (D6), comparável com as outras edições pelos mesmos
+      grupos (confirmado em 2026-10-18).
   tempo_experiencia_dados:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('P17', 'time_experience_data_science')"
       "2021": "('P2_i ', 'Quanto tempo de experiência na área de dados você tem?')"
@@ -186,9 +204,10 @@ fields:
     notes: >-
       Faixas mudam: 2019/2021 usam 2–3, 4–5, 6–10 anos; 2022 usa 3–4, 4–6, 7–10; 2023
       mistura 4–6 e 5–6; 2024+ usa 3–4, 5–6, 7–10. Grupos comparáveis: <1, 1–2, 3–6,
-      7–10, 10+ (2021 fica aproximado: 2–5 e 6–10).
+      7–10, 10+ (2019 e 2021 ficam aproximados: 2–5 e 6–10). Grupos confirmados em
+      2026-10-18.
   satisfeito_empresa:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": "('P2_k ', 'Você está satisfeito na sua empresa atual?')"
@@ -197,7 +216,7 @@ fields:
       "2024-2025": "2.k_satisfeito_atualmente"
       "2025-2026": "2.k_satisfeito_atualmente"
   plano_mudar_emprego:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": "('P2_n ', 'Você pretende mudar de emprego nos próximos 6 meses?')"
@@ -206,7 +225,7 @@ fields:
       "2024-2025": "2.n_planos_de_mudar_de_emprego_6m"
       "2025-2026": "2.n_planos_de_mudar_de_emprego_6m"
   modelo_trabalho_atual:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": "('P2_q ', 'Atualmente qual a sua forma de trabalho?')"
@@ -216,7 +235,7 @@ fields:
       "2025-2026": "2.q_modelo_de_trabalho_atual"
     notes: "Opções idênticas em todas as edições: 100% remoto, híbrido flexível, híbrido com dias fixos, 100% presencial."
   modelo_trabalho_ideal:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": "('P2_r ', 'Qual a forma de trabalho ideal para você?')"
@@ -225,7 +244,7 @@ fields:
       "2024-2025": "2.s_modelo_de_trabalho_ideal"
       "2025-2026": "2.r_modelo_de_trabalho_ideal"
   atitude_retorno_presencial:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": "('P2_s ', 'Caso sua empresa decida pelo modelo 100% presencial qual será sua atitude?')"
@@ -234,7 +253,7 @@ fields:
       "2024-2025": "2.t_atitude_em_caso_de_retorno_presencial"
       "2025-2026": "2.s_atitude_em_caso_de_retorno_presencial"
   layoff:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": null
@@ -242,9 +261,9 @@ fields:
       "2023": "('P2_q ', 'Empresa que trabaha passou por layoff em 2023')"
       "2024-2025": "2.q_empresa_passou_por_layoff_em_2024"
       "2025-2026": "2.p_empresa_passou_por_layoff_em_2025"
-    notes: "Cada edição pergunta sobre o ano corrente (2022, 2023, 2024, 2025)."
+    notes: "Cada edição pergunta sobre o ano corrente (2022, 2023, 2024, 2025) (confirmado em 2026-10-18)."
   uso_ia_generativa:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": null
@@ -252,19 +271,39 @@ fields:
       "2023": "('P4_m ', 'Utiliza ChatGPT ou LLMs no trabalho?')"
       "2024-2025": "4.m_usa_chatgpt_ou_copilot_no_trabalho?"
       "2025-2026": "4.j_usa_chatgpt_ou_copilot_no_trabalho?"
-    notes: "Texto multi-seleção. Os exemplos de ferramentas citados nas opções mudam por edição."
+    notes: >-
+      Texto multi-seleção. As opções citam exemplos de ferramentas que mudam por edição
+      (em 2025/26: Claude, Gemini, Cursor, Claude Code), então comparações entre edições
+      são aproximadas e devem trazer essa ressalva (confirmado em 2026-10-18).
+
+# Conversão de rótulos antigos para o formato das edições recentes, aplicada pela
+# leitura de cada campo (scripts/sod/data.py). Chave = valor no CSV; valor = rótulo canônico.
+value_maps:
+  situacao_trabalho:
+    "2019": { "Empregado (CTL)": "Empregado (CLT)", "Prefiro não dizer": "Prefiro não informar" }
+    "2021": { "Vivo no Brasil e trabalho remoto para empresa de fora do Brasil (PJ)": "Vivo no Brasil e trabalho remoto para empresa de fora do Brasil" }
+  setor_empresa:
+    "2021": { "Consultoria": "Área de Consultoria", "consultoria": "Área de Consultoria", "Outro": "Outra Opção", "Energia": "Setor de Energia", "Imobiliário": "Setor Imobiliário/ Construção Civil", "Construção Civil": "Setor Imobiliário/ Construção Civil", "Serviços": "Outra Opção", "Logística": "Outra Opção" }
+  tamanho_empresa:
+    "*": { "Acima de 3000": "Acima de 3.000", "de 1001 a 3000": "de 1.001 a 3.000", "de 501 a 1000": "de 501 a 1.000", "de 501 a 100": "de 501 a 1.000" }
+  atitude_retorno_presencial:
+    "2021": { "Vou procurar outra oportunidade no modelo híbrido ou remoto.": "Vou procurar outra oportunidade no modelo híbrido ou remoto", "Vou aceitar e retornar ao modelo 100% presencial.": "Vou aceitar e retornar ao modelo 100% presencial", "Vou procurar outra oportunidade no modelo 100% remoto.": "Vou procurar outra oportunidade no modelo 100% remoto" }
 
 # Perguntas de múltipla escolha que viram uma coluna binária por opção. Cada entrada
 # dá o prefixo das colunas binárias em cada edição; o rótulo da opção vem depois do
 # prefixo (ou dentro da tupla, em 2021–2023).
 multiselect:
   linguagens_trabalho:
-    status: proposed
+    status: confirmed
     prefix: { "2019": "('P21'", "2021": "('P4_d_", "2022": "('P4_d_", "2023": "('P4_d_", "2024-2025": "4.d.", "2025-2026": null }
+    labels:  # 2019 convertido para os rótulos de 2024/25
+      "2019": { "sql_": "SQL", "r": "R", "python": "Python", "c_c++_c#": "C/C++/C#", "dotnet": ".NET", "java": "Java", "julia": "Julia", "sas_stata": "SAS/Stata", "visual_basic_vba": "Visual Basic/VBA", "scala": "Scala", "matlab": "Matlab", "php": "PHP", "no_listed_languages": "Não utilizo nenhuma das linguagens listadas" }
     notes: "2025/26 ('4.c.') pergunta linguagens PREFERIDAS — não comparável; deixado como null."
   cloud_trabalho:
-    status: proposed
+    status: confirmed
     prefix: { "2019": "('P25'", "2021": "('P4_g_", "2022": null, "2023": "('P4_h_", "2024-2025": "4.h.", "2025-2026": "4.e." }
+    labels:  # 2019 convertido para os rótulos de 2024/25; null = sem equivalente, fica de fora
+      "2019": { "aws": "Amazon Web Services (AWS)", "gcp": "Google Cloud (GCP)", "azure": "Azure (Microsoft)", "ibm": "IBM", "on_premise_servers": "Servidores On Premise/Não utilizamos Cloud", "cloud_própria": "Cloud Própria", "other": null }
     fixes:
       "2023": { "Azure (Microsoft)": "Amazon Web Services (AWS)", "Amazon Web Services (AWS)": "Google Cloud (GCP)", "Google Cloud (GCP)": "Azure (Microsoft)" }
     text_column:
@@ -274,12 +313,14 @@ multiselect:
       contra a cloud preferida). 2022: as colunas binárias 'P4_h_1..3' são a cloud
       PREFERIDA em one-hot; o uso real está no texto de 'text_column'.
   bi_trabalho:
-    status: proposed
+    status: confirmed
     prefix: { "2019": "('P27'", "2021": "('P4_h_", "2022": null, "2023": "('P4_j_", "2024-2025": "4.j.", "2025-2026": "4.g." }
+    labels:  # 2019 convertido para os rótulos de 2024/25; null = sem equivalente, fica de fora
+      "2019": { "microsoft_powerbi": "Microsoft PowerBI", "qlik_view_qlik_sense": "Qlik View/Qlik Sense", "tableau": "Tableau", "metabase": "Metabase", "superset": "Superset", "redash": "Redash", "looker": "Looker", "google_data_studio": "Looker Studio(Google Data Studio)", "sap_business_objects": "SAP Business Objects/SAP Analytics", "oracle_business_intelligence": "Oracle Business Intelligence", "only_excel_gsheets": "Fazemos todas as análises utilizando apenas Excel ou planilhas do google", "no_bi_tool_at_work": "Não utilizo nenhuma ferramenta de BI no trabalho", "microstrategy": null, "ibm_analytics_cognos": null, "birst": null, "other": null }
     notes: "2022: só ~200 respostas no dataset ('P4_i_*'); deixado como null."
 
 methodology_notes:
-  - "2019: faixa salarial termina em 'Acima de R$ 25.001'; não há pergunta de senioridade Jr/Pl/Sr. Só gênero, desemprego e poucas outras perguntas são comparáveis."
+  - "2019: faixa salarial termina em 'Acima de R$ 25.001' e não há pergunta de senioridade Jr/Pl/Sr. São comparáveis: gênero, situação de trabalho (desemprego), estado, região (com ressalva), formação, porte da empresa, cargo, tempo de experiência (em grupos) e as perguntas de múltipla escolha de linguagens, cloud e BI (rótulos convertidos para o formato de 2024/25)."
   - "2025/26: novo nível 'Especialista/Staff+' tira do grupo Sênior parte das pessoas mais experientes; para comparar Sênior com anos anteriores, some Sênior + Staff+."
   - "2021: não há perguntas de cor/raça nem de PCD (começam em 2022)."
   - "Salário: valores em faixas; use mediana/quartis interpolados dentro da faixa (scripts/sod/stats.py). Para valores reais, use o IPCA de novembro de cada edição (data/reference/ipca_mensal.json)."
