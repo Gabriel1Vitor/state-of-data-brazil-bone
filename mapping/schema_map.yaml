@@ -61,7 +61,7 @@ fields:
       "2025-2026": "2.d_atua_como_gestor"
     notes: "0/1 na maioria das edições; em 2022 vem como True/False."
   genero:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('P2', 'gender')"
       "2021": "('P1_b ', 'Genero')"
@@ -69,8 +69,12 @@ fields:
       "2023": "('P1_b ', 'Genero')"
       "2024-2025": "1.b_genero"
       "2025-2026": "1.b_genero"
+    notes: >-
+      2019 entra no campo, com ressalva: o dataset de 2019 só tem Masculino e Feminino
+      (outras respostas foram mascaradas na anonimização). Comparações de gênero com
+      2019 devem citar isso (confirmado em 2026-10-18).
   raca:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": null
@@ -79,7 +83,7 @@ fields:
       "2024-2025": "1.c_cor/raca/etnia"
       "2025-2026": "1.c_cor/raca/etnia"
   pcd:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": null
@@ -88,7 +92,7 @@ fields:
       "2024-2025": "1.d_pcd"
       "2025-2026": "1.d_pcd"
   experiencia_prejudicada:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": null
@@ -126,7 +130,7 @@ fields:
       2019 entra no campo, mas comparações de região com 2019 precisam dessa ressalva
       (confirmado em 2026-10-18). 2021 tem a categoria "Exterior".
   formacao_nivel:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('P8', 'degreee_level')"
       "2021": "('P1_h ', 'Nivel de Ensino')"
@@ -135,7 +139,7 @@ fields:
       "2024-2025": "1.l_nivel_de_ensino"
       "2025-2026": "1.l_nivel_de_ensino"
   situacao_trabalho:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('P10', 'job_situation')"
       "2021": "('P2_a ', 'Qual sua situação atual de trabalho?')"
@@ -146,9 +150,9 @@ fields:
     notes: >-
       Inclui "Vivo no Brasil e trabalho remoto para empresa de fora do Brasil" e
       "Vivo fora do Brasil e trabalho para empresa de fora do Brasil" (a partir de 2021).
-      2019 escreve "Empregado (CTL)".
+      Rótulos antigos convertidos para o formato recente em value_maps (confirmado em 2026-10-18).
   setor_empresa:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": "('P2_b ', 'Setor')"
@@ -156,9 +160,12 @@ fields:
       "2023": "('P2_b ', 'Setor')"
       "2024-2025": "2.b_setor"
       "2025-2026": "2.b_setor"
-    notes: "2019 só tem setor anonimizado (D4). 'Consultoria' vira 'Área de Consultoria' a partir de 2022."
+    notes: >-
+      2019 só tem setor anonimizado (D4) e fica fora do campo. As opções de 2021 são
+      convertidas para as de 2022 em diante em value_maps; "Serviços" e "Logística" não
+      existem mais e viram "Outra Opção" (confirmado em 2026-10-18).
   tamanho_empresa:
-    status: proposed
+    status: confirmed
     columns:
       "2019": "('P12', 'workers_number')"
       "2021": "('P2_c ', 'Numero de Funcionarios')"
@@ -166,7 +173,10 @@ fields:
       "2023": "('P2_c ', 'Numero de Funcionarios')"
       "2024-2025": "2.c_numero_de_funcionarios"
       "2025-2026": "2.c_numero_de_funcionarios"
-    notes: "2021 escreve 'Acima de 3000'; a partir de 2022 'Acima de 3.000'. Há um rótulo com erro 'de 501 a 100' (= 501 a 1.000)."
+    notes: >-
+      Faixas iguais em todas as edições; a grafia é padronizada para a de 2022 em diante
+      ("Acima de 3.000") e o rótulo com erro "de 501 a 100" vira "de 501 a 1.000", em
+      value_maps (confirmado em 2026-10-18).
   cargo_atual:
     status: confirmed
     columns:
@@ -197,7 +207,7 @@ fields:
       7–10, 10+ (2019 e 2021 ficam aproximados: 2–5 e 6–10). Grupos confirmados em
       2026-10-18.
   satisfeito_empresa:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": "('P2_k ', 'Você está satisfeito na sua empresa atual?')"
@@ -206,7 +216,7 @@ fields:
       "2024-2025": "2.k_satisfeito_atualmente"
       "2025-2026": "2.k_satisfeito_atualmente"
   plano_mudar_emprego:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": "('P2_n ', 'Você pretende mudar de emprego nos próximos 6 meses?')"
@@ -215,7 +225,7 @@ fields:
       "2024-2025": "2.n_planos_de_mudar_de_emprego_6m"
       "2025-2026": "2.n_planos_de_mudar_de_emprego_6m"
   modelo_trabalho_atual:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": "('P2_q ', 'Atualmente qual a sua forma de trabalho?')"
@@ -225,7 +235,7 @@ fields:
       "2025-2026": "2.q_modelo_de_trabalho_atual"
     notes: "Opções idênticas em todas as edições: 100% remoto, híbrido flexível, híbrido com dias fixos, 100% presencial."
   modelo_trabalho_ideal:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": "('P2_r ', 'Qual a forma de trabalho ideal para você?')"
@@ -234,7 +244,7 @@ fields:
       "2024-2025": "2.s_modelo_de_trabalho_ideal"
       "2025-2026": "2.r_modelo_de_trabalho_ideal"
   atitude_retorno_presencial:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": "('P2_s ', 'Caso sua empresa decida pelo modelo 100% presencial qual será sua atitude?')"
@@ -243,7 +253,7 @@ fields:
       "2024-2025": "2.t_atitude_em_caso_de_retorno_presencial"
       "2025-2026": "2.s_atitude_em_caso_de_retorno_presencial"
   layoff:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": null
@@ -251,9 +261,9 @@ fields:
       "2023": "('P2_q ', 'Empresa que trabaha passou por layoff em 2023')"
       "2024-2025": "2.q_empresa_passou_por_layoff_em_2024"
       "2025-2026": "2.p_empresa_passou_por_layoff_em_2025"
-    notes: "Cada edição pergunta sobre o ano corrente (2022, 2023, 2024, 2025)."
+    notes: "Cada edição pergunta sobre o ano corrente (2022, 2023, 2024, 2025) (confirmado em 2026-10-18)."
   uso_ia_generativa:
-    status: proposed
+    status: confirmed
     columns:
       "2019": null
       "2021": null
@@ -261,7 +271,23 @@ fields:
       "2023": "('P4_m ', 'Utiliza ChatGPT ou LLMs no trabalho?')"
       "2024-2025": "4.m_usa_chatgpt_ou_copilot_no_trabalho?"
       "2025-2026": "4.j_usa_chatgpt_ou_copilot_no_trabalho?"
-    notes: "Texto multi-seleção. Os exemplos de ferramentas citados nas opções mudam por edição."
+    notes: >-
+      Texto multi-seleção. As opções citam exemplos de ferramentas que mudam por edição
+      (em 2025/26: Claude, Gemini, Cursor, Claude Code), então comparações entre edições
+      são aproximadas e devem trazer essa ressalva (confirmado em 2026-10-18).
+
+# Conversão de rótulos antigos para o formato das edições recentes, aplicada pela
+# leitura de cada campo (scripts/sod/data.py). Chave = valor no CSV; valor = rótulo canônico.
+value_maps:
+  situacao_trabalho:
+    "2019": { "Empregado (CTL)": "Empregado (CLT)", "Prefiro não dizer": "Prefiro não informar" }
+    "2021": { "Vivo no Brasil e trabalho remoto para empresa de fora do Brasil (PJ)": "Vivo no Brasil e trabalho remoto para empresa de fora do Brasil" }
+  setor_empresa:
+    "2021": { "Consultoria": "Área de Consultoria", "consultoria": "Área de Consultoria", "Outro": "Outra Opção", "Energia": "Setor de Energia", "Imobiliário": "Setor Imobiliário/ Construção Civil", "Construção Civil": "Setor Imobiliário/ Construção Civil", "Serviços": "Outra Opção", "Logística": "Outra Opção" }
+  tamanho_empresa:
+    "*": { "Acima de 3000": "Acima de 3.000", "de 1001 a 3000": "de 1.001 a 3.000", "de 501 a 1000": "de 501 a 1.000", "de 501 a 100": "de 501 a 1.000" }
+  atitude_retorno_presencial:
+    "2021": { "Vou procurar outra oportunidade no modelo híbrido ou remoto.": "Vou procurar outra oportunidade no modelo híbrido ou remoto", "Vou aceitar e retornar ao modelo 100% presencial.": "Vou aceitar e retornar ao modelo 100% presencial", "Vou procurar outra oportunidade no modelo 100% remoto.": "Vou procurar outra oportunidade no modelo 100% remoto" }
 
 # Perguntas de múltipla escolha que viram uma coluna binária por opção. Cada entrada
 # dá o prefixo das colunas binárias em cada edição; o rótulo da opção vem depois do

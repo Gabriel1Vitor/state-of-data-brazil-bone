@@ -18,6 +18,7 @@ def build():
     fields = list(data.schema()["fields"])
     df = data.frame(fields)
     df["gestor"] = derive.gestor_bool(df["gestor"])
+    df["satisfeito_empresa"] = derive.gestor_bool(df["satisfeito_empresa"])  # 1/0 e True/False -> booleano
     df = stats.add_bounds(df)
     df["nivel"] = derive.senioridade(df)
     df["vinculo"] = derive.vinculo(df["situacao_trabalho"])

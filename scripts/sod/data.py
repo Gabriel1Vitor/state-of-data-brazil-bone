@@ -35,12 +35,19 @@ def raw(ed):
 
 
 def column(ed, field):
-    """Série de um campo canônico numa edição (toda nula se a edição não tem a pergunta)."""
+    """Série de um campo canônico numa edição (toda nula se a edição não tem a pergunta).
+
+    Rótulos antigos são convertidos para o formato recente pelo `value_maps` do schema
+    (mapa da edição e, se houver, o mapa "*", que vale para todas).
+    """
     col = schema()["fields"][field]["columns"].get(ed)
     df = raw(ed)
     if col is None:
         return pd.Series(np.nan, index=df.index, name=field)
-    return df[col].rename(field)
+    s = df[col].rename(field)
+    maps = (schema().get("value_maps") or {}).get(field, {})
+    mapping = {**maps.get("*", {}), **maps.get(ed, {})}
+    return s.replace(mapping) if mapping else s
 
 
 def frame(fields, eds=None):
