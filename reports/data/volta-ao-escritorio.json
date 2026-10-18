@@ -1,0 +1,1434 @@
+{
+ "years": [
+  "2021",
+  "2022",
+  "2023",
+  "2024/25",
+  "2025/26"
+ ],
+ "n": {
+  "2021": 2338,
+  "2022": 3648,
+  "2023": 4689,
+  "2024/25": 4786,
+  "2025/26": 3162
+ },
+ "overall": {
+  "2021": {
+   "Remoto": 56.8,
+   "Híbrido flexível": 19.1,
+   "Híbrido fixo": 10.0,
+   "Presencial": 14.0,
+   "_n": 2338
+  },
+  "2022": {
+   "Remoto": 45.8,
+   "Híbrido flexível": 25.5,
+   "Híbrido fixo": 12.9,
+   "Presencial": 15.8,
+   "_n": 3648
+  },
+  "2023": {
+   "Remoto": 46.5,
+   "Híbrido flexível": 20.2,
+   "Híbrido fixo": 16.5,
+   "Presencial": 16.8,
+   "_n": 4689
+  },
+  "2024/25": {
+   "Remoto": 45.9,
+   "Híbrido flexível": 20.4,
+   "Híbrido fixo": 17.3,
+   "Presencial": 16.4,
+   "_n": 4786
+  },
+  "2025/26": {
+   "Remoto": 40.2,
+   "Híbrido flexível": 19.3,
+   "Híbrido fixo": 19.7,
+   "Presencial": 20.8,
+   "_n": 3162
+  }
+ },
+ "obrig_overall": [
+  24.0,
+  28.8,
+  33.3,
+  33.8,
+  40.5
+ ],
+ "sen": {
+  "Júnior": {
+   "remoto": [
+    57.4,
+    42.0,
+    37.9,
+    34.7,
+    26.0
+   ],
+   "obrig": [
+    27.2,
+    36.0,
+    45.0,
+    48.4,
+    58.8
+   ],
+   "n": [
+    618,
+    1018,
+    1037,
+    862,
+    515
+   ],
+   "d2526": {
+    "Remoto": 26.0,
+    "Híbrido flexível": 15.1,
+    "Híbrido fixo": 21.9,
+    "Presencial": 36.9,
+    "_n": 515
+   }
+  },
+  "Pleno": {
+   "remoto": [
+    58.2,
+    49.2,
+    48.6,
+    47.6,
+    40.3
+   ],
+   "obrig": [
+    23.1,
+    28.0,
+    33.1,
+    35.2,
+    41.4
+   ],
+   "n": [
+    650,
+    1044,
+    1377,
+    1359,
+    761
+   ],
+   "d2526": {
+    "Remoto": 40.3,
+    "Híbrido flexível": 18.3,
+    "Híbrido fixo": 18.7,
+    "Presencial": 22.7,
+    "_n": 761
+   }
+  },
+  "Sênior": {
+   "remoto": [
+    62.1,
+    54.3,
+    56.2,
+    58.1,
+    50.8
+   ],
+   "obrig": [
+    21.1,
+    20.6,
+    23.7,
+    23.1,
+    32.5
+   ],
+   "n": [
+    565,
+    878,
+    1394,
+    1541,
+    833
+   ],
+   "d2526": {
+    "Remoto": 50.8,
+    "Híbrido flexível": 16.7,
+    "Híbrido fixo": 18.6,
+    "Presencial": 13.9,
+    "_n": 833
+   }
+  },
+  "Especialista/Staff+": {
+   "remoto": [
+    null,
+    null,
+    null,
+    null,
+    52.2
+   ],
+   "obrig": [
+    null,
+    null,
+    null,
+    null,
+    27.4
+   ],
+   "n": [
+    0,
+    0,
+    0,
+    0,
+    343
+   ],
+   "d2526": {
+    "Remoto": 52.2,
+    "Híbrido flexível": 20.4,
+    "Híbrido fixo": 18.1,
+    "Presencial": 9.3,
+    "_n": 343
+   }
+  },
+  "Gestor": {
+   "remoto": [
+    48.5,
+    35.5,
+    37.9,
+    34.5,
+    32.1
+   ],
+   "obrig": [
+    24.8,
+    29.7,
+    35.0,
+    35.5,
+    42.0
+   ],
+   "n": [
+    505,
+    708,
+    881,
+    1024,
+    710
+   ],
+   "d2526": {
+    "Remoto": 32.1,
+    "Híbrido flexível": 25.9,
+    "Híbrido fixo": 21.3,
+    "Presencial": 20.7,
+    "_n": 710
+   }
+  }
+ },
+ "local": {
+  "São Paulo (SP)": {
+   "remoto": [
+    55.0,
+    40.6,
+    40.1,
+    38.2,
+    32.8
+   ],
+   "obrig": [
+    22.6,
+    25.4,
+    33.8,
+    33.8,
+    42.1
+   ],
+   "n": [
+    982,
+    1570,
+    1895,
+    1956,
+    1323
+   ],
+   "d2526": {
+    "Remoto": 32.8,
+    "Híbrido flexível": 25.1,
+    "Híbrido fixo": 26.2,
+    "Presencial": 15.9,
+    "_n": 1323
+   }
+  },
+  "Minas Gerais (MG)": {
+   "remoto": [
+    58.3,
+    49.4,
+    50.0,
+    51.3,
+    44.7
+   ],
+   "obrig": [
+    18.2,
+    28.1,
+    30.0,
+    31.5,
+    36.9
+   ],
+   "n": [
+    319,
+    413,
+    504,
+    536,
+    371
+   ],
+   "d2526": {
+    "Remoto": 44.7,
+    "Híbrido flexível": 18.3,
+    "Híbrido fixo": 14.0,
+    "Presencial": 22.9,
+    "_n": 371
+   }
+  },
+  "Rio de Janeiro (RJ)": {
+   "remoto": [
+    56.9,
+    51.2,
+    49.0,
+    52.8,
+    43.2
+   ],
+   "obrig": [
+    23.9,
+    27.5,
+    30.3,
+    26.9,
+    38.6
+   ],
+   "n": [
+    188,
+    287,
+    396,
+    360,
+    264
+   ],
+   "d2526": {
+    "Remoto": 43.2,
+    "Híbrido flexível": 18.2,
+    "Híbrido fixo": 23.1,
+    "Presencial": 15.5,
+    "_n": 264
+   }
+  },
+  "Resto do Brasil": {
+   "remoto": [
+    58.8,
+    49.1,
+    51.0,
+    50.0,
+    46.0
+   ],
+   "obrig": [
+    27.7,
+    33.2,
+    34.8,
+    36.2,
+    40.6
+   ],
+   "n": [
+    823,
+    1333,
+    1852,
+    1877,
+    1160
+   ],
+   "d2526": {
+    "Remoto": 46.0,
+    "Híbrido flexível": 13.4,
+    "Híbrido fixo": 13.7,
+    "Presencial": 26.9,
+    "_n": 1160
+   }
+  }
+ },
+ "papel": {
+  "Contribuidor individual": {
+   "remoto": [
+    59.1,
+    48.3,
+    48.5,
+    49.0,
+    42.5
+   ],
+   "obrig": [
+    23.8,
+    28.5,
+    32.9,
+    33.3,
+    40.1
+   ],
+   "n": [
+    1833,
+    2940,
+    3808,
+    3762,
+    2452
+   ],
+   "d2526": {
+    "Remoto": 42.5,
+    "Híbrido flexível": 17.4,
+    "Híbrido fixo": 19.2,
+    "Presencial": 20.8,
+    "_n": 2452
+   }
+  },
+  "Liderança": {
+   "remoto": [
+    48.5,
+    35.5,
+    37.9,
+    34.5,
+    32.1
+   ],
+   "obrig": [
+    24.8,
+    29.7,
+    35.0,
+    35.5,
+    42.0
+   ],
+   "n": [
+    505,
+    708,
+    881,
+    1024,
+    710
+   ],
+   "d2526": {
+    "Remoto": 32.1,
+    "Híbrido flexível": 25.9,
+    "Híbrido fixo": 21.3,
+    "Presencial": 20.7,
+    "_n": 710
+   }
+  }
+ },
+ "role": {
+  "Engenheiro(a) de Dados": {
+   "remoto": [
+    73.5,
+    69.0,
+    70.3,
+    64.9,
+    62.4
+   ],
+   "obrig": [
+    8.3,
+    9.0,
+    12.7,
+    17.8,
+    20.3
+   ],
+   "n": [
+    302,
+    477,
+    671,
+    639,
+    418
+   ],
+   "d2526": {
+    "Remoto": 62.4,
+    "Híbrido flexível": 17.2,
+    "Híbrido fixo": 13.9,
+    "Presencial": 6.5,
+    "_n": 418
+   }
+  },
+  "Cientista de Dados": {
+   "remoto": [
+    72.6,
+    57.9,
+    58.5,
+    59.5,
+    49.8
+   ],
+   "obrig": [
+    10.5,
+    13.3,
+    20.8,
+    22.1,
+    27.4
+   ],
+   "n": [
+    354,
+    549,
+    674,
+    679,
+    420
+   ],
+   "d2526": {
+    "Remoto": 49.8,
+    "Híbrido flexível": 22.9,
+    "Híbrido fixo": 18.8,
+    "Presencial": 8.6,
+    "_n": 420
+   }
+  },
+  "Analista de Dados": {
+   "remoto": [
+    60.1,
+    46.0,
+    43.9,
+    46.5,
+    35.4
+   ],
+   "obrig": [
+    19.8,
+    28.1,
+    35.7,
+    34.9,
+    46.9
+   ],
+   "n": [
+    318,
+    631,
+    898,
+    948,
+    588
+   ],
+   "d2526": {
+    "Remoto": 35.4,
+    "Híbrido flexível": 17.7,
+    "Híbrido fixo": 25.0,
+    "Presencial": 21.9,
+    "_n": 588
+   }
+  },
+  "Analista de BI": {
+   "remoto": [
+    53.9,
+    40.8,
+    35.6,
+    33.7,
+    31.5
+   ],
+   "obrig": [
+    28.6,
+    37.9,
+    47.9,
+    49.4,
+    52.1
+   ],
+   "n": [
+    336,
+    375,
+    503,
+    395,
+    213
+   ],
+   "d2526": {
+    "Remoto": 31.5,
+    "Híbrido flexível": 16.4,
+    "Híbrido fixo": 19.2,
+    "Presencial": 32.9,
+    "_n": 213
+   }
+  },
+  "Analytics Engineer": {
+   "remoto": [
+    null,
+    68.6,
+    61.0,
+    58.9,
+    54.5
+   ],
+   "obrig": [
+    null,
+    8.6,
+    16.9,
+    22.8,
+    30.3
+   ],
+   "n": [
+    0,
+    70,
+    136,
+    224,
+    132
+   ],
+   "d2526": {
+    "Remoto": 54.5,
+    "Híbrido flexível": 15.2,
+    "Híbrido fixo": 22.7,
+    "Presencial": 7.6,
+    "_n": 132
+   }
+  },
+  "Eng. de ML / IA": {
+   "remoto": [
+    79.2,
+    66.2,
+    68.5,
+    74.3,
+    63.5
+   ],
+   "obrig": [
+    2.1,
+    7.7,
+    16.4,
+    9.9,
+    20.2
+   ],
+   "n": [
+    48,
+    65,
+    73,
+    101,
+    104
+   ],
+   "d2526": {
+    "Remoto": 63.5,
+    "Híbrido flexível": 16.3,
+    "Híbrido fixo": 12.5,
+    "Presencial": 7.7,
+    "_n": 104
+   }
+  }
+ },
+ "porte": {
+  "Até 50": {
+   "remoto": [
+    58.1,
+    46.0,
+    53.9,
+    46.8,
+    49.6
+   ],
+   "obrig": [
+    25.4,
+    36.6,
+    32.2,
+    36.4,
+    36.0
+   ],
+   "n": [
+    303,
+    426,
+    553,
+    459,
+    369
+   ],
+   "d2526": {
+    "Remoto": 49.6,
+    "Híbrido flexível": 14.4,
+    "Híbrido fixo": 13.8,
+    "Presencial": 22.2,
+    "_n": 369
+   }
+  },
+  "51 a 500": {
+   "remoto": [
+    57.1,
+    47.7,
+    48.3,
+    46.9,
+    42.7
+   ],
+   "obrig": [
+    21.2,
+    28.9,
+    33.7,
+    37.1,
+    42.5
+   ],
+   "n": [
+    676,
+    930,
+    1137,
+    1043,
+    791
+   ],
+   "d2526": {
+    "Remoto": 42.7,
+    "Híbrido flexível": 14.8,
+    "Híbrido fixo": 18.0,
+    "Presencial": 24.5,
+    "_n": 791
+   }
+  },
+  "501 a 3.000": {
+   "remoto": [
+    54.0,
+    44.4,
+    43.2,
+    43.0,
+    41.6
+   ],
+   "obrig": [
+    26.1,
+    27.6,
+    34.5,
+    35.8,
+    41.8
+   ],
+   "n": [
+    559,
+    783,
+    953,
+    978,
+    711
+   ],
+   "d2526": {
+    "Remoto": 41.6,
+    "Híbrido flexível": 16.6,
+    "Híbrido fixo": 19.4,
+    "Presencial": 22.4,
+    "_n": 711
+   }
+  },
+  "Acima de 3.000": {
+   "remoto": [
+    58.1,
+    45.2,
+    45.0,
+    46.4,
+    35.2
+   ],
+   "obrig": [
+    24.5,
+    27.0,
+    32.8,
+    30.9,
+    39.9
+   ],
+   "n": [
+    800,
+    1509,
+    2046,
+    2306,
+    1291
+   ],
+   "d2526": {
+    "Remoto": 35.2,
+    "Híbrido flexível": 24.9,
+    "Híbrido fixo": 22.6,
+    "Presencial": 17.3,
+    "_n": 1291
+   }
+  }
+ },
+ "setor": {
+  "Tecnologia / software": {
+   "remoto": [
+    71.7,
+    65.4,
+    64.1,
+    61.9,
+    60.7
+   ],
+   "obrig": [
+    7.6,
+    10.8,
+    15.6,
+    17.7,
+    21.4
+   ],
+   "n": [
+    635,
+    703,
+    845,
+    925,
+    547
+   ],
+   "d2526": {
+    "Remoto": 60.7,
+    "Híbrido flexível": 17.9,
+    "Híbrido fixo": 13.5,
+    "Presencial": 7.9,
+    "_n": 547
+   }
+  },
+  "Finanças e bancos": {
+   "remoto": [
+    59.2,
+    44.1,
+    40.0,
+    38.1,
+    32.5
+   ],
+   "obrig": [
+    18.1,
+    24.3,
+    37.0,
+    38.3,
+    42.6
+   ],
+   "n": [
+    382,
+    596,
+    920,
+    1029,
+    594
+   ],
+   "d2526": {
+    "Remoto": 32.5,
+    "Híbrido flexível": 24.9,
+    "Híbrido fixo": 26.4,
+    "Presencial": 16.2,
+    "_n": 594
+   }
+  },
+  "Consultoria": {
+   "remoto": [
+    61.7,
+    63.1,
+    63.4,
+    67.5,
+    65.2
+   ],
+   "obrig": [
+    8.5,
+    11.7,
+    13.3,
+    14.8,
+    17.9
+   ],
+   "n": [
+    47,
+    274,
+    383,
+    345,
+    279
+   ],
+   "d2526": {
+    "Remoto": 65.2,
+    "Híbrido flexível": 16.8,
+    "Híbrido fixo": 12.2,
+    "Presencial": 5.7,
+    "_n": 279
+   }
+  },
+  "Varejo": {
+   "remoto": [
+    61.4,
+    59.7,
+    62.4,
+    60.3,
+    46.3
+   ],
+   "obrig": [
+    22.1,
+    19.7,
+    26.4,
+    24.3,
+    42.4
+   ],
+   "n": [
+    140,
+    305,
+    386,
+    378,
+    177
+   ],
+   "d2526": {
+    "Remoto": 46.3,
+    "Híbrido flexível": 11.3,
+    "Híbrido fixo": 19.8,
+    "Presencial": 22.6,
+    "_n": 177
+   }
+  },
+  "Indústria": {
+   "remoto": [
+    31.5,
+    30.6,
+    36.8,
+    35.3,
+    22.2
+   ],
+   "obrig": [
+    55.4,
+    48.6,
+    41.4,
+    46.1,
+    57.7
+   ],
+   "n": [
+    130,
+    216,
+    307,
+    323,
+    234
+   ],
+   "d2526": {
+    "Remoto": 22.2,
+    "Híbrido flexível": 20.1,
+    "Híbrido fixo": 16.7,
+    "Presencial": 41.0,
+    "_n": 234
+   }
+  },
+  "Saúde": {
+   "remoto": [
+    50.4,
+    29.2,
+    38.5,
+    33.3,
+    33.9
+   ],
+   "obrig": [
+    33.9,
+    43.8,
+    41.5,
+    51.6,
+    47.2
+   ],
+   "n": [
+    127,
+    178,
+    200,
+    192,
+    127
+   ],
+   "d2526": {
+    "Remoto": 33.9,
+    "Híbrido flexível": 18.9,
+    "Híbrido fixo": 22.0,
+    "Presencial": 25.2,
+    "_n": 127
+   }
+  },
+  "Educação": {
+   "remoto": [
+    52.4,
+    33.8,
+    36.1,
+    37.6,
+    43.7
+   ],
+   "obrig": [
+    34.1,
+    49.3,
+    46.2,
+    45.5,
+    43.7
+   ],
+   "n": [
+    126,
+    142,
+    208,
+    189,
+    158
+   ],
+   "d2526": {
+    "Remoto": 43.7,
+    "Híbrido flexível": 12.7,
+    "Híbrido fixo": 17.1,
+    "Presencial": 26.6,
+    "_n": 158
+   }
+  },
+  "Setor público": {
+   "remoto": [
+    25.7,
+    13.4,
+    19.2,
+    21.6,
+    11.1
+   ],
+   "obrig": [
+    63.4,
+    76.5,
+    70.9,
+    69.1,
+    77.0
+   ],
+   "n": [
+    101,
+    149,
+    172,
+    139,
+    135
+   ],
+   "d2526": {
+    "Remoto": 11.1,
+    "Híbrido flexível": 11.9,
+    "Híbrido fixo": 24.4,
+    "Presencial": 52.6,
+    "_n": 135
+   }
+  }
+ },
+ "genero": {
+  "Feminino": {
+   "remoto": [
+    64.7,
+    50.5,
+    50.4,
+    51.6,
+    45.2
+   ],
+   "obrig": [
+    18.0,
+    25.1,
+    30.4,
+    29.5,
+    35.8
+   ],
+   "n": [
+    434,
+    875,
+    1102,
+    1131,
+    692
+   ],
+   "d2526": {
+    "Remoto": 45.2,
+    "Híbrido flexível": 18.9,
+    "Híbrido fixo": 21.8,
+    "Presencial": 14.0,
+    "_n": 692
+   }
+  },
+  "Masculino": {
+   "remoto": [
+    55.0,
+    44.3,
+    45.3,
+    44.0,
+    38.9
+   ],
+   "obrig": [
+    25.4,
+    29.9,
+    34.3,
+    35.1,
+    41.7
+   ],
+   "n": [
+    1900,
+    2755,
+    3568,
+    3634,
+    2454
+   ],
+   "d2526": {
+    "Remoto": 38.9,
+    "Híbrido flexível": 19.4,
+    "Híbrido fixo": 19.1,
+    "Presencial": 22.6,
+    "_n": 2454
+   }
+  }
+ },
+ "sal": {
+  "2024/25": {
+   "Júnior": {
+    "Remoto": {
+     "v": 4010,
+     "n": 293
+    },
+    "Híbrido flexível": {
+     "v": 4000,
+     "n": 146
+    },
+    "Híbrido fixo": {
+     "v": 3500,
+     "n": 144
+    },
+    "Presencial": {
+     "v": 2806,
+     "n": 271
+    }
+   },
+   "Pleno": {
+    "Remoto": {
+     "v": 7667,
+     "n": 628
+    },
+    "Híbrido flexível": {
+     "v": 7655,
+     "n": 231
+    },
+    "Híbrido fixo": {
+     "v": 6732,
+     "n": 252
+    },
+    "Presencial": {
+     "v": 5532,
+     "n": 227
+    }
+   },
+   "Sênior": {
+    "Remoto": {
+     "v": 13146,
+     "n": 815
+    },
+    "Híbrido flexível": {
+     "v": 12649,
+     "n": 285
+    },
+    "Híbrido fixo": {
+     "v": 11835,
+     "n": 241
+    },
+    "Presencial": {
+     "v": 9087,
+     "n": 115
+    }
+   },
+   "Especialista/Staff+": {
+    "Remoto": {
+     "v": null,
+     "n": 0
+    },
+    "Híbrido flexível": {
+     "v": null,
+     "n": 0
+    },
+    "Híbrido fixo": {
+     "v": null,
+     "n": 0
+    },
+    "Presencial": {
+     "v": null,
+     "n": 0
+    }
+   },
+   "Gestor": {
+    "Remoto": {
+     "v": 18341,
+     "n": 341
+    },
+    "Híbrido flexível": {
+     "v": 19021,
+     "n": 303
+    },
+    "Híbrido fixo": {
+     "v": 18649,
+     "n": 191
+    },
+    "Presencial": {
+     "v": 13000,
+     "n": 172
+    }
+   }
+  },
+  "2025/26": {
+   "Júnior": {
+    "Remoto": {
+     "v": 3795,
+     "n": 129
+    },
+    "Híbrido flexível": {
+     "v": 4211,
+     "n": 78
+    },
+    "Híbrido fixo": {
+     "v": 3738,
+     "n": 111
+    },
+    "Presencial": {
+     "v": 2875,
+     "n": 190
+    }
+   },
+   "Pleno": {
+    "Remoto": {
+     "v": 7974,
+     "n": 288
+    },
+    "Híbrido flexível": {
+     "v": 7696,
+     "n": 138
+    },
+    "Híbrido fixo": {
+     "v": 7235,
+     "n": 142
+    },
+    "Presencial": {
+     "v": 5705,
+     "n": 173
+    }
+   },
+   "Sênior": {
+    "Remoto": {
+     "v": 12444,
+     "n": 364
+    },
+    "Híbrido flexível": {
+     "v": 12500,
+     "n": 136
+    },
+    "Híbrido fixo": {
+     "v": 11594,
+     "n": 153
+    },
+    "Presencial": {
+     "v": 8571,
+     "n": 116
+    }
+   },
+   "Especialista/Staff+": {
+    "Remoto": {
+     "v": 17633,
+     "n": 148
+    },
+    "Híbrido flexível": {
+     "v": 17500,
+     "n": 70
+    },
+    "Híbrido fixo": {
+     "v": 15059,
+     "n": 62
+    },
+    "Presencial": {
+     "v": 11750,
+     "n": 32
+    }
+   },
+   "Gestor": {
+    "Remoto": {
+     "v": 18700,
+     "n": 212
+    },
+    "Híbrido flexível": {
+     "v": 20338,
+     "n": 181
+    },
+    "Híbrido fixo": {
+     "v": 17214,
+     "n": 151
+    },
+    "Presencial": {
+     "v": 14071,
+     "n": 147
+    }
+   }
+  }
+ },
+ "premium": {
+  "Júnior": [
+   30.8,
+   26.9,
+   18.1,
+   35.1,
+   19.4
+  ],
+  "Pleno": [
+   22.1,
+   32.0,
+   25.3,
+   25.2,
+   23.8
+  ],
+  "Sênior": [
+   43.7,
+   24.7,
+   22.5,
+   20.9,
+   19.7
+  ],
+  "Gestor": [
+   50.4,
+   58.1,
+   25.6,
+   13.1,
+   19.1
+  ]
+ },
+ "foreign_share_remote": {
+  "2021": 3.5,
+  "2022": 3.9,
+  "2023": 5.1,
+  "2024/25": 5.4,
+  "2025/26": 10.2
+ },
+ "ideal": {
+  "2021": {
+   "Remoto": 31.3,
+   "Híbrido flexível": 58.6,
+   "Híbrido fixo": 9.0,
+   "Presencial": 1.2
+  },
+  "2022": {
+   "Remoto": 39.3,
+   "Híbrido flexível": 52.3,
+   "Híbrido fixo": 6.9,
+   "Presencial": 1.5
+  },
+  "2023": {
+   "Remoto": 44.9,
+   "Híbrido flexível": 44.8,
+   "Híbrido fixo": 8.2,
+   "Presencial": 2.0
+  },
+  "2024/25": {
+   "Remoto": 46.3,
+   "Híbrido flexível": 43.0,
+   "Híbrido fixo": 8.8,
+   "Presencial": 1.9
+  },
+  "2025/26": {
+   "Remoto": 42.4,
+   "Híbrido flexível": 42.9,
+   "Híbrido fixo": 12.8,
+   "Presencial": 1.8
+  }
+ },
+ "ideal_matrix": {
+  "Remoto": {
+   "Remoto": 73.1,
+   "Híbrido flexível": 24.4,
+   "Híbrido fixo": 2.0,
+   "Presencial": 0.6,
+   "_n": 1271
+  },
+  "Híbrido flexível": {
+   "Remoto": 23.9,
+   "Híbrido flexível": 72.0,
+   "Híbrido fixo": 3.3,
+   "Presencial": 0.8,
+   "_n": 610
+  },
+  "Híbrido fixo": {
+   "Remoto": 24.4,
+   "Híbrido flexível": 51.5,
+   "Híbrido fixo": 23.0,
+   "Presencial": 1.1,
+   "_n": 623
+  },
+  "Presencial": {
+   "Remoto": 17.5,
+   "Híbrido flexível": 43.6,
+   "Híbrido fixo": 33.0,
+   "Presencial": 5.9,
+   "_n": 658
+  }
+ },
+ "match": [
+  45.2,
+  55.8,
+  53.3,
+  54.0,
+  49.0
+ ],
+ "att": {
+  "2021": {
+   "Procuraria vaga 100% remota": 21.7,
+   "Procuraria vaga híbrida ou remota": 42.1,
+   "Aceitaria voltar": 36.2
+  },
+  "2022": {
+   "Procuraria vaga 100% remota": 30.1,
+   "Procuraria vaga híbrida ou remota": 43.9,
+   "Aceitaria voltar": 26.0
+  },
+  "2023": {
+   "Procuraria vaga 100% remota": 31.4,
+   "Procuraria vaga híbrida ou remota": 43.4,
+   "Aceitaria voltar": 25.2
+  },
+  "2024/25": {
+   "Procuraria vaga 100% remota": 30.9,
+   "Procuraria vaga híbrida ou remota": 44.0,
+   "Aceitaria voltar": 25.1
+  },
+  "2025/26": {
+   "Procuraria vaga 100% remota": 28.6,
+   "Procuraria vaga híbrida ou remota": 43.1,
+   "Aceitaria voltar": 28.4
+  }
+ },
+ "att_by_model": {
+  "Remoto": {
+   "Procuraria vaga 100% remota": 56.8,
+   "Procuraria vaga híbrida ou remota": 36.0,
+   "Aceitaria voltar": 7.2,
+   "_n": 1271
+  },
+  "Híbrido flexível": {
+   "Procuraria vaga 100% remota": 12.8,
+   "Procuraria vaga híbrida ou remota": 59.5,
+   "Aceitaria voltar": 27.7,
+   "_n": 610
+  },
+  "Híbrido fixo": {
+   "Procuraria vaga 100% remota": 9.0,
+   "Procuraria vaga híbrida ou remota": 59.9,
+   "Aceitaria voltar": 31.1,
+   "_n": 623
+  },
+  "Presencial": {
+   "Procuraria vaga 100% remota": 7.1,
+   "Procuraria vaga híbrida ou remota": 25.5,
+   "Aceitaria voltar": 67.3,
+   "_n": 658
+  }
+ },
+ "att_by_sen": {
+  "Júnior": 60.4,
+  "Pleno": 73.7,
+  "Sênior": 82.4,
+  "Especialista/Staff+": 79.3,
+  "Gestor": 61.3
+ },
+ "sat_by_model": {
+  "Remoto": {
+   "satisf": [
+    79.1,
+    80.2,
+    78.3,
+    75.0,
+    74.4
+   ],
+   "busca": [
+    32.1,
+    34.7,
+    34.1,
+    31.5,
+    33.8
+   ]
+  },
+  "Híbrido flexível": {
+   "satisf": [
+    81.1,
+    82.7,
+    75.6,
+    73.6,
+    75.4
+   ],
+   "busca": [
+    29.3,
+    28.4,
+    31.6,
+    29.1,
+    26.9
+   ]
+  },
+  "Híbrido fixo": {
+   "satisf": [
+    67.5,
+    68.2,
+    66.6,
+    62.8,
+    68.2
+   ],
+   "busca": [
+    45.7,
+    39.1,
+    42.5,
+    39.2,
+    33.7
+   ]
+  },
+  "Presencial": {
+   "satisf": [
+    47.6,
+    46.0,
+    54.8,
+    49.8,
+    53.6
+   ],
+   "busca": [
+    52.7,
+    56.6,
+    49.9,
+    44.7,
+    44.5
+   ]
+  }
+ },
+ "sat_match": {
+  "Trabalha no modelo que considera ideal": {
+   "satisf": 75.9,
+   "busca": 30.0,
+   "n": 1550
+  },
+  "Trabalha em outro modelo": {
+   "satisf": 62.5,
+   "busca": 39.2,
+   "n": 1612
+  }
+ }
+}

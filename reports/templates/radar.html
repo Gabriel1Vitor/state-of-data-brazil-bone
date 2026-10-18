@@ -1,0 +1,618 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Radar State of Data</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f2f4f6; --surface:#fbfcfd; --ink:#0f1419; --ink2:#48515e; --muted:#7a8390;
+  --grid:#e4e7eb; --axis:#c4c9d1; --border:rgba(15,20,25,.10); --accent:#2a78d6; --accent-ink:#1c5cab;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --ref:#48515e; --dumb-a:#a9b0ba;
+  --o1:#104281; --o2:#1c5cab; --o3:#2a78d6; --o4:#5598e7; --o5:#86b6ef;
+  --o1t:#fff; --o2t:#fff; --o3t:#fff; --o4t:#0b0b0b; --o5t:#0b0b0b; --segt:#0b0b0b;
+  --tip-bg:#0f1419; --tip-ink:#f2f4f7; --tip-ink2:#b8c0cc;
+  --display:"Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0d0f12; --surface:#16191d; --ink:#f2f4f7; --ink2:#c0c7d1; --muted:#8a929e;
+    --grid:#252a30; --axis:#3a414a; --border:rgba(255,255,255,.10); --accent:#3987e5; --accent-ink:#86b6ef;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --ref:#c0c7d1; --dumb-a:#5d6570;
+    --o1:#9ec5f4; --o2:#6da7ec; --o3:#3987e5; --o4:#256abf; --o5:#184f95;
+    --o1t:#0b0b0b; --o2t:#0b0b0b; --o3t:#0b0b0b; --o4t:#fff; --o5t:#fff; --segt:#0b0b0b;
+    --tip-bg:#f2f4f7; --tip-ink:#0f1419; --tip-ink2:#48515e;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0d0f12; --surface:#16191d; --ink:#f2f4f7; --ink2:#c0c7d1; --muted:#8a929e;
+  --grid:#252a30; --axis:#3a414a; --border:rgba(255,255,255,.10); --accent:#3987e5; --accent-ink:#86b6ef;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --ref:#c0c7d1; --dumb-a:#5d6570;
+  --o1:#9ec5f4; --o2:#6da7ec; --o3:#3987e5; --o4:#256abf; --o5:#184f95;
+  --o1t:#0b0b0b; --o2t:#0b0b0b; --o3t:#0b0b0b; --o4t:#fff; --o5t:#fff; --segt:#0b0b0b;
+  --tip-bg:#f2f4f7; --tip-ink:#0f1419; --tip-ink2:#48515e;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1240px;margin:0 auto;padding-inline:clamp(16px,3vw,32px)}
+header.top{padding-block:40px 28px}
+.eyebrow{font-family:var(--display);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.eyebrow .dot{width:4px;height:4px;border-radius:50%;background:var(--axis)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(34px,5.4vw,58px);line-height:1;letter-spacing:-.025em;margin:14px 0 14px;text-wrap:balance}
+h1 .band{color:var(--accent)}
+.lead{max-width:64ch;color:var(--ink2);font-size:16px;margin:0}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:28px}
+.tile{background:var(--surface);padding:18px 20px 16px;display:flex;flex-direction:column;gap:4px}
+.tile .lab{font-size:13px;color:var(--ink2)}
+.tile .val{font-family:var(--display);font-size:34px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.tile .delta{font-size:13px;color:var(--ink2)}
+.tile .delta b{color:var(--ink);font-weight:600}
+nav.sections{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+nav.sections .wrap{display:flex;gap:4px;overflow-x:auto;padding-block:8px;scrollbar-width:none}
+nav.sections a{flex:none;font-family:var(--display);font-weight:600;font-size:14px;color:var(--ink2);text-decoration:none;padding:7px 12px;border-radius:6px}
+nav.sections a:hover{background:var(--surface);color:var(--ink)}
+nav.sections a:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+section.block{padding-block:40px 8px;scroll-margin-top:56px}
+.block-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:18px;border-bottom:2px solid var(--ink);padding-bottom:10px}
+h2{font-family:var(--display);font-weight:700;font-size:26px;letter-spacing:-.015em;margin:0}
+.block-head p{margin:0;color:var(--ink2);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.card.wide{grid-column:1/-1}
+@media (max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px 20px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.card h3{font-family:var(--display);font-weight:600;font-size:18px;line-height:1.25;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.card .sub{margin:0;color:var(--ink2);font-size:13.5px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;flex:none}
+.legend i.line{width:16px;height:2px;border-radius:1px}
+.legend i.rect{width:11px;height:11px;border-radius:2px}
+.legend i.dot{width:10px;height:10px;border-radius:50%}
+.legend i.ref{width:16px;height:0;border-top:1px solid var(--ref)}
+.chart{position:relative;width:100%;min-width:0}
+.chart svg{display:block;width:100%;overflow:visible}
+.chart svg text{font-family:var(--body)}
+.chart .hit:focus{outline:none}
+.chart .hit:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.foot{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-top:auto;padding-top:6px;border-top:1px solid var(--grid)}
+.foot p{margin:0;font-size:12px;color:var(--muted);max-width:70ch}
+.foot button{flex:none;font:500 12px var(--body);color:var(--ink2);background:transparent;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer}
+.foot button:hover{color:var(--ink);border-color:var(--axis)}
+.foot button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.tbl{overflow-x:auto}
+.tbl table{border-collapse:collapse;font-size:13px;width:100%;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{padding:5px 10px;text-align:right;border-bottom:1px solid var(--grid);white-space:nowrap}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl th{font-weight:600;color:var(--ink2)}
+/* html bar charts */
+.bars{display:grid;grid-template-columns:minmax(90px,max-content) minmax(0,1fr);gap:8px 12px;align-items:center}
+.bars .k{font-size:13px;color:var(--ink2);text-align:right;line-height:1.2}
+.bars .track{position:relative;height:24px;display:flex;align-items:center;gap:8px;cursor:default}
+.bars .bar{height:20px;border-radius:0 4px 4px 0;background:var(--s1);flex:none;transition:filter .12s}
+.bars .track:hover .bar,.bars .track:focus-visible .bar{filter:brightness(1.12)}
+.bars .track:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.bars .v{font-size:13px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bars .v small{font-weight:400;color:var(--muted);margin-left:4px}
+.dumb{display:grid;grid-template-columns:minmax(90px,max-content) minmax(0,1fr);gap:6px 12px;align-items:center}
+.dumb .k{font-size:13px;color:var(--ink2);text-align:right;line-height:1.2}
+.dumb .track{position:relative;height:26px;margin-right:64px}
+.dumb .track:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.dumb .gl{position:absolute;top:0;bottom:0;width:1px;background:var(--grid)}
+.dumb .seg{position:absolute;top:12px;height:2px;background:var(--axis)}
+.dumb .pt{position:absolute;top:13px;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;box-shadow:0 0 0 2px var(--surface)}
+.dumb .pt.a{background:var(--dumb-a)}
+.dumb .pt.b{background:var(--s1)}
+.dumb .lbl{position:absolute;top:4px;font-size:12.5px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+.dumb .axis{position:relative;height:18px;margin-right:64px;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.dumb .axis span{position:absolute;transform:translateX(-50%)}
+.stack{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 12px;align-items:center}
+.stack .k{font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.stack .row{display:flex;gap:2px;height:26px}
+.stack .seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;overflow:visible;min-width:0;cursor:default;transition:filter .12s}
+.stack .seg:first-child{border-radius:4px 0 0 4px}.stack .seg:last-child{border-radius:0 4px 4px 0}
+.stack .seg:hover,.stack .seg:focus-visible{filter:brightness(1.12)}
+.stack .seg:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.stack .seg span{white-space:nowrap;font-variant-numeric:tabular-nums}
+#tip{position:fixed;z-index:50;pointer-events:none;background:var(--tip-bg);color:var(--tip-ink);border-radius:8px;padding:9px 11px;font-size:12.5px;line-height:1.35;box-shadow:0 6px 24px rgba(0,0,0,.18);min-width:140px;max-width:280px}
+#tip .t{font-weight:600;margin-bottom:5px;color:var(--tip-ink2);font-size:12px}
+#tip .r{display:grid;grid-template-columns:14px auto 1fr;gap:6px;align-items:center}
+#tip .r i{height:2px;border-radius:1px}
+#tip .r i.sq{height:9px;width:9px;border-radius:2px}
+#tip .r b{font-variant-numeric:tabular-nums}
+#tip .r span{color:var(--tip-ink2)}
+#tip .n{color:var(--tip-ink2);font-size:11.5px;margin-top:4px}
+.method{padding-block:40px 56px}
+.method ul{margin:0;padding-left:18px;columns:2 340px;column-gap:40px;color:var(--ink2);font-size:14px}
+.method li{margin-bottom:9px;break-inside:avoid}
+.method li b{color:var(--ink);font-weight:600}
+.sources{margin-top:22px;font-size:12.5px;color:var(--muted)}
+.sources code{font-size:12px;color:var(--ink2)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="top wrap">
+  <div class="eyebrow"><span>Data Hackers</span><span class="dot"></span><span>6 edições · 2019 a 2025/26</span><span class="dot"></span><span id="ntotal"></span></div>
+  <h1>Radar <span class="band">State of Data</span> Brazil</h1>
+  <p class="lead">Seis edições da pesquisa State of Data Brazil, com as perguntas harmonizadas entre os anos: salários, carreira, ferramentas, IA generativa e diversidade entre profissionais de dados no Brasil. A maioria das séries começa em 2021, porque 2019 usou um questionário diferente.</p>
+  <div class="tiles" id="tiles"></div>
+</header>
+
+<nav class="sections" aria-label="Seções">
+  <div class="wrap">
+    <a href="#salarios">Salários</a><a href="#carreira">Carreira</a><a href="#tecnologia">Tecnologia</a><a href="#ia">IA generativa</a><a href="#diversidade">Diversidade</a><a href="#metodo">Metodologia</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <section class="block" id="salarios">
+    <div class="block-head"><h2>Salários</h2><p>Mediana mensal estimada a partir das faixas salariais, em R$ nominais</p></div>
+    <div class="grid">
+      <article class="card wide" id="c-sen"></article>
+      <article class="card" id="c-role"></article>
+      <article class="card" id="c-gap"></article>
+      <article class="card" id="c-vinc"></article>
+      <article class="card" id="c-reg"></article>
+    </div>
+  </section>
+  <section class="block" id="carreira">
+    <div class="block-head"><h2>Carreira</h2><p>Nível, modelo de trabalho, satisfação e mercado</p></div>
+    <div class="grid">
+      <article class="card" id="c-mix"></article>
+      <article class="card" id="c-mod"></article>
+      <article class="card" id="c-sat"></article>
+      <article class="card" id="c-lay"></article>
+      <article class="card wide" id="c-des"></article>
+    </div>
+  </section>
+  <section class="block" id="tecnologia">
+    <div class="block-head"><h2>Tecnologia</h2><p>% de quem respondeu a cada pergunta, marcando todas as opções que usa no trabalho</p></div>
+    <div class="grid">
+      <article class="card" id="c-lang"></article>
+      <article class="card" id="c-cloud"></article>
+      <article class="card wide" id="c-bi"></article>
+    </div>
+  </section>
+  <section class="block" id="ia">
+    <div class="block-head"><h2>IA generativa</h2><p>Pergunta feita a partir de 2023</p></div>
+    <div class="grid">
+      <article class="card" id="c-ai"></article>
+      <article class="card" id="c-aicode"></article>
+    </div>
+  </section>
+  <section class="block" id="diversidade">
+    <div class="block-head"><h2>Diversidade</h2><p>Gênero, raça, deficiência e percepção de discriminação</p></div>
+    <div class="grid">
+      <article class="card" id="c-fem"></article>
+      <article class="card" id="c-femsen"></article>
+      <article class="card" id="c-raca"></article>
+      <article class="card" id="c-prej"></article>
+      <article class="card" id="c-pcd"></article>
+    </div>
+  </section>
+  <section class="method" id="metodo">
+    <div class="block-head"><h2>Metodologia e ressalvas</h2><p>Leia antes de comparar os anos</p></div>
+    <ul>
+      <li><b>A amostra não é aleatória.</b> São as pessoas que responderam à pesquisa da Data Hackers, e o tamanho muda por edição (de 1.765 a 5.293). Variações pequenas entre anos podem ser só ruído.</li>
+      <li><b>Salário vem em faixas.</b> A mediana é interpolada dentro da faixa em que cai. Os valores são nominais, sem correção pela inflação (o IPCA acumulado desde 2021 passa de 20%). Quem mora fora do Brasil fica de fora das análises de salário.</li>
+      <li><b>A mediana geral mistura níveis.</b> Parte da alta vem do perfil dos respondentes, que ficou mais sênior. Compare dentro de cada nível.</li>
+      <li><b>O nível Especialista/Staff+ foi criado em 2025/26.</b> Ele tira do grupo Sênior parte das pessoas mais bem pagas. Somando os dois grupos, a mediana de 2025/26 fica em R$ 13,9k.</li>
+      <li><b>2019 aparece só em duas séries:</b> participação feminina e desemprego. As outras perguntas mudaram demais (não havia pergunta de nível, e a faixa salarial ia só até R$ 25k).</li>
+      <li><b>Cargos foram agrupados:</b> Arquiteto de Dados entra junto com Eng. de Dados, porque algumas edições tinham as duas opções numa só. A comparação usa 2022 como base, porque em 2021 Analytics Engineer vinha junto com BI.</li>
+      <li><b>Linguagens param em 2024/25.</b> Em 2025/26 a pergunta passou a ser sobre linguagens preferidas, não sobre uso no trabalho.</li>
+      <li><b>Correções nos dados do Kaggle:</b> em 2023, as colunas de cloud estão com os nomes trocados (o que está marcado como Azure/AWS/GCP é, na verdade, AWS/GCP/Azure; conferido contra a cloud preferida de cada pessoa). Em 2022, as colunas binárias de cloud registram a cloud preferida, então o uso foi tirado do campo de texto. Ferramentas de BI de 2022 ficaram de fora porque só têm cerca de 200 respostas no dataset.</li>
+      <li><b>Percepção de discriminação:</b> a pergunta foi respondida quase só por mulheres e por pessoas não brancas. O percentual é sobre quem respondeu dentro de cada grupo.</li>
+      <li><b>Referência de raça:</b> pessoas pretas e pardas são 55,5% da população brasileira no Censo 2022 do IBGE.</li>
+    </ul>
+    <p class="sources">Fonte: datasets públicos da Data Hackers no Kaggle: <code>pesquisa-data-hackers-2019</code>, <code>state-of-data-2021</code>, <code>state-of-data-2022</code>, <code>state-of-data-brazil-2023</code>, <code>state-of-data-brazil-20242025</code>, <code>state-of-data-brazil-2025-2026</code>. Os nomes das colunas de cada edição estão mapeados em <code>mapping/schema_map.yaml</code>.</p>
+  </section>
+</main>
+<div id="tip" hidden></div>
+
+<script>
+const D = __DATA__;
+const SEN = ['Júnior','Pleno','Sênior','Especialista/Staff+','Gestor'];
+const SENC = {'Júnior':'var(--s1)','Pleno':'var(--s2)','Sênior':'var(--s3)','Especialista/Staff+':'var(--s4)','Gestor':'var(--s5)'};
+const nf1 = new Intl.NumberFormat('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+const nf0 = new Intl.NumberFormat('pt-BR',{maximumFractionDigits:0});
+const R = v => v==null ? '–' : 'R$ ' + nf1.format(v/1000) + 'k';
+const RT = v => 'R$ ' + nf0.format(v/1000) + 'k';
+const P = v => v==null ? '–' : nf1.format(v) + '%';
+const PT = v => nf0.format(v) + '%';
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs={}, parent, text){const e=document.createElement(tag);for(const k in attrs){if(k==='class')e.className=attrs[k];else if(k==='style')e.style.cssText=attrs[k];else e.setAttribute(k,attrs[k]);}if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+function sv(tag, attrs={}, parent, text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+
+/* ---------- tooltip ---------- */
+const tip = document.getElementById('tip');
+function showTip(x, y, title, rows, note){
+  tip.replaceChildren();
+  el('div',{class:'t'},tip,title);
+  rows.forEach(r=>{const row=el('div',{class:'r'},tip);el('i',{class:r.sq?'sq':'',style:`background:${r.color}`},row);el('b',{},row,r.value);el('span',{},row,r.name);});
+  if(note) el('div',{class:'n'},tip,note);
+  tip.hidden=false;
+  const w=tip.offsetWidth,h=tip.offsetHeight,vw=innerWidth,vh=innerHeight;
+  let left=x+14, top=y+14; if(left+w>vw-8) left=x-w-14; if(left<8) left=8; if(top+h>vh-8) top=y-h-14;
+  tip.style.left=left+'px'; tip.style.top=top+'px';
+}
+function hideTip(){tip.hidden=true;}
+function rectCenter(node){const b=node.getBoundingClientRect();return [b.left+b.width/2,b.top+b.height/2];}
+
+/* ---------- card scaffolding ---------- */
+function card(id, {title, sub, legend, note, table}){
+  const c=document.getElementById(id);
+  el('h3',{},c,title);
+  if(sub) el('p',{class:'sub'},c,sub);
+  if(legend&&legend.length){const lg=el('div',{class:'legend'},c);legend.forEach(l=>{const s=el('span',{},lg);el('i',{class:l.kind||'line',style:l.kind==='ref'?'':`background:${l.color}`},s);s.appendChild(document.createTextNode(l.name));});}
+  const chart=el('div',{class:'chart'},c);
+  const tbl=el('div',{class:'tbl'},c); tbl.hidden=true;
+  if(table){const t=el('table',{},tbl);const hr=el('tr',{},el('thead',{},t));table.head.forEach(h=>el('th',{},hr,h));const tb=el('tbody',{},t);table.rows.forEach(r=>{const tr=el('tr',{},tb);r.forEach(v=>el('td',{},tr,v));});}
+  const f=el('div',{class:'foot'},c); el('p',{},f,note||'');
+  if(table){const b=el('button',{type:'button','aria-expanded':'false'},f,'Ver tabela');b.addEventListener('click',()=>{tbl.hidden=!tbl.hidden;b.textContent=tbl.hidden?'Ver tabela':'Ocultar tabela';b.setAttribute('aria-expanded',String(!tbl.hidden));});}
+  return chart;
+}
+function niceMax(v, steps=4){const raw=v/steps;const mag=Math.pow(10,Math.floor(Math.log10(raw)));const n=[1,2,2.5,5,10].find(m=>m*mag>=raw)*mag;return {max:Math.ceil(v/n)*n,step:n};}
+function onResize(node, fn){let w=0;const ro=new ResizeObserver(()=>{const nw=Math.round(node.clientWidth);if(nw&&nw!==w){w=nw;fn(nw);}});ro.observe(node);}
+
+/* ---------- line chart (SVG) ---------- */
+function lineChart(node, cfg){
+  const {years, series, fmt, tick, yMin=0, yMax, ref, endLabels=true, height=250, note} = cfg;
+  onResize(node, W=>{
+    node.replaceChildren();
+    const narrow=W<520, showEnd=endLabels&&!narrow;
+    const m={l:46,r:showEnd?(cfg.endW||124):16,t:12,b:28};
+    const H=height, iw=W-m.l-m.r, ih=H-m.t-m.b;
+    const all=series.flatMap(s=>s.values).filter(v=>v!=null).concat(ref?[ref.v]:[]);
+    const top=yMax!=null?{max:yMax,step:cfg.yStep||niceMax(yMax-yMin).step}:niceMax(Math.max(...all)-yMin);
+    const lo=yMin, hi=yMax!=null?yMax:lo+top.max, step=top.step;
+    const n=years.length, x=i=>m.l+(n===1?iw/2:i*iw/(n-1)), y=v=>m.t+ih-(v-lo)/(hi-lo)*ih;
+    const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:'img','aria-label':cfg.aria||''},node);
+    for(let v=lo; v<=hi+1e-9; v+=step){
+      sv('line',{x1:m.l,x2:m.l+iw,y1:y(v),y2:y(v),stroke:v===lo?'var(--axis)':'var(--grid)','stroke-width':1,'shape-rendering':'crispEdges'},svg);
+      sv('text',{x:m.l-8,y:y(v)+4,'text-anchor':'end','font-size':11,fill:'var(--muted)','style':'font-variant-numeric:tabular-nums'},svg,tick(v));
+    }
+    years.forEach((yr,i)=>sv('text',{x:x(i),y:H-8,'text-anchor':'middle','font-size':11.5,fill:'var(--muted)'},svg,yr));
+    if(ref){
+      sv('line',{x1:m.l,x2:m.l+iw,y1:y(ref.v),y2:y(ref.v),stroke:'var(--ref)','stroke-width':1,'shape-rendering':'crispEdges'},svg);
+      sv('text',{x:m.l+4,y:y(ref.v)-6,'font-size':11,fill:'var(--ink2)'},svg,ref.label);
+    }
+    series.forEach(s=>{
+      let d='', prev=false;
+      s.values.forEach((v,i)=>{if(v==null){prev=false;return;}d+=(prev?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1);prev=true;});
+      if(d) sv('path',{d,fill:'none',stroke:s.color,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+      s.values.forEach((v,i)=>{ if(v==null) return; const iso=(s.values[i-1]==null)&&(s.values[i+1]==null); const last=s.values.slice(i+1).every(z=>z==null);
+        if(iso||last) sv('circle',{cx:x(i),cy:y(v),r:4,fill:s.color,stroke:'var(--surface)','stroke-width':2},svg);});
+    });
+    if(showEnd){
+      const labs=series.map(s=>{let i=s.values.length-1;while(i>=0&&s.values[i]==null)i--;return i<0?null:{s,i,y0:y(s.values[i]),y:y(s.values[i])};}).filter(Boolean).sort((a,b)=>a.y0-b.y0);
+      const gap=15; for(let k=1;k<labs.length;k++) if(labs[k].y-labs[k-1].y<gap) labs[k].y=labs[k-1].y+gap;
+      const over=labs.length?labs[labs.length-1].y-(m.t+ih):0; if(over>0) labs.forEach(l=>l.y-=over);
+      for(let k=labs.length-2;k>=0;k--) if(labs[k+1].y-labs[k].y<gap) labs[k].y=labs[k+1].y-gap;
+      labs.forEach(l=>{const lx=x(l.i)+10;
+        if(Math.abs(l.y-l.y0)>2) sv('path',{d:`M${x(l.i)+5} ${l.y0}L${lx-2} ${l.y}`,stroke:'var(--axis)','stroke-width':1,fill:'none'},svg);
+        const t=sv('text',{x:lx,y:l.y+4,'font-size':12,fill:'var(--ink2)'},svg);
+        sv('tspan',{'font-weight':600,fill:'var(--ink)'},t,fmt(l.s.values[l.i])); sv('tspan',{dx:5},t,l.s.short||l.s.name);});
+    }
+    // hover layer
+    const cross=sv('line',{y1:m.t,y2:m.t+ih,stroke:'var(--axis)','stroke-width':1,visibility:'hidden'},svg);
+    const dots=series.map(s=>sv('circle',{r:4.5,fill:s.color,stroke:'var(--surface)','stroke-width':2,visibility:'hidden'},svg));
+    const hit=sv('rect',{x:m.l-12,y:m.t,width:iw+24,height:ih,fill:'transparent',class:'hit',tabindex:0},svg);
+    let cur=-1;
+    const show=(i,cx,cy)=>{cur=i;cross.setAttribute('x1',x(i));cross.setAttribute('x2',x(i));cross.setAttribute('visibility','visible');
+      series.forEach((s,k)=>{const v=s.values[i];if(v==null){dots[k].setAttribute('visibility','hidden');return;}dots[k].setAttribute('cx',x(i));dots[k].setAttribute('cy',y(v));dots[k].setAttribute('visibility','visible');});
+      const rows=series.filter(s=>s.values[i]!=null).map(s=>({color:s.color,value:fmt(s.values[i]),name:s.name,v:s.values[i]})).sort((a,b)=>b.v-a.v);
+      if(!rows.length){hideTip();return;}
+      const b=svg.getBoundingClientRect(); const px=cx??(b.left+x(i)*b.width/W), py=cy??(b.top+m.t*b.height/H+20);
+      showTip(px,py,years[i],rows,note?note(i):null);};
+    const hide=()=>{cur=-1;cross.setAttribute('visibility','hidden');dots.forEach(d=>d.setAttribute('visibility','hidden'));hideTip();};
+    hit.addEventListener('pointermove',e=>{const b=svg.getBoundingClientRect();const px=(e.clientX-b.left)*W/b.width;let i=Math.round((px-m.l)/(n===1?1:iw/(n-1)));i=Math.max(0,Math.min(n-1,i));show(i,e.clientX,e.clientY);});
+    hit.addEventListener('pointerleave',hide); hit.addEventListener('blur',hide);
+    hit.addEventListener('focus',()=>show(cur<0?n-1:cur));
+    hit.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){show(Math.min(n-1,(cur<0?n-1:cur+1)));e.preventDefault();}if(e.key==='ArrowLeft'){show(Math.max(0,(cur<0?0:cur-1)));e.preventDefault();}if(e.key==='Escape')hide();});
+  });
+}
+
+/* ---------- horizontal bars (HTML) ---------- */
+function hbars(node, {items, fmt, color='var(--s1)', max, tipTitle, tipName}){
+  const g=el('div',{class:'bars'},node); const mx=max||Math.max(...items.map(i=>i.v));
+  items.forEach(it=>{
+    el('div',{class:'k'},g,it.k);
+    const tr=el('div',{class:'track',tabindex:0,'aria-label':`${it.k}: ${fmt(it.v)}`},g);
+    // leave room for the value label so a 100% bar never collides with it
+    el('div',{class:'bar',style:`width:calc((100% - 92px) * ${it.v/mx});background:${it.color||color}`},tr);
+    const v=el('div',{class:'v'},tr,fmt(it.v)); if(it.n) el('small',{},v,`n=${nf0.format(it.n)}`);
+    const t=(x,y)=>showTip(x,y,it.k,[{color:it.color||color,value:fmt(it.v),name:tipName||'',sq:true}],it.n?`${nf0.format(it.n)} respostas`:null);
+    tr.addEventListener('pointermove',e=>t(e.clientX,e.clientY)); tr.addEventListener('pointerleave',hideTip);
+    tr.addEventListener('focus',()=>{const [x,y]=rectCenter(tr);t(x,y);}); tr.addEventListener('blur',hideTip);
+  });
+}
+
+/* ---------- dumbbell (HTML) ---------- */
+function dumbbell(node, {items, fmt, tick, aName, bName, lo=0, hi, step, extra}){
+  const g=el('div',{class:'dumb'},node);
+  const pos=v=>((v-lo)/(hi-lo)*100).toFixed(2)+'%';
+  const ticks=[];for(let v=lo;v<=hi+1e-9;v+=step)ticks.push(v);
+  el('div',{},g); const ax=el('div',{class:'axis','aria-hidden':'true'},g); ticks.forEach(v=>el('span',{style:`left:${pos(v)}`},ax,tick(v)));
+  items.forEach(it=>{
+    el('div',{class:'k'},g,it.k);
+    const tr=el('div',{class:'track',tabindex:0,'aria-label':`${it.k}: ${aName} ${fmt(it.a)}, ${bName} ${fmt(it.b)}`},g);
+    ticks.forEach(v=>el('div',{class:'gl',style:`left:${pos(v)}`},tr));
+    if(it.a!=null&&it.b!=null){const l=Math.min(it.a,it.b),r=Math.max(it.a,it.b);el('div',{class:'seg',style:`left:${pos(l)};width:calc(${pos(r)} - ${pos(l)})`},tr);}
+    if(it.a!=null) el('div',{class:'pt a',style:`left:${pos(it.a)}`},tr);
+    if(it.b!=null) el('div',{class:'pt b',style:`left:${pos(it.b)}`},tr);
+    const right=Math.max(it.a??-Infinity,it.b);
+    el('div',{class:'lbl',style:`left:calc(${pos(right)} + 12px)`},tr,fmt(it.b));
+    const rows=[]; if(it.a!=null) rows.push({color:'var(--dumb-a)',value:fmt(it.a),name:aName,sq:true}); rows.push({color:'var(--s1)',value:fmt(it.b),name:bName,sq:true});
+    const t=(x,y)=>showTip(x,y,it.k,rows,extra?extra(it):null);
+    tr.addEventListener('pointermove',e=>t(e.clientX,e.clientY)); tr.addEventListener('pointerleave',hideTip);
+    tr.addEventListener('focus',()=>{const [x,y]=rectCenter(tr);t(x,y);}); tr.addEventListener('blur',hideTip);
+  });
+}
+
+/* ---------- 100% stacked rows (HTML) ---------- */
+function stack(node, {rows, keys, colors, text, note}){
+  const g=el('div',{class:'stack'},node); const segs=[];
+  rows.forEach(r=>{
+    el('div',{class:'k'},g,r.label);
+    const row=el('div',{class:'row'},g);
+    keys.forEach((k,i)=>{const v=r.parts[k]; if(!v) return;
+      const s=el('div',{class:'seg',tabindex:0,style:`flex:${v} 1 0;background:${colors[i]};color:${text[i]}`,'aria-label':`${r.label}, ${k}: ${P(v)}`},row);
+      const sp=el('span',{},s,PT(v)); segs.push([s,sp]);
+      const t=(x,y)=>showTip(x,y,r.label,[{color:colors[i],value:P(v),name:k,sq:true}],note?note(r):null);
+      s.addEventListener('pointermove',e=>t(e.clientX,e.clientY)); s.addEventListener('pointerleave',hideTip);
+      s.addEventListener('focus',()=>{const [x,y]=rectCenter(s);t(x,y);}); s.addEventListener('blur',hideTip);});
+  });
+  onResize(g,()=>segs.forEach(([s,sp])=>{sp.style.visibility='visible';if(sp.scrollWidth+8>s.clientWidth)sp.style.visibility='hidden';}));
+}
+
+/* ================= content ================= */
+const Y = D.years, last = Y.length-1;
+const sum = Object.values(D.n).reduce((a,b)=>a+b,0);
+document.getElementById('ntotal').textContent = nf0.format(sum)+' respostas';
+
+// tiles
+(()=>{
+  const t=document.getElementById('tiles');
+  const so=D.sal_overall, a=so['2024/25'], b=so['2025/26'];
+  const rem=Y.map(y=>D.modelo[y]['100% remoto']);
+  const ai=D.ai['2025/26']['Empresa paga'], ai0=D.ai['2024/25']['Empresa paga'];
+  const fem=D.mulheres['2025/26'], fem0=D.mulheres['2024/25'];
+  [['Mediana salarial, 2025/26',R(b),`<b>+${nf1.format((b/a-1)*100)}%</b> vs 2024/25 (todos os níveis)`],
+   ['Trabalham 100% remoto',P(rem[last]),`<b>${nf1.format(rem[last]-rem[0])} p.p.</b> desde 2021 (${P(rem[0])})`],
+   ['Usam IA generativa paga pela empresa',P(ai),`<b>+${nf1.format(ai-ai0)} p.p.</b> vs 2024/25`],
+   ['Mulheres entre respondentes',P(fem),`<b>${nf1.format(fem-fem0)} p.p.</b> vs 2024/25`]
+  ].forEach(([l,v,d])=>{const x=el('div',{class:'tile'},t);el('div',{class:'lab'},x,l);el('div',{class:'val'},x,v);const dd=el('div',{class:'delta'},x);dd.innerHTML=d;});
+})();
+
+// salary by seniority
+(()=>{
+  const series=SEN.map(s=>({name:s,short:s==='Especialista/Staff+'?'Staff+':s,color:SENC[s],values:D.sal_sen[s]}));
+  const ch=card('c-sen',{title:'A gestão e o nível Sênior se distanciaram; o salário Júnior está parado em cerca de R$ 3,5k desde 2022',
+    sub:'Mediana salarial mensal por nível. Gestores são quem respondeu que atua como gestor.',
+    legend:series.map(s=>({name:s.name,color:s.color})),
+    note:'Staff+ só existe em 2025/26, o que explica parte da queda do Sênior. Somando os dois grupos, a mediana de 2025/26 é R$ 13,9k.',
+    table:{head:['Nível',...Y],rows:SEN.map(s=>[s,...D.sal_sen[s].map(R)])}});
+  lineChart(ch,{years:Y,series,fmt:R,tick:RT,height:300,aria:'Mediana salarial por nível, 2021 a 2025/26',
+    note:i=>'n: '+SEN.map(s=>D.sal_sen_n[s][i]).filter(Boolean).map(nf0.format).join(' · ')});
+})();
+
+// by role (dumbbell)
+(()=>{
+  const it=D.sal_role.map(r=>({k:r.role,a:r.v2022,b:r.v2025,n:r.n}));
+  const ch=card('c-role',{title:'Engenharia de ML e IA teve a maior alta: de R$ 10k para R$ 16k',
+    sub:'Mediana por cargo, 2022 e 2025/26, em ordem decrescente de salário em 2025/26.',
+    legend:[{name:'2022',color:'var(--dumb-a)',kind:'dot'},{name:'2025/26',color:'var(--s1)',kind:'dot'}],
+    note:'Arquiteto de Dados está somado a Eng. de Dados. Em 2025/26 cada cargo tem pelo menos 102 respostas.',
+    table:{head:['Cargo','2022','2025/26','Variação','n 2025/26'],rows:it.map(r=>[r.k,R(r.a),R(r.b),'+'+nf0.format((r.b/r.a-1)*100)+'%',nf0.format(r.n)])}});
+  dumbbell(ch,{items:it,fmt:R,tick:RT,aName:'2022',bName:'2025/26',lo:4000,hi:18000,step:4000,
+    extra:r=>`+${nf0.format((r.b/r.a-1)*100)}% · n=${nf0.format(r.n)} em 2025/26`});
+})();
+
+// gender gap
+(()=>{
+  const L=['Júnior','Pleno','Sênior','Gestor'];
+  const series=L.map(s=>({name:s,color:SENC[s],values:D.gap[s]}));
+  const ch=card('c-gap',{title:'Mulheres sênior recebem 88% da mediana dos homens do mesmo nível',
+    sub:'Mediana salarial das mulheres como % da mediana dos homens, dentro de cada nível. 100% = mesma mediana.',
+    legend:[...series.map(s=>({name:s.name,color:s.color})),{name:'Mesma mediana',kind:'ref'}],
+    note:'Os grupos de mulheres são pequenos (67 a 363 por nível e ano), então oscilações de um ano para o outro são esperadas. No Pleno há paridade; no Sênior, a diferença é constante.',
+    table:{head:['Nível',...Y],rows:L.map(s=>[s,...D.gap[s].map(P)])}});
+  lineChart(ch,{years:Y,series,fmt:P,tick:PT,yMin:80,yMax:110,yStep:10,ref:{v:100,label:'mesma mediana'},endLabels:false,aria:'Diferença salarial de gênero por nível',
+    note:i=>'mulheres com salário: '+L.map(s=>`${s} ${D.gap_n_fem[s][i]}`).join(' · ')});
+})();
+
+// by work arrangement
+(()=>{
+  const ch=card('c-vinc',{title:'Quem mora no Brasil e trabalha para empresa estrangeira ganha quase 3 vezes o CLT',
+    sub:'Mediana salarial por tipo de vínculo, 2025/26.',
+    note:'A mediana de quem trabalha para empresa estrangeira (R$ 29,1k) fica na faixa de R$ 25k a 30k. Estágio aparece para dar escala.',
+    table:{head:['Vínculo','Mediana','n'],rows:D.sal_vinc.map(r=>[r.k,R(r.v),nf0.format(r.n)])}});
+  hbars(ch,{items:D.sal_vinc,fmt:R,tipName:'mediana'});
+})();
+
+// by region
+(()=>{
+  const ch=card('c-reg',{title:'Sudeste lidera; o Nordeste tem a menor mediana, R$ 8,8k',
+    sub:'Mediana salarial por região onde a pessoa mora, 2025/26.',
+    note:'O Norte tem só 36 respostas com salário; trate esse valor como indicativo.',
+    table:{head:['Região','Mediana','n'],rows:D.sal_reg.map(r=>[r.k,R(r.v),nf0.format(r.n)])}});
+  hbars(ch,{items:D.sal_reg,fmt:R,tipName:'mediana'});
+})();
+
+// seniority mix
+(()=>{
+  const keys=SEN;
+  const ch=card('c-mix',{title:'Os respondentes estão mais experientes: Júnior caiu de 28% para 16%',
+    sub:'Distribuição por nível entre quem trabalha na área.',
+    legend:keys.map(k=>({name:k,color:SENC[k],kind:'rect'})),
+    note:'Staff+ passou a existir em 2025/26.',
+    table:{head:['Edição',...keys],rows:Y.map(y=>[y,...keys.map(k=>P(D.sen_mix[y][k]))])}});
+  stack(ch,{rows:Y.map(y=>({label:y,parts:D.sen_mix[y]})),keys,colors:keys.map(k=>SENC[k]),text:keys.map(()=> 'var(--segt)')});
+})();
+
+// work model
+(()=>{
+  const keys=['100% remoto','Híbrido flexível','Híbrido com dias fixos','100% presencial'];
+  const cols=['var(--o1)','var(--o2)','var(--o4)','var(--o5)'], txt=['var(--o1t)','var(--o2t)','var(--o4t)','var(--o5t)'];
+  const ch=card('c-mod',{title:'O 100% remoto caiu de 56% para 40%, e o presencial subiu de 14% para 21%',
+    sub:'Modelo de trabalho atual entre quem está empregado.',
+    legend:keys.map((k,i)=>({name:k,color:cols[i],kind:'rect'})),
+    note:'Em 2025/26 aumentaram tanto o híbrido com dias fixos quanto o 100% presencial.',
+    table:{head:['Edição',...keys],rows:Y.map(y=>[y,...keys.map(k=>P(D.modelo[y][k]))])}});
+  stack(ch,{rows:Y.map(y=>({label:y,parts:D.modelo[y]})),keys,colors:cols,text:txt});
+})();
+
+// satisfaction
+(()=>{
+  const series=[{name:'Satisfeitos com a empresa atual',short:'satisfeitos',color:'var(--s1)',values:D.satisf},
+                {name:'Procurando emprego ativamente',short:'procurando',color:'var(--s2)',values:D.buscando},
+                {name:'Procurando só fora do Brasil',short:'só exterior',color:'var(--s3)',values:D.so_exterior}];
+  const ch=card('c-sat',{title:'A satisfação caiu de 74% para 69%; cerca de 1 em cada 3 procura emprego',
+    sub:'% de quem respondeu, por edição.',
+    legend:series.map(s=>({name:s.name,color:s.color})),
+    note:'"Procurando" inclui vagas no Brasil ou no exterior; "só exterior" é uma parte desse grupo.',
+    table:{head:['Série',...Y],rows:series.map(s=>[s.name,...s.values.map(P)])}});
+  lineChart(ch,{years:Y,series,fmt:P,tick:PT,yMax:100,yStep:25,endW:118,aria:'Satisfação e busca de emprego'});
+})();
+
+// layoffs
+(()=>{
+  const series=[{name:'A empresa teve layoff',short:'empresa',color:'var(--s1)',values:D.layoff.empresa},
+                {name:'Fui afetado pelo layoff',short:'afetados',color:'var(--s2)',values:D.layoff.afetado}];
+  const ch=card('c-lay',{title:'O pico de layoffs foi em 2023: 32% trabalhavam em empresa que demitiu em massa',
+    sub:'% dos empregados, pelo ano do layoff perguntado em cada edição.',
+    legend:series.map(s=>({name:s.name,color:s.color})),
+    note:'A pergunta refere-se ao ano anterior ou corrente de cada edição (2022 a 2025).',
+    table:{head:['Série',...D.layoff.anos],rows:series.map(s=>[s.name,...s.values.map(P)])}});
+  lineChart(ch,{years:D.layoff.anos,series,fmt:P,tick:PT,yMax:40,yStep:10,endW:100,aria:'Layoffs'});
+})();
+
+// unemployment incl. 2019
+(()=>{
+  const yrs=Object.keys(D.desemprego), vals=Object.values(D.desemprego);
+  const ch=card('c-des',{title:'O desemprego entre respondentes chegou a 8,2% em 2022 e voltou para menos de 5%',
+    sub:'% de quem está desempregado e procurando recolocação. Esta pergunta é igual desde 2019.',
+    note:'Vale para quem respondeu à pesquisa, não é a taxa oficial de desemprego do setor.',
+    table:{head:['Edição',...yrs],rows:[['Desempregados buscando',...vals.map(P)]]}});
+  lineChart(ch,{years:yrs,series:[{name:'Desempregados procurando',short:'desempregados',color:'var(--s1)',values:vals}],fmt:P,tick:PT,yMax:10,yStep:2.5,height:220,endLabels:false,aria:'Desemprego entre respondentes'});
+})();
+
+// languages
+(()=>{
+  const S=D.lang.series, names=Object.keys(S), cols=['var(--s1)','var(--s2)','var(--s3)'];
+  const series=names.map((k,i)=>({name:k,color:cols[i],values:S[k]}));
+  const ch=card('c-lang',{title:'SQL e Python continuam subindo; o uso de R caiu de 17% para 10%',
+    sub:'% que usa a linguagem no trabalho.',
+    legend:series.map(s=>({name:s.name,color:s.color})),
+    note:'A série para em 2024/25 porque em 2025/26 a pergunta passou a ser sobre linguagens preferidas.',
+    table:{head:['Linguagem',...D.lang.years],rows:series.map(s=>[s.name,...s.values.map(P)])}});
+  lineChart(ch,{years:D.lang.years,series,fmt:P,tick:PT,yMax:100,yStep:25,endW:84,aria:'Linguagens usadas no trabalho'});
+})();
+
+// cloud
+(()=>{
+  const S=D.cloud.series, names=Object.keys(S), cols=['var(--s1)','var(--s2)','var(--s3)','var(--s4)'];
+  const series=names.map((k,i)=>({name:k,short:k==='On-premise / sem cloud'?'on-premise':k,color:cols[i],values:S[k]}));
+  const ch=card('c-cloud',{title:'A AWS lidera e está perto de 50%; a Azure passou o GCP',
+    sub:'% que usa cada nuvem no trabalho.',
+    legend:series.map(s=>({name:s.name,color:s.color})),
+    note:'Em 2022 não havia opção on-premise, e o uso de nuvem foi tirado do campo de texto. Os nomes das colunas de 2023 foram corrigidos (veja Metodologia).',
+    table:{head:['Nuvem',...D.cloud.years],rows:series.map(s=>[s.name,...s.values.map(P)])}});
+  lineChart(ch,{years:D.cloud.years,series,fmt:P,tick:PT,yMax:60,yStep:20,endW:112,aria:'Uso de cloud'});
+})();
+
+// BI (insert 2022 gap on a uniform axis)
+(()=>{
+  const S=D.bi.series, names=Object.keys(S), cols=['var(--s1)','var(--s2)','var(--s3)','var(--s4)','var(--s5)'];
+  const pad=v=>[v[0],null,...v.slice(1)];
+  const series=names.map((k,i)=>({name:k,color:cols[i],values:pad(S[k])}));
+  const ch=card('c-bi',{title:'O Power BI é usado por 6 em cada 10; o Tableau caiu de 20% para 14% no último ano',
+    sub:'% que usa cada ferramenta de BI no trabalho.',
+    legend:series.map(s=>({name:s.name,color:s.color})),
+    note:'2022 fica em branco: o dataset tem só cerca de 200 respostas de BI nessa edição.',
+    table:{head:['Ferramenta',...Y],rows:series.map(s=>[s.name,...s.values.map(P)])}});
+  lineChart(ch,{years:Y,series,fmt:P,tick:PT,yMax:75,yStep:25,endW:150,aria:'Ferramentas de BI'});
+})();
+
+// AI adoption
+(()=>{
+  const keys=['Empresa paga','Paga do próprio bolso','Só IA de código','Só gratuitas','Não usa'];
+  const cols=['var(--o1)','var(--o2)','var(--o3)','var(--o4)','var(--o5)'], txt=['var(--o1t)','var(--o2t)','var(--o3t)','var(--o4t)','var(--o5t)'];
+  const yrs=Object.keys(D.ai);
+  const ch=card('c-ai',{title:'Em dois anos, a empresa passou a pagar a IA de 42% dos profissionais (eram 6%)',
+    sub:'Uso de IA generativa para produtividade no trabalho. Cada pessoa entra na opção mais avançada que marcou.',
+    legend:keys.map((k,i)=>({name:k,color:cols[i],kind:'rect'})),
+    note:'Quem não usa IA caiu de 20% para 2%. Em 2025/26, as ferramentas citadas nas opções incluem Claude, Gemini, Cursor e Claude Code.',
+    table:{head:['Edição',...keys,'n'],rows:yrs.map(y=>[y,...keys.map(k=>P(D.ai[y][k])),nf0.format(D.ai[y]._n)])}});
+  stack(ch,{rows:yrs.map(y=>({label:y,parts:D.ai[y],n:D.ai[y]._n})),keys,colors:cols,text:txt,note:r=>`${nf0.format(r.n)} respostas`});
+})();
+(()=>{
+  const yrs=Object.keys(D.ai);
+  const ch=card('c-aicode',{title:'Assistentes de código (Copilot, Cursor, Claude Code) já são usados por 30%',
+    sub:'% que marcou uma ferramenta de IA para programar, com ou sem outras opções.',
+    note:'Os exemplos citados na pergunta mudaram de edição para edição, acompanhando o mercado.',
+    table:{head:['Edição','% usa IA de código'],rows:yrs.map((y,i)=>[y,P(D.ai_code[i])])}});
+  hbars(ch,{items:yrs.map((y,i)=>({k:y,v:D.ai_code[i]})),fmt:P,max:40,tipName:'usa IA de código'});
+})();
+
+// women share
+(()=>{
+  const yrs=Object.keys(D.mulheres), vals=Object.values(D.mulheres);
+  const ch=card('c-fem',{title:'A participação de mulheres parou entre 22% e 25% desde 2022',
+    sub:'% de mulheres entre todas as respostas. Esta pergunta é igual desde 2019.',
+    note:'O salto de 2021 para 2022 pode vir de uma mudança em quem respondeu, e não só do mercado.',
+    table:{head:['Edição',...yrs],rows:[['Mulheres',...vals.map(P)]]}});
+  lineChart(ch,{years:yrs,series:[{name:'Mulheres',color:'var(--s1)',values:vals}],fmt:P,tick:PT,yMax:30,yStep:10,endLabels:false,height:230,aria:'Participação de mulheres'});
+})();
+
+// women by seniority
+(()=>{
+  const it=SEN.map(s=>({k:s,a:D.fem_sen['2022'][s],b:D.fem_sen['2025/26'][s]}));
+  const ch=card('c-femsen',{title:'Quanto mais alto o nível, menos mulheres: 28% no Júnior, 18% na gestão',
+    sub:'% de mulheres dentro de cada nível.',
+    legend:[{name:'2022',color:'var(--dumb-a)',kind:'dot'},{name:'2025/26',color:'var(--s1)',kind:'dot'}],
+    note:'Staff+ não existia em 2022.',
+    table:{head:['Nível','2022','2025/26'],rows:it.map(r=>[r.k,P(r.a),P(r.b)])}});
+  dumbbell(ch,{items:it,fmt:P,tick:PT,aName:'2022',bName:'2025/26',lo:10,hi:35,step:5});
+})();
+
+// race
+(()=>{
+  const yrs=Object.keys(D.raca);
+  const series=[{name:'Pessoas negras (pretas e pardas)',short:'negras',color:'var(--s1)',values:yrs.map(y=>D.raca[y]['Negras (pretas + pardas)'])},
+                {name:'Pessoas pretas',short:'pretas',color:'var(--s2)',values:yrs.map(y=>D.raca[y]['Pretas'])}];
+  const ch=card('c-raca',{title:'Pessoas negras são 31% da área, contra 55,5% da população brasileira',
+    sub:'% entre quem declarou cor ou raça. A linha de referência é o Censo 2022 do IBGE.',
+    legend:[...series.map(s=>({name:s.name,color:s.color})),{name:'População do Brasil (Censo 2022)',kind:'ref'}],
+    note:'A pergunta sobre cor ou raça existe desde 2022.',
+    table:{head:['Grupo',...yrs],rows:series.map(s=>[s.name,...s.values.map(P)])}});
+  lineChart(ch,{years:yrs,series,fmt:P,tick:PT,yMax:60,yStep:20,ref:{v:55.5,label:'população do Brasil: 55,5%'},endW:96,aria:'Raça'});
+})();
+
+// perceived harm
+(()=>{
+  const yrs=Object.keys(D.raca);
+  const series=[{name:'Mulheres que dizem que o gênero prejudica a carreira',short:'mulheres',color:'var(--s1)',values:D.prejud.mulheres_genero},
+                {name:'Pessoas negras que dizem que a raça prejudica a carreira',short:'pessoas negras',color:'var(--s2)',values:D.prejud.negros_raca}];
+  const ch=card('c-prej',{title:'62% das mulheres dizem que o gênero prejudica a carreira; em 2022 eram 43%',
+    sub:'% de quem respondeu à pergunta sobre discriminação, dentro de cada grupo.',
+    legend:series.map(s=>({name:s.name,color:s.color})),
+    note:'Entre pessoas negras, entre 27% e 32% apontam a raça como prejuízo, sem tendência clara desde 2022.',
+    table:{head:['Grupo',...yrs,],rows:[...series.map(s=>[s.name,...s.values.map(P)]),['n mulheres',...D.prejud.n_w.map(nf0.format)],['n pessoas negras',...D.prejud.n_b.map(nf0.format)]]}});
+  lineChart(ch,{years:yrs,series,fmt:P,tick:PT,yMax:75,yStep:25,endW:130,aria:'Percepção de discriminação',
+    note:i=>`n: ${nf0.format(D.prejud.n_w[i])} mulheres · ${nf0.format(D.prejud.n_b[i])} pessoas negras`});
+})();
+
+// PCD
+(()=>{
+  const yrs=Object.keys(D.pcd), vals=Object.values(D.pcd);
+  const ch=card('c-pcd',{title:'Pessoas com deficiência quase triplicaram: de 1,3% para 3,6%',
+    sub:'% que se declara pessoa com deficiência (PCD).',
+    note:'Os números absolutos ainda são pequenos: 127 pessoas em 2025/26.',
+    table:{head:['Edição',...yrs],rows:[['PCD',...vals.map(P)]]}});
+  lineChart(ch,{years:yrs,series:[{name:'PCD',color:'var(--s1)',values:vals}],fmt:P,tick:PT,yMax:5,yStep:1,endLabels:false,height:220,aria:'Pessoas com deficiência'});
+})();
+</script>
+
+</body></html>

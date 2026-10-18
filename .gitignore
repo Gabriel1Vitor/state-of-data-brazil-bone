@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+# configuração pessoal do Claude Code
+.claude/settings.local.json
+# arquivos de trabalho locais (dados brutos, base harmonizada e referência SÃO versionados)
+data/_golden/
+data/scratch/

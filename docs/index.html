@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>State of Data Brazil — análises abertas</title>
+<meta name="description" content="Dados abertos e análises das 6 edições do State of Data Brazil, a pesquisa da Data Hackers sobre o mercado de dados e IA no Brasil.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f2f4f6; --surface:#fbfcfd; --ink:#0f1419; --ink2:#48515e; --muted:#7a8390;
+  --border:rgba(15,20,25,.10); --accent:#1c5cab; --code-bg:#e8ebef;
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){color-scheme:dark;--bg:#0d0f12;--surface:#16191d;--ink:#f2f4f7;--ink2:#c0c7d1;--muted:#8a929e;--border:rgba(255,255,255,.10);--accent:#86b6ef;--code-bg:#1f2329}
+}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0d0f12;--surface:#16191d;--ink:#f2f4f7;--ink2:#c0c7d1;--muted:#8a929e;--border:rgba(255,255,255,.10);--accent:#86b6ef;--code-bg:#1f2329}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:56px 64px}
+.kicker{font-family:var(--display);font-size:12.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(36px,6vw,64px);line-height:1;letter-spacing:-.03em;margin:12px 0 16px;text-wrap:balance}
+.lede{font-size:18px;color:var(--ink2);max-width:62ch;margin:0}
+h2{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.01em;margin:52px 0 16px}
+.reports{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.report{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:20px;color:inherit;text-decoration:none;transition:border-color .15s}
+.report:hover{border-color:var(--accent)}
+.report:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.report .stat{font-family:var(--display);font-weight:800;font-size:34px;letter-spacing:-.02em;line-height:1.1}
+.report h3{font-family:var(--display);font-weight:600;font-size:18px;margin:0}
+.report p{margin:0;color:var(--ink2);font-size:14.5px}
+.report .go{margin-top:auto;padding-top:6px;color:var(--accent);font-weight:600;font-size:14px}
+.steps{display:grid;gap:12px;max-width:760px}
+pre{margin:0;background:var(--code-bg);border-radius:8px;padding:14px 16px;overflow-x:auto;font-family:var(--mono);font-size:13.5px;line-height:1.6}
+.steps p{margin:0;color:var(--ink2)}
+footer{margin-top:56px;padding-top:16px;border-top:1px solid var(--border);font-size:13.5px;color:var(--muted);max-width:80ch}
+footer a,.steps a{color:var(--accent)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="kicker">Data Hackers · State of Data Brazil · 2019 a 2025/26</div>
+  <h1>State of Data Brazil em dados abertos</h1>
+  <p class="lede">As 6 edições do State of Data Brazil, a maior pesquisa sobre o mercado de trabalho em dados e IA no Brasil, harmonizadas numa base só. Mais de 22 mil respostas. Os relatórios abaixo foram feitos com a skill <strong>state-of-data-analyst</strong> no Claude Code, e você pode fazer as suas próprias perguntas com ela.</p>
+
+  <h2>Relatórios</h2>
+  <div class="reports">
+    <a class="report" href="salario-real.html">
+      <span class="stat">+20% × −14%</span>
+      <h3>O paradoxo do salário real</h3>
+      <p>A mediana geral subiu acima da inflação, mas o salário real do Júnior caiu. Senioridade, experiência, gênero e trabalho para empresas estrangeiras.</p>
+      <span class="go">Ler relatório →</span>
+    </a>
+    <a class="report" href="volta-ao-escritorio.html">
+      <span class="stat">24% → 41%</span>
+      <h3>A volta ao escritório</h3>
+      <p>Quem voltou ao presencial: nível, estado, cargo, setor, salário, liderança e o que as pessoas fariam se o presencial virasse regra.</p>
+      <span class="go">Ler relatório →</span>
+    </a>
+    <a class="report" href="radar.html">
+      <span class="stat">19 gráficos</span>
+      <h3>Radar State of Data</h3>
+      <p>Painel geral: salários, carreira, linguagens, cloud, BI, IA generativa e diversidade, de 2021 a 2025/26.</p>
+      <span class="go">Abrir painel →</span>
+    </a>
+  </div>
+
+  <h2>Faça suas próprias análises</h2>
+  <div class="steps">
+    <p>Você precisa do <a href="https://claude.com/claude-code">Claude Code</a> e de Python 3.9 ou mais recente. Os dados já vêm no repositório: não é preciso conta no Kaggle.</p>
+<pre>git clone https://github.com/data-hackers-br/state-of-data-brazil.git
+cd state-of-data-brazil
+python3 -m venv .venv &amp;&amp; source .venv/bin/activate
+pip install -r requirements.txt
+claude</pre>
+    <p>Dentro do Claude Code, pergunte o que quiser:</p>
+<pre>/state-of-data-analyst como evoluiu o salário de cientistas de dados por nível desde 2021?</pre>
+  </div>
+
+  <footer>
+    Dados: State of Data Brazil, Data Hackers (em parceria com a Bain &amp; Company a partir de 2021), licença <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.pt-br">CC BY-NC-SA 4.0</a>. Código no repositório <a href="https://github.com/data-hackers-br/state-of-data-brazil">data-hackers-br/state-of-data-brazil</a>. A amostra não é aleatória: são as pessoas que responderam à pesquisa.
+  </footer>
+</main>
+</body>
+</html>

@@ -1,0 +1,287 @@
+# Mapeamento canônico de colunas entre as 6 edições do State of Data Brazil.
+#
+# Fonte única de verdade para todos os scripts (scripts/sod/) e para a skill.
+# Cada campo canônico tem, por edição, o nome EXATO da coluna no CSV daquela edição
+# (ou null se a edição não tiver essa pergunta).
+#
+# status:
+#   confirmed = validado com o dono da pesquisa
+#   proposed  = inferido na harmonização e usado nos relatórios publicados, mas ainda
+#               não revisado pelo dono — revisar antes de tratar como definitivo
+#
+# Nas edições 2021 a 2023 os nomes de coluna são tuplas serializadas como texto, por
+# exemplo "('P2_h ', 'Faixa salarial')" — o espaço depois do código faz parte do nome.
+
+editions:
+  "2019":      { label: "2019",    file: "data/raw/2019/data_hackers_survey_2019.csv",      rows: 1765, fielded: "2019-11",               kaggle: "datahackers/pesquisa-data-hackers-2019" }
+  "2021":      { label: "2021",    file: "data/raw/2021/state_of_data_2021.csv",            rows: 2645, fielded: "2021-10-18 a 2021-12-06", kaggle: "datahackers/state-of-data-2021" }
+  "2022":      { label: "2022",    file: "data/raw/2022/state_of_data_2022.csv",            rows: 4271, fielded: "2022-10-10 a 2022-11-28", kaggle: "datahackers/state-of-data-2022" }
+  "2023":      { label: "2023",    file: "data/raw/2023/state_of_data_2023.csv",            rows: 5293, fielded: "2023-10-16 a 2023-12-06", kaggle: "datahackers/state-of-data-brazil-2023" }
+  "2024-2025": { label: "2024/25", file: "data/raw/2024-2025/state_of_data_2024_2025.csv",  rows: 5217, fielded: "2024-10-14 a 2024-12-18", kaggle: "datahackers/state-of-data-brazil-20242025" }
+  "2025-2026": { label: "2025/26", file: "data/raw/2025-2026/state_of_data_2025_2026.csv",  rows: 3495, fielded: "2025-10-20 a 2025-12-22", kaggle: "datahackers/state-of-data-brazil-2025-2026" }
+
+fields:
+  salario_faixa:
+    status: confirmed
+    columns:
+      "2019": "('P16', 'salary_range')"
+      "2021": "('P2_h ', 'Faixa salarial')"
+      "2022": "('P2_h ', 'Faixa salarial')"
+      "2023": "('P2_h ', 'Faixa salarial')"
+      "2024-2025": "2.h_faixa_salarial"
+      "2025-2026": "2.h_faixa_salarial"
+    notes: >-
+      Faixas mensais em R$, idênticas de 2021 a 2025/26 (de "Menos de R$ 1.000" até
+      "Acima de R$ 40.001"). Em 2019 a faixa mais alta é "Acima de R$ 25.001", então
+      25k-40k+ não existe como faixa separada. Rótulos com erro de digitação (1 linha
+      cada): 2023 "de R$ 101/mês a R$ 2.000/mês" = 1.001-2.000; 2025/26
+      "de R$ 25.001/mês a R$ 3000/mês" = 25.001-30.000. Nulo = sem emprego/sem resposta.
+  senioridade:
+    status: confirmed
+    columns:
+      "2019": null
+      "2021": "('P2_g ', 'Nivel')"
+      "2022": "('P2_g ', 'Nivel')"
+      "2023": "('P2_g ', 'Nivel')"
+      "2024-2025": "2.g_nivel"
+      "2025-2026": "2.g_nivel"
+    notes: >-
+      Júnior/Pleno/Sênior. Gestores não respondem essa pergunta (fica nulo) — o valor
+      canônico "Gestor" vem do campo gestor. 2025/26 acrescentou "Especialista/Staff+",
+      mantido como categoria própria (confirmado em 2026-09-22). 2019 não tem essa
+      pergunta: 2019 entra só como Gestor/não gestor, sem estimar Jr/Pl/Sr.
+  gestor:
+    status: confirmed
+    columns:
+      "2019": "('P13', 'manager')"
+      "2021": "('P2_d ', 'Gestor?')"
+      "2022": "('P2_d ', 'Gestor?')"
+      "2023": "('P2_d ', 'Gestor?')"
+      "2024-2025": "2.d_atua_como_gestor"
+      "2025-2026": "2.d_atua_como_gestor"
+    notes: "0/1 na maioria das edições; em 2022 vem como True/False."
+  genero:
+    status: proposed
+    columns:
+      "2019": "('P2', 'gender')"
+      "2021": "('P1_b ', 'Genero')"
+      "2022": "('P1_b ', 'Genero')"
+      "2023": "('P1_b ', 'Genero')"
+      "2024-2025": "1.b_genero"
+      "2025-2026": "1.b_genero"
+  raca:
+    status: proposed
+    columns:
+      "2019": null
+      "2021": null
+      "2022": "('P1_c ', 'Cor/raca/etnia')"
+      "2023": "('P1_c ', 'Cor/raca/etnia')"
+      "2024-2025": "1.c_cor/raca/etnia"
+      "2025-2026": "1.c_cor/raca/etnia"
+  pcd:
+    status: proposed
+    columns:
+      "2019": null
+      "2021": null
+      "2022": "('P1_d ', 'PCD')"
+      "2023": "('P1_d ', 'PCD')"
+      "2024-2025": "1.d_pcd"
+      "2025-2026": "1.d_pcd"
+  experiencia_prejudicada:
+    status: proposed
+    columns:
+      "2019": null
+      "2021": null
+      "2022": "('P1_e ', 'experiencia_profissional_prejudicada')"
+      "2023": "('P1_e ', 'experiencia_profissional_prejudicada')"
+      "2024-2025": "1.e_experiencia_profissional_prejudicada"
+      "2025-2026": "1.e_experiencia_profissional_prejudicada"
+    notes: "Respondida quase só por mulheres e pessoas não brancas; texto multi-seleção separado por vírgula."
+  estado:
+    status: proposed
+    columns:
+      "2019": "('P5', 'living_state')"
+      "2021": "('P1_e_a ', 'uf onde mora')"
+      "2022": "('P1_i_1 ', 'uf onde mora')"
+      "2023": "('P1_i_1 ', 'uf onde mora')"
+      "2024-2025": "1.i.1_uf_onde_mora"
+      "2025-2026": "1.i.1_uf_onde_mora"
+    notes: >-
+      Sigla da UF. A pesquisa não pergunta a cidade. Estados com poucas respostas são
+      anonimizados (só a região aparece). Em 2019 os valores são nomes de estado.
+  regiao:
+    status: proposed
+    columns:
+      "2019": "('D1', 'living_macroregion')"
+      "2021": "('P1_e_b ', 'Regiao onde mora')"
+      "2022": "('P1_i_2 ', 'Regiao onde mora')"
+      "2023": "('P1_i_2 ', 'Regiao onde mora')"
+      "2024-2025": "1.i.2_regiao_onde_mora"
+      "2025-2026": "1.i.2_regiao_onde_mora"
+    notes: "2019 usa 'Região Sudeste' etc. e só tem Sudeste/Sul; 2021 tem a categoria 'Exterior'."
+  formacao_nivel:
+    status: proposed
+    columns:
+      "2019": "('P8', 'degreee_level')"
+      "2021": "('P1_h ', 'Nivel de Ensino')"
+      "2022": "('P1_l ', 'Nivel de Ensino')"
+      "2023": "('P1_l ', 'Nivel de Ensino')"
+      "2024-2025": "1.l_nivel_de_ensino"
+      "2025-2026": "1.l_nivel_de_ensino"
+  situacao_trabalho:
+    status: proposed
+    columns:
+      "2019": "('P10', 'job_situation')"
+      "2021": "('P2_a ', 'Qual sua situação atual de trabalho?')"
+      "2022": "('P2_a ', 'Qual sua situação atual de trabalho?')"
+      "2023": "('P2_a ', 'Qual sua situação atual de trabalho?')"
+      "2024-2025": "2.a_situação_de_trabalho"
+      "2025-2026": "2.a_situação_de_trabalho"
+    notes: >-
+      Inclui "Vivo no Brasil e trabalho remoto para empresa de fora do Brasil" e
+      "Vivo fora do Brasil e trabalho para empresa de fora do Brasil" (a partir de 2021).
+      2019 escreve "Empregado (CTL)".
+  setor_empresa:
+    status: proposed
+    columns:
+      "2019": null
+      "2021": "('P2_b ', 'Setor')"
+      "2022": "('P2_b ', 'Setor')"
+      "2023": "('P2_b ', 'Setor')"
+      "2024-2025": "2.b_setor"
+      "2025-2026": "2.b_setor"
+    notes: "2019 só tem setor anonimizado (D4). 'Consultoria' vira 'Área de Consultoria' a partir de 2022."
+  tamanho_empresa:
+    status: proposed
+    columns:
+      "2019": "('P12', 'workers_number')"
+      "2021": "('P2_c ', 'Numero de Funcionarios')"
+      "2022": "('P2_c ', 'Numero de Funcionarios')"
+      "2023": "('P2_c ', 'Numero de Funcionarios')"
+      "2024-2025": "2.c_numero_de_funcionarios"
+      "2025-2026": "2.c_numero_de_funcionarios"
+    notes: "2021 escreve 'Acima de 3000'; a partir de 2022 'Acima de 3.000'. Há um rótulo com erro 'de 501 a 100' (= 501 a 1.000)."
+  cargo_atual:
+    status: proposed
+    columns:
+      "2019": "('D6', 'anonymized_role')"
+      "2021": "('P2_f ', 'Cargo Atual')"
+      "2022": "('P2_f ', 'Cargo Atual')"
+      "2023": "('P2_f ', 'Cargo Atual')"
+      "2024-2025": "2.f_cargo_atual"
+      "2025-2026": "2.f_cargo_atual"
+    notes: >-
+      Opções mudam por edição. 2021: "Analista de BI/BI Analyst/Analytics Engineer" numa
+      opção só; Analytics Engineer separado a partir de 2022. 2022–2023 juntam Engenheiro
+      e Arquiteto de Dados; 2024+ separam. Nas análises, Arquiteto é somado a Engenheiro.
+  tempo_experiencia_dados:
+    status: proposed
+    columns:
+      "2019": "('P17', 'time_experience_data_science')"
+      "2021": "('P2_i ', 'Quanto tempo de experiência na área de dados você tem?')"
+      "2022": "('P2_i ', 'Quanto tempo de experiência na área de dados você tem?')"
+      "2023": "('P2_i ', 'Quanto tempo de experiência na área de dados você tem?')"
+      "2024-2025": "2.i_tempo_de_experiencia_em_dados"
+      "2025-2026": "2.i_tempo_de_experiencia_em_dados"
+    notes: >-
+      Faixas mudam: 2019/2021 usam 2–3, 4–5, 6–10 anos; 2022 usa 3–4, 4–6, 7–10; 2023
+      mistura 4–6 e 5–6; 2024+ usa 3–4, 5–6, 7–10. Grupos comparáveis: <1, 1–2, 3–6,
+      7–10, 10+ (2021 fica aproximado: 2–5 e 6–10).
+  satisfeito_empresa:
+    status: proposed
+    columns:
+      "2019": null
+      "2021": "('P2_k ', 'Você está satisfeito na sua empresa atual?')"
+      "2022": "('P2_k ', 'Você está satisfeito na sua empresa atual?')"
+      "2023": "('P2_k ', 'Você está satisfeito na sua empresa atual?')"
+      "2024-2025": "2.k_satisfeito_atualmente"
+      "2025-2026": "2.k_satisfeito_atualmente"
+  plano_mudar_emprego:
+    status: proposed
+    columns:
+      "2019": null
+      "2021": "('P2_n ', 'Você pretende mudar de emprego nos próximos 6 meses?')"
+      "2022": "('P2_n ', 'Você pretende mudar de emprego nos próximos 6 meses?')"
+      "2023": "('P2_n ', 'Você pretende mudar de emprego nos próximos 6 meses?')"
+      "2024-2025": "2.n_planos_de_mudar_de_emprego_6m"
+      "2025-2026": "2.n_planos_de_mudar_de_emprego_6m"
+  modelo_trabalho_atual:
+    status: proposed
+    columns:
+      "2019": null
+      "2021": "('P2_q ', 'Atualmente qual a sua forma de trabalho?')"
+      "2022": "('P2_p ', 'Atualmente qual a sua forma de trabalho?')"
+      "2023": "('P2_r ', 'Atualmente qual a sua forma de trabalho?')"
+      "2024-2025": "2.r_modelo_de_trabalho_atual"
+      "2025-2026": "2.q_modelo_de_trabalho_atual"
+    notes: "Opções idênticas em todas as edições: 100% remoto, híbrido flexível, híbrido com dias fixos, 100% presencial."
+  modelo_trabalho_ideal:
+    status: proposed
+    columns:
+      "2019": null
+      "2021": "('P2_r ', 'Qual a forma de trabalho ideal para você?')"
+      "2022": "('P2_q ', 'Qual a forma de trabalho ideal para você?')"
+      "2023": "('P2_s ', 'Qual a forma de trabalho ideal para você?')"
+      "2024-2025": "2.s_modelo_de_trabalho_ideal"
+      "2025-2026": "2.r_modelo_de_trabalho_ideal"
+  atitude_retorno_presencial:
+    status: proposed
+    columns:
+      "2019": null
+      "2021": "('P2_s ', 'Caso sua empresa decida pelo modelo 100% presencial qual será sua atitude?')"
+      "2022": "('P2_r ', 'Caso sua empresa decida pelo modelo 100% presencial qual será sua atitude?')"
+      "2023": "('P2_t ', 'Caso sua empresa decida pelo modelo 100% presencial qual será sua atitude?')"
+      "2024-2025": "2.t_atitude_em_caso_de_retorno_presencial"
+      "2025-2026": "2.s_atitude_em_caso_de_retorno_presencial"
+  layoff:
+    status: proposed
+    columns:
+      "2019": null
+      "2021": null
+      "2022": "('P2_s ', 'Sua empresa passu por Layoff em 2022?')"
+      "2023": "('P2_q ', 'Empresa que trabaha passou por layoff em 2023')"
+      "2024-2025": "2.q_empresa_passou_por_layoff_em_2024"
+      "2025-2026": "2.p_empresa_passou_por_layoff_em_2025"
+    notes: "Cada edição pergunta sobre o ano corrente (2022, 2023, 2024, 2025)."
+  uso_ia_generativa:
+    status: proposed
+    columns:
+      "2019": null
+      "2021": null
+      "2022": null
+      "2023": "('P4_m ', 'Utiliza ChatGPT ou LLMs no trabalho?')"
+      "2024-2025": "4.m_usa_chatgpt_ou_copilot_no_trabalho?"
+      "2025-2026": "4.j_usa_chatgpt_ou_copilot_no_trabalho?"
+    notes: "Texto multi-seleção. Os exemplos de ferramentas citados nas opções mudam por edição."
+
+# Perguntas de múltipla escolha que viram uma coluna binária por opção. Cada entrada
+# dá o prefixo das colunas binárias em cada edição; o rótulo da opção vem depois do
+# prefixo (ou dentro da tupla, em 2021–2023).
+multiselect:
+  linguagens_trabalho:
+    status: proposed
+    prefix: { "2019": "('P21'", "2021": "('P4_d_", "2022": "('P4_d_", "2023": "('P4_d_", "2024-2025": "4.d.", "2025-2026": null }
+    notes: "2025/26 ('4.c.') pergunta linguagens PREFERIDAS — não comparável; deixado como null."
+  cloud_trabalho:
+    status: proposed
+    prefix: { "2019": "('P25'", "2021": "('P4_g_", "2022": null, "2023": "('P4_h_", "2024-2025": "4.h.", "2025-2026": "4.e." }
+    fixes:
+      "2023": { "Azure (Microsoft)": "Amazon Web Services (AWS)", "Amazon Web Services (AWS)": "Google Cloud (GCP)", "Google Cloud (GCP)": "Azure (Microsoft)" }
+    text_column:
+      "2022": "('P4_g ', 'Quais das opções de Cloud listadas abaixo você utiliza no trabalho?')"
+    notes: >-
+      2023: rótulos das três primeiras colunas trocados (aplicar 'fixes'; conferido
+      contra a cloud preferida). 2022: as colunas binárias 'P4_h_1..3' são a cloud
+      PREFERIDA em one-hot; o uso real está no texto de 'text_column'.
+  bi_trabalho:
+    status: proposed
+    prefix: { "2019": "('P27'", "2021": "('P4_h_", "2022": null, "2023": "('P4_j_", "2024-2025": "4.j.", "2025-2026": "4.g." }
+    notes: "2022: só ~200 respostas no dataset ('P4_i_*'); deixado como null."
+
+methodology_notes:
+  - "2019: faixa salarial termina em 'Acima de R$ 25.001'; não há pergunta de senioridade Jr/Pl/Sr. Só gênero, desemprego e poucas outras perguntas são comparáveis."
+  - "2025/26: novo nível 'Especialista/Staff+' tira do grupo Sênior parte das pessoas mais experientes; para comparar Sênior com anos anteriores, some Sênior + Staff+."
+  - "2021: não há perguntas de cor/raça nem de PCD (começam em 2022)."
+  - "Salário: valores em faixas; use mediana/quartis interpolados dentro da faixa (scripts/sod/stats.py). Para valores reais, use o IPCA de novembro de cada edição (data/reference/ipca_mensal.json)."
+  - "Quem mora fora do Brasil ou trabalha para empresa estrangeira tem outro mercado salarial; separe esses grupos ao analisar salário."
+  - "A amostra não é aleatória e o perfil muda entre edições (por exemplo, menos juniores a cada ano). Compare dentro de grupos (nível, experiência) antes de tirar conclusões sobre o mercado."

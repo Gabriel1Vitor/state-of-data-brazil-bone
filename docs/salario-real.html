@@ -1,0 +1,1278 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>O Paradoxo do Salário Real</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@500;700;800&family=Public+Sans:wght@400;600;700&display=swap">
+<style>
+/* chart components */
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px;color:var(--ink2);line-height:1.3}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;flex:none}
+.legend i.line{width:16px;height:2px;border-radius:1px}
+.legend i.rect{width:11px;height:11px;border-radius:2px}
+.legend i.dot{width:10px;height:10px;border-radius:50%}
+.legend i.ref{width:16px;height:0;border-top:1px solid var(--ref)}
+.chart{position:relative;width:100%;min-width:0}
+.chart svg{display:block;width:100%;overflow:visible}
+.chart svg text{font-family:var(--body)}
+.chart .hit:focus{outline:none}
+.chart .hit:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.foot{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-top:6px;border-top:1px solid var(--grid)}
+.foot p{margin:0;font-size:13px;color:var(--muted);line-height:1.45;max-width:70ch}
+.foot button{flex:none;font:600 12.5px var(--body);color:var(--ink2);background:transparent;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer}
+.foot button:hover{color:var(--ink);border-color:var(--axis)}
+.foot button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.tbl{overflow-x:auto}
+.tbl table{border-collapse:collapse;font-size:13.5px;width:100%;font-variant-numeric:tabular-nums}
+.tbl th,.tbl td{padding:5px 10px;text-align:right;border-bottom:1px solid var(--grid);white-space:nowrap}
+.tbl th:first-child,.tbl td:first-child{text-align:left}
+.tbl th{font-weight:600;color:var(--ink2)}
+.bars{display:grid;grid-template-columns:minmax(90px,max-content) minmax(0,1fr);gap:8px 12px;align-items:center}
+.bars .k{font-size:14px;color:var(--ink2);text-align:right;line-height:1.2}
+.bars .track{position:relative;height:24px;display:flex;align-items:center;gap:8px}
+.bars .bar{height:20px;border-radius:0 4px 4px 0;flex:none}
+.bars .track:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.bars .v{font-size:13.5px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bars .v small{font-weight:400;color:var(--muted);margin-left:4px}
+.dumb{display:grid;grid-template-columns:minmax(90px,max-content) minmax(0,1fr);gap:6px 12px;align-items:center}
+.dumb .k{font-size:14px;color:var(--ink2);text-align:right;line-height:1.2}
+.dumb .track{position:relative;height:28px;margin-right:64px}
+.dumb .track:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+.dumb .gl{position:absolute;top:0;bottom:0;width:1px;background:var(--grid)}
+.dumb .seg{position:absolute;top:13px;height:2px;background:var(--axis)}
+.dumb .pt{position:absolute;top:14px;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;box-shadow:0 0 0 2px var(--surface)}
+.dumb .pt.a{background:var(--dumb-a)}
+.dumb .pt.b{background:var(--s1)}
+.dumb .lbl{position:absolute;top:5px;font-size:13px;font-weight:600;white-space:nowrap;font-variant-numeric:tabular-nums}
+.dumb .axis{position:relative;height:18px;margin-right:64px;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.dumb .axis span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.stack{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:8px 12px;align-items:center}
+.stack .k{font-size:14px;color:var(--ink2);font-variant-numeric:tabular-nums;line-height:1.2}
+.stack .row{display:flex;gap:2px;height:28px}
+.stack .seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;min-width:0;cursor:default}
+.stack .seg:first-child{border-radius:4px 0 0 4px}.stack .seg:last-child{border-radius:0 4px 4px 0}
+.stack .seg:hover,.stack .seg:focus-visible{filter:brightness(1.1)}
+.stack .seg:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+.stack .seg span{white-space:nowrap;font-variant-numeric:tabular-nums}
+#tip{position:fixed;z-index:50;pointer-events:none;background:var(--tip-bg);color:var(--tip-ink);border-radius:8px;padding:9px 11px;font-size:13px;line-height:1.35;box-shadow:0 6px 24px rgba(0,0,0,.18);min-width:140px;max-width:300px}
+#tip .t{font-weight:600;margin-bottom:5px;color:var(--tip-ink2);font-size:12.5px}
+#tip .r{display:grid;grid-template-columns:14px auto 1fr;gap:6px;align-items:center}
+#tip .r i{height:2px;border-radius:1px}
+#tip .r i.sq{height:9px;width:9px;border-radius:2px}
+#tip .r b{font-variant-numeric:tabular-nums}
+#tip .r span{color:var(--tip-ink2)}
+#tip .n{color:var(--tip-ink2);font-size:12px;margin-top:4px}
+.method ul{padding-left:20px;margin:0;display:grid;gap:8px;max-width:80ch;color:var(--ink2);font-size:15.5px}
+.method b{color:var(--ink)}
+.src{margin-top:18px;font-size:13.5px;color:var(--muted)}
+.src code{font-size:12.5px;color:var(--ink2)}
+
+:root{
+  --bg:#fbfbfd; --surface:#fbfbfd; --panel:#f1f0f7; --ink:#14131c; --ink2:#4b4a5a; --muted:#7c7b8a;
+  --grid:#e6e5ee; --axis:#c8c6d4; --border:rgba(20,19,28,.10); --accent:#4a3aa7; --accent-soft:#e9e6f8;
+  --real:#4a3aa7; --nominal:#a7a5b5;
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4; --s6:#4a3aa7;
+  --up:#006300; --down:#b42318;
+  --ref:#4b4a5a; --dumb-a:#a7a5b5; --segt:#0b0b0b;
+  --o1:#2b1f7a; --o2:#4a3aa7; --o3:#7a6dd0; --o4:#a99fe6; --o5:#d4cff5;
+  --o1t:#fff; --o2t:#fff; --o3t:#fff; --o4t:#0b0b0b; --o5t:#0b0b0b;
+  --tip-bg:#14131c; --tip-ink:#f4f3f9; --tip-ink2:#bab8c9;
+  --display:"Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --body:"Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#111017; --surface:#111017; --panel:#1b1a24; --ink:#f2f1f8; --ink2:#c4c2d2; --muted:#8d8b9c;
+    --grid:#252430; --axis:#3b3a48; --border:rgba(255,255,255,.10); --accent:#9085e9; --accent-soft:#25213f;
+    --real:#9085e9; --nominal:#5f5d6e;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#9085e9;
+    --up:#0ca30c; --down:#f07067;
+    --ref:#c4c2d2; --dumb-a:#5f5d6e; --segt:#0b0b0b;
+    --o1:#d4cff5; --o2:#a99fe6; --o3:#7a6dd0; --o4:#4a3aa7; --o5:#2f2575;
+    --o1t:#0b0b0b; --o2t:#0b0b0b; --o3t:#0b0b0b; --o4t:#fff; --o5t:#fff;
+    --tip-bg:#f2f1f8; --tip-ink:#14131c; --tip-ink2:#4b4a5a;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#111017; --surface:#111017; --panel:#1b1a24; --ink:#f2f1f8; --ink2:#c4c2d2; --muted:#8d8b9c;
+  --grid:#252430; --axis:#3b3a48; --border:rgba(255,255,255,.10); --accent:#9085e9; --accent-soft:#25213f;
+  --real:#9085e9; --nominal:#5f5d6e;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181; --s6:#9085e9;
+  --up:#0ca30c; --down:#f07067;
+  --ref:#c4c2d2; --dumb-a:#5f5d6e; --segt:#0b0b0b;
+  --o1:#d4cff5; --o2:#a99fe6; --o3:#7a6dd0; --o4:#4a3aa7; --o5:#2f2575;
+  --o1t:#0b0b0b; --o2t:#0b0b0b; --o3t:#0b0b0b; --o4t:#fff; --o5t:#fff;
+  --tip-bg:#f2f1f8; --tip-ink:#14131c; --tip-ink2:#4b4a5a;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.62;-webkit-font-smoothing:antialiased}
+.page{max-width:1040px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:48px 64px}
+.kicker{font-family:var(--display);font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(40px,7vw,80px);line-height:.98;letter-spacing:-.03em;margin:12px 0 18px;text-wrap:balance;max-width:14ch}
+.lede{font-size:19px;color:var(--ink2);max-width:62ch;margin:0}
+.lede strong{color:var(--ink)}
+.duel{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:30px}
+@media (max-width:640px){.duel{grid-template-columns:minmax(0,1fr)}}
+.duel > div{background:var(--surface);padding:20px 22px}
+.duel .lab{font-size:14px;color:var(--ink2)}
+.duel .num{font-family:var(--display);font-weight:800;font-size:clamp(46px,7vw,68px);letter-spacing:-.035em;line-height:1.02;margin:4px 0}
+.duel .num.up{color:var(--up)} .duel .num.down{color:var(--down)}
+.duel .cap{font-size:14px;color:var(--ink2)}
+.duel .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-size:13px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--panel);color:var(--ink);font-variant-numeric:tabular-nums}
+.hero-chart{margin-top:30px}
+.takeaways{margin:36px 0 0;padding:22px 26px;background:var(--panel);border-radius:10px}
+.takeaways h2{font-family:var(--display);font-size:14px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px;color:var(--ink2)}
+.takeaways ul{margin:0;padding-left:20px;display:grid;gap:8px}
+nav.toc{display:flex;flex-wrap:wrap;gap:6px 18px;margin:26px 0 0;font-size:15px}
+nav.toc a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+nav.toc a:hover{border-bottom-color:currentColor}
+nav.toc a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section.ch{margin-top:72px;scroll-margin-top:16px}
+section.ch > header{border-top:3px solid var(--ink);padding-top:14px;margin-bottom:18px}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(25px,3.3vw,34px);line-height:1.12;letter-spacing:-.02em;margin:6px 0 0;text-wrap:balance}
+.prose{max-width:68ch}
+.prose p{margin:0 0 14px}
+.figs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:26px 36px;margin-top:22px}
+.figs.one{grid-template-columns:minmax(0,1fr)}
+@media (max-width:820px){.figs{grid-template-columns:minmax(0,1fr)}}
+.card{display:flex;flex-direction:column;gap:10px;min-width:0}
+.card h3{font-family:var(--display);font-weight:700;font-size:17px;line-height:1.3;margin:0;text-wrap:balance}
+.card .sub{margin:0;color:var(--ink2);font-size:14.5px;line-height:1.45}
+.callout{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-top:22px}
+.callout div{background:var(--surface);padding:16px 18px;display:flex;flex-direction:column;gap:2px}
+.callout b{font-family:var(--display);font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.callout b small{font-size:15px;font-weight:600;color:var(--muted);letter-spacing:0;margin-left:6px}
+.callout span{font-size:14px;color:var(--ink2);line-height:1.4}
+.cohort{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px 18px;align-items:center;background:var(--panel);border-radius:12px;padding:20px 22px;margin-top:22px}
+@media (max-width:640px){.cohort{grid-template-columns:minmax(0,1fr)}.cohort .arrow{transform:rotate(90deg);justify-self:start}}
+.cohort .side .lab{font-size:14px;color:var(--ink2)}
+.cohort .side .v{font-family:var(--display);font-size:38px;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.cohort .arrow{font-family:var(--display);font-size:15px;font-weight:700;color:var(--accent);text-align:center;white-space:nowrap}
+.cohort .arrow b{display:block;font-size:30px;letter-spacing:-.02em}
+.cohort .note{grid-column:1/-1;font-size:13.5px;color:var(--muted);margin:0}
+.mini{border-collapse:collapse;font-size:14.5px;font-variant-numeric:tabular-nums;margin-top:8px}
+.mini caption{text-align:left;font-size:13.5px;color:var(--ink2);padding-bottom:6px;caption-side:top}
+.mini th,.mini td{padding:6px 14px 6px 0;text-align:right;border-bottom:1px solid var(--grid)}
+.mini th:first-child,.mini td:first-child{text-align:left}
+.mini th{font-weight:600;color:var(--ink2);font-size:13px}
+.minwrap{overflow-x:auto;margin-top:18px}
+.dumb .pt.b{background:var(--real)}
+.rng .seg{position:absolute;top:11px;height:6px;border-radius:3px;background:var(--accent-soft);border:1px solid var(--axis)}
+.rng .pt{position:absolute;top:14px;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--real);box-shadow:0 0 0 2px var(--surface)}
+.method ul{padding-left:20px;margin:0;display:grid;gap:8px;max-width:80ch;color:var(--ink2);font-size:15px}
+.method b{color:var(--ink)}
+.src{margin-top:18px;font-size:13.5px;color:var(--muted)}
+.src code{font-size:12.5px;color:var(--ink2)}
+</style>
+
+<div class="page">
+  <div class="kicker">State of Data Brazil · Salários · 2021 a 2025/26 · valores corrigidos pelo IPCA</div>
+  <h1>O paradoxo do salário real</h1>
+  <p class="lede">Descontada a inflação, a mediana salarial dos profissionais de dados subiu 20% em quatro anos. Mas, olhando cada nível separadamente, o salário real <strong>caiu</strong> para Júnior e Pleno e ficou estável para Sênior. A explicação está em quem respondeu à pesquisa: a amostra ficou mais experiente, e quem tem mais experiência ganha bem mais.</p>
+  <div class="duel">
+    <div><div class="lab">Mediana geral, em R$ de nov/2025</div><div class="num up" id="d-all"></div><div class="cap" id="d-all-cap"></div></div>
+    <div><div class="lab">Dentro de cada nível, 2021 → 2025/26</div><div class="num down" id="d-jr"></div><div class="cap">é a variação real do salário Júnior</div><div class="chips" id="d-chips"></div></div>
+  </div>
+  <div class="hero-chart"><article class="card" id="f-hero"></article></div>
+
+  <div class="takeaways">
+    <h2>Em resumo</h2>
+    <ul>
+      <li><b>A mediana geral subiu porque a amostra mudou:</b> Júnior era 26,8% dos respondentes e agora é 16,8%. A parcela com 7 anos ou mais de experiência subiu de 22,0% para 25,4%.</li>
+      <li><b>A experiência passou a valer mais:</b> de 2022 a 2025/26, quem tem mais de 10 anos ganhou 11,9% acima da inflação. Quem tem de 1 a 2 anos perdeu 14,2%.</li>
+      <li><b>A carreira compensa, mesmo assim:</b> a mediana de quem tinha 1 a 2 anos de experiência em 2021 era R$ 6,0k (em valores de hoje). A de quem tem 5 a 6 anos em 2025/26 é R$ 12,5k, o dobro.</li>
+      <li><b>Cerca de 40% da diferença salarial entre homens e mulheres não se explica por nível ou experiência:</b> a diferença bruta é de 11,6 pontos. Comparando pessoas do mesmo nível e com a mesma experiência, ainda sobram 4,7 pontos, e essa diferença era zero em 2021.</li>
+      <li><b>Empresa estrangeira paga quase 3 vezes mais:</b> mediana de R$ 29,1k, contra R$ 10,2k em empresa brasileira. São 4,4% dos respondentes, mas 19,4% de quem ganha acima de R$ 20k.</li>
+    </ul>
+  </div>
+  <nav class="toc" aria-label="Seções">
+    <a href="#nominal">Nominal x real</a><a href="#senioridade">Senioridade</a><a href="#experiencia">Experiência</a><a href="#genero">Gênero</a><a href="#exterior">Trabalho para fora</a><a href="#topo">Quem ganha acima de R$ 20k</a><a href="#metodo">Metodologia</a>
+  </nav>
+
+  <section class="ch" id="nominal">
+    <header><div class="kicker">Nominal x real</div><h2>Em reais correntes, +46%. Descontada a inflação, +20%</h2></header>
+    <div class="prose">
+      <p>A mediana nominal foi de R$ 7,3k para R$ 10,6k. O IPCA acumulou <strong>21,5%</strong> entre novembro de 2021 e novembro de 2025, então em reais de hoje a mediana de 2021 equivale a R$ 8,8k. O ganho real é de 19,9%. Em 2022 e 2023 o salário real ficou praticamente parado; a alta se concentrou nas duas últimas edições.</p>
+      <p>A distribuição se moveu para cima: quem ganha mais de R$ 20k nominais passou de 6,9% para <strong>17,1%</strong>, e quem ganha até R$ 4k caiu de 22,2% para 13,4%. A dispersão ficou estável: o 3º quartil continua ganhando cerca de 2,7 vezes o 1º quartil.</p>
+    </div>
+    <div class="figs">
+      <article class="card" id="f-nomreal"></article>
+      <article class="card" id="f-bands"></article>
+    </div>
+  </section>
+
+  <section class="ch" id="senioridade">
+    <header><div class="kicker">Senioridade</div><h2>Júnior e Pleno perderam poder de compra; só gestores tiveram ganho real claro</h2></header>
+    <div class="prose">
+      <p>Considerando só quem trabalha para empresa brasileira e em valores de novembro de 2025, a mediana do Júnior caiu de R$ 4,0k para <strong>R$ 3,5k (−13,6%)</strong>. O valor nominal ficou parado em torno de R$ 3,4k a 3,5k desde 2022 enquanto a inflação corria. O Pleno perdeu 9,0%. Gestores ganharam 15,4% acima da inflação.</p>
+      <p>A queda aparente do Sênior em 2025/26 (−8,3%) vem da criação do nível Especialista/Staff+, que tirou do grupo Sênior as pessoas mais bem pagas. Somando os dois grupos, a mediana real fica em R$ 13,0k, 2,8% acima de 2021. A distância entre Sênior e Júnior aumentou: de 3,2 para 3,4 vezes (chegou a 3,6 em 2024/25).</p>
+    </div>
+    <div class="figs one">
+      <article class="card" id="f-sen"></article>
+    </div>
+  </section>
+
+  <section class="ch" id="experiencia">
+    <header><div class="kicker">Tempo de experiência</div><h2>A experiência passou a valer mais; quem está começando ganha menos em termos reais</h2></header>
+    <div class="prose">
+      <p>Entre 2022 e 2025/26, o salário real caiu para quem tem até 6 anos de experiência em dados e subiu para quem tem mais. Quem tem <strong>mais de 10 anos ganhou 11,9%</strong> acima da inflação; quem tem de 7 a 10 anos, 9,1%. Já quem tem de 1 a 2 anos perdeu 14,2%, e quem tem menos de 1 ano, 13,6%. É o mesmo movimento visto por nível: o mercado está pagando mais por experiência e menos por entrada.</p>
+      <p>Em 2025/26 a mediana vai de R$ 3,3k (menos de 1 ano) para R$ 19,5k (mais de 10 anos). Cada faixa de experiência acrescenta entre R$ 2,2k e R$ 3,7k à mediana.</p>
+    </div>
+    <div class="figs">
+      <article class="card" id="f-exp-line"></article>
+      <article class="card" id="f-exp-curve"></article>
+    </div>
+    <div class="cohort" id="cohort"></div>
+  </section>
+
+  <section class="ch" id="genero">
+    <header><div class="kicker">Gênero</div><h2>Parte da diferença salarial vem de nível e experiência; outra parte não</h2></header>
+    <div class="prose">
+      <p>Em 2025/26, a mediana salarial das mulheres é <strong>88,4%</strong> da dos homens: uma diferença de 11,6 pontos. Parte dela vem do perfil: há proporcionalmente menos mulheres em níveis altos e com muita experiência. Para isolar isso, comparei mulheres e homens <em>do mesmo nível e com a mesma faixa de experiência</em>. Nessa comparação, elas recebem <strong>95,3%</strong>. Ou seja, cerca de 60% da diferença se explica pelo perfil, e cerca de 40% não.</p>
+      <p>A diferença que sobra apareceu ao longo do tempo: em 2021, comparando mulheres e homens do mesmo nível e experiência, as medianas eram iguais (100,5%). Desde 2023 fica em torno de 95%. No topo, 15,9% dos homens ganham mais de R$ 20k, contra 9,1% das mulheres. As mulheres são 29,1% de quem ganha até R$ 4k e só 14,1% de quem ganha mais de R$ 20k.</p>
+    </div>
+    <div class="figs">
+      <article class="card" id="f-gap"></article>
+      <article class="card" id="f-top-gender"></article>
+    </div>
+    <div class="figs one"><article class="card" id="f-band-women"></article></div>
+  </section>
+
+  <section class="ch" id="exterior">
+    <header><div class="kicker">Trabalho para o exterior</div><h2>Empresa estrangeira paga quase 3 vezes mais, mas essa vantagem está diminuindo</h2></header>
+    <div class="prose">
+      <p>Quem mora no Brasil e trabalha para empresa estrangeira tem mediana de <strong>R$ 29,1k</strong>, contra R$ 10,2k de quem trabalha para empresa brasileira. A diferença é de 2,85 vezes; em 2021 era 3,3. Em reais de hoje, o salário de quem trabalha para fora ficou praticamente igual (R$ 28,5k para R$ 29,1k), enquanto o de quem trabalha para empresa brasileira subiu 17,5% acima da inflação. Isso pode refletir o câmbio e também o fato de mais pessoas, e não só as mais experientes, estarem conseguindo essas vagas.</p>
+      <p>Esse grupo dobrou na pesquisa (de 2,2% para 4,4% das respostas) e é formado principalmente por Sênior e Staff+ (67%). Para um Sênior, a diferença é de R$ 30,0k contra R$ 11,6k. Como 22,7% deles estão na faixa aberta "acima de R$ 40k", as medianas deste grupo estão subestimadas.</p>
+    </div>
+    <div class="figs">
+      <article class="card" id="f-vinc"></article>
+      <article class="card" id="f-vinc-sen"></article>
+    </div>
+  </section>
+
+  <section class="ch" id="topo">
+    <header><div class="kicker">O topo da pirâmide</div><h2>Quem ganha mais de R$ 20k: gestores, empresas estrangeiras, Sudeste e pouca presença feminina</h2></header>
+    <div class="prose">
+      <p>Em 2025/26, 17,1% de quem mora no Brasil ganha mais de R$ 20k por mês (540 pessoas). Mais da metade desse grupo é gestor. Juniores e plenos são, juntos, 2,1%. Comparando a fatia de cada grupo no topo com a fatia na pesquisa toda, empresas estrangeiras são o grupo mais sobrerrepresentado (4 vezes), e as mulheres o mais sub-representado.</p>
+    </div>
+    <div class="callout" id="top-callout"></div>
+  </section>
+
+  <section class="ch method" id="metodo">
+    <header><div class="kicker">Metodologia</div><h2>Como os números foram calculados</h2></header>
+    <ul>
+      <li><b>Inflação:</b> IPCA mensal (IBGE, SIDRA tabela 1737; mesma série do Banco Central, SGS 433), acumulado até novembro de cada ano de coleta. Todos os valores "reais" estão em reais de novembro de 2025. O IPCA acumulado de nov/2021 a nov/2025 é 21,5%.</li>
+      <li><b>Data de coleta:</b> todas as edições foram coletadas entre outubro e dezembro (2021: 18/out a 6/dez; 2022: 10/out a 28/nov; 2023: 16/out a 6/dez; 2024/25: 14/out a 18/dez de 2024; 2025/26: 20/out a 22/dez de 2025). Por isso novembro é o mês de referência de preços de cada edição.</li>
+      <li><b>Salário em faixas:</b> mediana e quartis interpolados dentro da faixa. A faixa mais alta ("acima de R$ 40k") não tem teto, então salários muito altos ficam subestimados, principalmente para empresa estrangeira e exterior.</li>
+      <li><b>Quem entra em cada análise:</b> nível, experiência e gênero usam só quem mora no Brasil e trabalha para empresa brasileira, para não misturar com salários de fora. "Mora no exterior" é uma categoria separada e pequena (27 a 77 respostas por edição), com salário informado em reais pela própria pessoa.</li>
+      <li><b>Faixas de experiência mudaram entre edições.</b> Agrupei em: menos de 1, 1–2, 3–6, 7–10 e mais de 10 anos. Em 2021 os cortes eram diferentes (2–5 e 6–10 anos), por isso a comparação de experiência começa em 2022.</li>
+      <li><b>Diferença ajustada de gênero:</b> calculei a razão entre medianas de mulheres e homens dentro de cada combinação de nível × experiência (com pelo menos 10 pessoas de cada gênero) e fiz a média ponderada pelo número de mulheres. Não considera cargo, setor ou região.</li>
+      <li><b>Comparação de coortes:</b> a pesquisa não acompanha as mesmas pessoas ao longo do tempo. A comparação entre "1–2 anos em 2021" e "5–6 anos em 2025/26" é entre grupos parecidos, não entre os mesmos indivíduos.</li>
+      <li><b>A amostra não é aleatória:</b> são as pessoas que responderam à pesquisa da Data Hackers, e o perfil muda a cada edição. Esse é exatamente o efeito que produz o paradoxo do título.</li>
+    </ul>
+    <p class="src">Fontes: datasets públicos da Data Hackers no Kaggle (<code>state-of-data-2021</code> a <code>state-of-data-brazil-2025-2026</code>) e IPCA do IBGE (SIDRA 1737 / Banco Central SGS 433). Os nomes das colunas estão mapeados em <code>mapping/schema_map.yaml</code>.</p>
+  </section>
+</div>
+<div id="tip" hidden></div>
+
+<script>
+const D = {
+ "years": [
+  "2021",
+  "2022",
+  "2023",
+  "2024/25",
+  "2025/26"
+ ],
+ "deflator": {
+  "2021": 1.2145,
+  "2022": 1.1468,
+  "2023": 1.0955,
+  "2024/25": 1.0446,
+  "2025/26": 1.0
+ },
+ "ipca_acum": 21.5,
+ "overall": {
+  "p25": [
+   4320,
+   4257,
+   4771,
+   5702,
+   6124
+  ],
+  "p50": [
+   7255,
+   7536,
+   8323,
+   9697,
+   10564
+  ],
+  "p75": [
+   11693,
+   12420,
+   13461,
+   15243,
+   16809
+  ]
+ },
+ "overall_real": {
+  "p25": [
+   5247,
+   4882,
+   5227,
+   5956,
+   6124
+  ],
+  "p50": [
+   8811,
+   8643,
+   9118,
+   10130,
+   10564
+  ],
+  "p75": [
+   14201,
+   14244,
+   14747,
+   15923,
+   16809
+  ]
+ },
+ "overall_n": [
+  2338,
+  3648,
+  4689,
+  4786,
+  3162
+ ],
+ "sen_nom": {
+  "Júnior": [
+   3308,
+   3406,
+   3464,
+   3474,
+   3471
+  ],
+  "Pleno": [
+   6675,
+   6894,
+   6688,
+   7178,
+   7374
+  ],
+  "Sênior": [
+   10439,
+   11208,
+   11599,
+   12508,
+   11632
+  ],
+  "Especialista/Staff+": [
+   null,
+   null,
+   null,
+   null,
+   16615
+  ],
+  "Gestor": [
+   12838,
+   15727,
+   15953,
+   17828,
+   18000
+  ]
+ },
+ "sen_real": {
+  "Júnior": [
+   4018,
+   3906,
+   3795,
+   3629,
+   3471
+  ],
+  "Pleno": [
+   8107,
+   7906,
+   7327,
+   7498,
+   7374
+  ],
+  "Sênior": [
+   12678,
+   12854,
+   12707,
+   13066,
+   11632
+  ],
+  "Especialista/Staff+": [
+   null,
+   null,
+   null,
+   null,
+   16615
+  ],
+  "Gestor": [
+   15592,
+   18036,
+   17477,
+   18623,
+   18000
+  ]
+ },
+ "sen_n": {
+  "Júnior": [
+   613,
+   1015,
+   1033,
+   854,
+   508
+  ],
+  "Pleno": [
+   639,
+   1023,
+   1353,
+   1338,
+   741
+  ],
+  "Sênior": [
+   539,
+   844,
+   1323,
+   1456,
+   769
+  ],
+  "Especialista/Staff+": [
+   0,
+   0,
+   0,
+   0,
+   312
+  ],
+  "Gestor": [
+   494,
+   697,
+   864,
+   1007,
+   691
+  ]
+ },
+ "bands": {
+  "2021": {
+   "Até R$ 4k": 22.2,
+   "R$ 4k a 8k": 34.0,
+   "R$ 8k a 12k": 20.3,
+   "R$ 12k a 20k": 16.5,
+   "Acima de R$ 20k": 6.9
+  },
+  "2022": {
+   "Até R$ 4k": 22.9,
+   "R$ 4k a 8k": 30.4,
+   "R$ 8k a 12k": 20.4,
+   "R$ 12k a 20k": 17.9,
+   "Acima de R$ 20k": 8.3
+  },
+  "2023": {
+   "Até R$ 4k": 18.9,
+   "R$ 4k a 8k": 29.3,
+   "R$ 8k a 12k": 21.8,
+   "R$ 12k a 20k": 20.4,
+   "Acima de R$ 20k": 9.6
+  },
+  "2024/25": {
+   "Até R$ 4k": 14.5,
+   "R$ 4k a 8k": 26.0,
+   "R$ 8k a 12k": 22.5,
+   "R$ 12k a 20k": 24.2,
+   "Acima de R$ 20k": 12.9
+  },
+  "2025/26": {
+   "Até R$ 4k": 13.4,
+   "R$ 4k a 8k": 22.4,
+   "R$ 8k a 12k": 22.2,
+   "R$ 12k a 20k": 25.0,
+   "Acima de R$ 20k": 17.1
+  }
+ },
+ "exp_nom": {
+  "Menos de 1 ano": [
+   3767,
+   3378,
+   3211,
+   3398,
+   3347
+  ],
+  "1 a 2 anos": [
+   4943,
+   5656,
+   5256,
+   5451,
+   5562
+  ],
+  "3 a 6 anos": [
+   8351,
+   9831,
+   9759,
+   10199,
+   10549
+  ],
+  "7 a 10 anos": [
+   10943,
+   12828,
+   13843,
+   15034,
+   16051
+  ],
+  "Mais de 10 anos": [
+   13515,
+   15205,
+   16024,
+   17892,
+   19515
+  ]
+ },
+ "exp_real": {
+  "Menos de 1 ano": [
+   4575,
+   3874,
+   3518,
+   3550,
+   3347
+  ],
+  "1 a 2 anos": [
+   6003,
+   6486,
+   5758,
+   5694,
+   5562
+  ],
+  "3 a 6 anos": [
+   10142,
+   11275,
+   10691,
+   10654,
+   10549
+  ],
+  "7 a 10 anos": [
+   13290,
+   14712,
+   15165,
+   15705,
+   16051
+  ],
+  "Mais de 10 anos": [
+   16414,
+   17438,
+   17555,
+   18690,
+   19515
+  ]
+ },
+ "exp_n": {
+  "Menos de 1 ano": [
+   381,
+   591,
+   470,
+   341,
+   213
+  ],
+  "1 a 2 anos": [
+   435,
+   962,
+   1187,
+   919,
+   497
+  ],
+  "3 a 6 anos": [
+   844,
+   1167,
+   1836,
+   2110,
+   1366
+  ],
+  "7 a 10 anos": [
+   255,
+   284,
+   390,
+   506,
+   366
+  ],
+  "Mais de 10 anos": [
+   248,
+   387,
+   531,
+   559,
+   402
+  ]
+ },
+ "exp_fine": {
+  "2024/25": [
+   {
+    "k": "Menos de 1 ano",
+    "v": 3398,
+    "p25": 2139,
+    "p75": 5819,
+    "n": 341
+   },
+   {
+    "k": "de 1 a 2 anos",
+    "v": 5451,
+    "p25": 3644,
+    "p75": 7705,
+    "n": 919
+   },
+   {
+    "k": "de 3 a 4 anos",
+    "v": 8784,
+    "p25": 6406,
+    "p75": 11768,
+    "n": 1340
+   },
+   {
+    "k": "de 5 a 6 anos",
+    "v": 13108,
+    "p25": 9622,
+    "p75": 17504,
+    "n": 770
+   },
+   {
+    "k": "de 7 a 10 anos",
+    "v": 15034,
+    "p25": 10661,
+    "p75": 20433,
+    "n": 506
+   },
+   {
+    "k": "Mais de 10 anos",
+    "v": 17892,
+    "p25": 13356,
+    "p75": 25486,
+    "n": 559
+   }
+  ],
+  "2025/26": [
+   {
+    "k": "Menos de 1 ano",
+    "v": 3347,
+    "p25": 1922,
+    "p75": 5352,
+    "n": 213
+   },
+   {
+    "k": "de 1 a 2 anos",
+    "v": 5562,
+    "p25": 3594,
+    "p75": 8271,
+    "n": 497
+   },
+   {
+    "k": "de 3 a 4 anos",
+    "v": 9215,
+    "p25": 6510,
+    "p75": 12419,
+    "n": 778
+   },
+   {
+    "k": "de 5 a 6 anos",
+    "v": 12479,
+    "p25": 9292,
+    "p75": 16926,
+    "n": 588
+   },
+   {
+    "k": "de 7 a 10 anos",
+    "v": 16051,
+    "p25": 11699,
+    "p75": 21343,
+    "n": 366
+   },
+   {
+    "k": "Mais de 10 anos",
+    "v": 19515,
+    "p25": 13385,
+    "p75": 27689,
+    "n": 402
+   }
+  ]
+ },
+ "cohorts": [
+  {
+   "from": "de 1 a 2 anos em 2021",
+   "to": "de 5 a 6 anos em 2025/26",
+   "a_nom": 4943,
+   "b_nom": 12479,
+   "a_real": 6003,
+   "b_real": 12479,
+   "n_a": 435,
+   "n_b": 588
+  },
+  {
+   "from": "Menos de 1 ano em 2021",
+   "to": "de 3 a 4 anos em 2025/26",
+   "a_nom": 3767,
+   "b_nom": 9215,
+   "a_real": 4575,
+   "b_real": 9215,
+   "n_a": 381,
+   "n_b": 778
+  },
+  {
+   "from": "de 1 a 2 anos em 2022",
+   "to": "de 3 a 4 anos em 2025/26",
+   "a_nom": 5656,
+   "b_nom": 9215,
+   "a_real": 6486,
+   "b_real": 9215,
+   "n_a": 962,
+   "n_b": 778
+  }
+ ],
+ "gap_raw": [
+  89.8,
+  87.2,
+  85.4,
+  85.9,
+  88.4
+ ],
+ "gap_adj": [
+  100.5,
+  98.3,
+  94.7,
+  95.8,
+  95.3
+ ],
+ "gap_exp": {
+  "Menos de 1 ano": [
+   101.5,
+   110.7,
+   84.4,
+   92.6,
+   92.5
+  ],
+  "1 a 2 anos": [
+   95.0,
+   95.5,
+   97.0,
+   100.8,
+   101.5
+  ],
+  "3 a 6 anos": [
+   93.2,
+   91.2,
+   93.2,
+   90.7,
+   92.7
+  ],
+  "7 a 10 anos": [
+   87.6,
+   80.8,
+   88.5,
+   83.3,
+   93.8
+  ],
+  "Mais de 10 anos": [
+   87.2,
+   81.8,
+   78.8,
+   84.1,
+   90.9
+  ]
+ },
+ "top_share": {
+  "Mulheres": [
+   3.3,
+   3.5,
+   3.7,
+   6.4,
+   9.1
+  ],
+  "Homens": [
+   6.2,
+   8.6,
+   9.6,
+   13.0,
+   15.9
+  ]
+ },
+ "women_share_by_band_2526": {
+  "Até R$ 4k": 29.1,
+  "R$ 4k a 8k": 23.7,
+  "R$ 8k a 12k": 21.9,
+  "R$ 12k a 20k": 22.4,
+  "Acima de R$ 20k": 14.1
+ },
+ "gap_n": [
+  425,
+  867,
+  1080,
+  1112,
+  671
+ ],
+ "vinc_med": {
+  "Mora no Brasil, empresa brasileira": [
+   7153,
+   7418,
+   8136,
+   9504,
+   10212
+  ],
+  "Mora no Brasil, empresa estrangeira": [
+   23438,
+   24688,
+   24737,
+   25417,
+   29100
+  ],
+  "Mora no exterior": [
+   null,
+   19200,
+   21000,
+   23594,
+   24000
+  ]
+ },
+ "vinc_med_real": {
+  "Mora no Brasil, empresa brasileira": [
+   8687,
+   8507,
+   8913,
+   9928,
+   10212
+  ],
+  "Mora no Brasil, empresa estrangeira": [
+   28465,
+   28313,
+   27100,
+   26551,
+   29100
+  ],
+  "Mora no exterior": [
+   null,
+   22019,
+   23006,
+   24647,
+   24000
+  ]
+ },
+ "vinc_n": {
+  "Mora no Brasil, empresa brasileira": [
+   2285,
+   3579,
+   4573,
+   4655,
+   3021
+  ],
+  "Mora no Brasil, empresa estrangeira": [
+   53,
+   69,
+   116,
+   131,
+   141
+  ],
+  "Mora no exterior": [
+   27,
+   46,
+   64,
+   77,
+   66
+  ]
+ },
+ "vinc_top40": {
+  "Mora no Brasil, empresa brasileira": [
+   1.0,
+   0.7,
+   1.0,
+   1.6,
+   2.3
+  ],
+  "Mora no Brasil, empresa estrangeira": [
+   11.3,
+   18.8,
+   17.2,
+   16.8,
+   22.7
+  ],
+  "Mora no exterior": [
+   22.2,
+   15.2,
+   12.5,
+   11.7,
+   19.7
+  ]
+ },
+ "foreign_share": [
+  2.2,
+  1.9,
+  2.4,
+  2.7,
+  4.4
+ ],
+ "foreign_by_sen_2526": {
+  "Júnior": {
+   "dom": 3471,
+   "ext": null,
+   "n_ext": 7
+  },
+  "Pleno": {
+   "dom": 7374,
+   "ext": 15333,
+   "n_ext": 20
+  },
+  "Sênior": {
+   "dom": 11632,
+   "ext": 30000,
+   "n_ext": 64
+  },
+  "Especialista/Staff+": {
+   "dom": 16615,
+   "ext": 35417,
+   "n_ext": 31
+  },
+  "Gestor": {
+   "dom": 18000,
+   "ext": null,
+   "n_ext": 19
+  }
+ },
+ "foreign_profile_2526": {
+  "sen": {
+   "Júnior": 5.0,
+   "Pleno": 14.2,
+   "Sênior": 45.4,
+   "Especialista/Staff+": 22.0,
+   "Gestor": 13.5
+  },
+  "mulheres": 14.9,
+  "n": 141
+ },
+ "top20": {
+  "n": 540,
+  "share_all": 17.1,
+  "sen": {
+   "Júnior": 0.2,
+   "Pleno": 1.9,
+   "Sênior": 20.2,
+   "Especialista/Staff+": 21.7,
+   "Gestor": 56.1
+  },
+  "foreign": 19.4,
+  "foreign_all": 4.5,
+  "women": 13.9,
+  "women_all": 21.9,
+  "sudeste": 70.9,
+  "sudeste_all": 64.0
+ },
+ "spread": [
+  2.71,
+  2.92,
+  2.82,
+  2.67,
+  2.74
+ ],
+ "sen_spread": [
+  3.16,
+  3.29,
+  3.35,
+  3.6,
+  3.35
+ ],
+ "sr_staff_real_2526": 13032,
+ "exp7_share": [
+  22.0,
+  18.7,
+  20.1,
+  22.9,
+  25.4
+ ],
+ "jr_share": [
+  26.8,
+  28.4,
+  22.6,
+  18.3,
+  16.8
+ ]
+};
+const nf1 = new Intl.NumberFormat('pt-BR',{minimumFractionDigits:1,maximumFractionDigits:1});
+const nf0 = new Intl.NumberFormat('pt-BR',{maximumFractionDigits:0});
+const R = v => v==null ? '–' : 'R$ ' + nf1.format(v/1000) + 'k';
+const RT = v => 'R$ ' + nf0.format(v/1000) + 'k';
+const P = v => v==null ? '–' : nf1.format(v) + '%';
+const PT = v => nf0.format(v) + '%';
+const NS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs={}, parent, text){const e=document.createElement(tag);for(const k in attrs){if(k==='class')e.className=attrs[k];else if(k==='style')e.style.cssText=attrs[k];else e.setAttribute(k,attrs[k]);}if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+function sv(tag, attrs={}, parent, text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;if(parent)parent.appendChild(e);return e;}
+
+/* ---------- tooltip ---------- */
+const tip = document.getElementById('tip');
+function showTip(x, y, title, rows, note){
+  tip.replaceChildren();
+  el('div',{class:'t'},tip,title);
+  rows.forEach(r=>{const row=el('div',{class:'r'},tip);el('i',{class:r.sq?'sq':'',style:`background:${r.color}`},row);el('b',{},row,r.value);el('span',{},row,r.name);});
+  if(note) el('div',{class:'n'},tip,note);
+  tip.hidden=false;
+  const w=tip.offsetWidth,h=tip.offsetHeight,vw=innerWidth,vh=innerHeight;
+  let left=x+14, top=y+14; if(left+w>vw-8) left=x-w-14; if(left<8) left=8; if(top+h>vh-8) top=y-h-14;
+  tip.style.left=left+'px'; tip.style.top=top+'px';
+}
+function hideTip(){tip.hidden=true;}
+function rectCenter(node){const b=node.getBoundingClientRect();return [b.left+b.width/2,b.top+b.height/2];}
+
+/* ---------- card scaffolding ---------- */
+function card(id, {title, sub, legend, note, table}){
+  const c=document.getElementById(id);
+  el('h3',{},c,title);
+  if(sub) el('p',{class:'sub'},c,sub);
+  if(legend&&legend.length){const lg=el('div',{class:'legend'},c);legend.forEach(l=>{const s=el('span',{},lg);el('i',{class:l.kind||'line',style:l.kind==='ref'?'':`background:${l.color}`},s);s.appendChild(document.createTextNode(l.name));});}
+  const chart=el('div',{class:'chart'},c);
+  const tbl=el('div',{class:'tbl'},c); tbl.hidden=true;
+  if(table){const t=el('table',{},tbl);const hr=el('tr',{},el('thead',{},t));table.head.forEach(h=>el('th',{},hr,h));const tb=el('tbody',{},t);table.rows.forEach(r=>{const tr=el('tr',{},tb);r.forEach(v=>el('td',{},tr,v));});}
+  const f=el('div',{class:'foot'},c); el('p',{},f,note||'');
+  if(table){const b=el('button',{type:'button','aria-expanded':'false'},f,'Ver tabela');b.addEventListener('click',()=>{tbl.hidden=!tbl.hidden;b.textContent=tbl.hidden?'Ver tabela':'Ocultar tabela';b.setAttribute('aria-expanded',String(!tbl.hidden));});}
+  return chart;
+}
+function niceMax(v, steps=4){const raw=v/steps;const mag=Math.pow(10,Math.floor(Math.log10(raw)));const n=[1,2,2.5,5,10].find(m=>m*mag>=raw)*mag;return {max:Math.ceil(v/n)*n,step:n};}
+function onResize(node, fn){let w=0;const ro=new ResizeObserver(()=>{const nw=Math.round(node.clientWidth);if(nw&&nw!==w){w=nw;fn(nw);}});ro.observe(node);}
+
+/* ---------- line chart (SVG) ---------- */
+function lineChart(node, cfg){
+  const {years, series, fmt, tick, yMin=0, yMax, ref, endLabels=true, height=250, note} = cfg;
+  onResize(node, W=>{
+    node.replaceChildren();
+    const narrow=W<520, showEnd=endLabels&&!narrow;
+    const m={l:46,r:showEnd?(cfg.endW||124):16,t:12,b:28};
+    const H=height, iw=W-m.l-m.r, ih=H-m.t-m.b;
+    const all=series.flatMap(s=>s.values).filter(v=>v!=null).concat(ref?[ref.v]:[]);
+    const top=yMax!=null?{max:yMax,step:cfg.yStep||niceMax(yMax-yMin).step}:niceMax(Math.max(...all)-yMin);
+    const lo=yMin, hi=yMax!=null?yMax:lo+top.max, step=top.step;
+    const n=years.length, x=i=>m.l+(n===1?iw/2:i*iw/(n-1)), y=v=>m.t+ih-(v-lo)/(hi-lo)*ih;
+    const svg=sv('svg',{viewBox:`0 0 ${W} ${H}`,width:W,height:H,role:'img','aria-label':cfg.aria||''},node);
+    for(let v=lo; v<=hi+1e-9; v+=step){
+      sv('line',{x1:m.l,x2:m.l+iw,y1:y(v),y2:y(v),stroke:v===lo?'var(--axis)':'var(--grid)','stroke-width':1,'shape-rendering':'crispEdges'},svg);
+      sv('text',{x:m.l-8,y:y(v)+4,'text-anchor':'end','font-size':11,fill:'var(--muted)','style':'font-variant-numeric:tabular-nums'},svg,tick(v));
+    }
+    years.forEach((yr,i)=>sv('text',{x:x(i),y:H-8,'text-anchor':'middle','font-size':11.5,fill:'var(--muted)'},svg,yr));
+    if(ref){
+      sv('line',{x1:m.l,x2:m.l+iw,y1:y(ref.v),y2:y(ref.v),stroke:'var(--ref)','stroke-width':1,'shape-rendering':'crispEdges'},svg);
+      sv('text',{x:m.l+4,y:y(ref.v)-6,'font-size':11,fill:'var(--ink2)'},svg,ref.label);
+    }
+    series.forEach(s=>{
+      let d='', prev=false;
+      s.values.forEach((v,i)=>{if(v==null){prev=false;return;}d+=(prev?'L':'M')+x(i).toFixed(1)+' '+y(v).toFixed(1);prev=true;});
+      if(d) sv('path',{d,fill:'none',stroke:s.color,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},svg);
+      s.values.forEach((v,i)=>{ if(v==null) return; const iso=(s.values[i-1]==null)&&(s.values[i+1]==null); const last=s.values.slice(i+1).every(z=>z==null);
+        if(iso||last) sv('circle',{cx:x(i),cy:y(v),r:4,fill:s.color,stroke:'var(--surface)','stroke-width':2},svg);});
+    });
+    if(showEnd){
+      const labs=series.map(s=>{let i=s.values.length-1;while(i>=0&&s.values[i]==null)i--;return i<0?null:{s,i,y0:y(s.values[i]),y:y(s.values[i])};}).filter(Boolean).sort((a,b)=>a.y0-b.y0);
+      const gap=15; for(let k=1;k<labs.length;k++) if(labs[k].y-labs[k-1].y<gap) labs[k].y=labs[k-1].y+gap;
+      const over=labs.length?labs[labs.length-1].y-(m.t+ih):0; if(over>0) labs.forEach(l=>l.y-=over);
+      for(let k=labs.length-2;k>=0;k--) if(labs[k+1].y-labs[k].y<gap) labs[k].y=labs[k+1].y-gap;
+      labs.forEach(l=>{const lx=x(l.i)+10;
+        if(Math.abs(l.y-l.y0)>2) sv('path',{d:`M${x(l.i)+5} ${l.y0}L${lx-2} ${l.y}`,stroke:'var(--axis)','stroke-width':1,fill:'none'},svg);
+        const t=sv('text',{x:lx,y:l.y+4,'font-size':12,fill:'var(--ink2)'},svg);
+        sv('tspan',{'font-weight':600,fill:'var(--ink)'},t,fmt(l.s.values[l.i])); sv('tspan',{dx:5},t,l.s.short||l.s.name);});
+    }
+    // hover layer
+    const cross=sv('line',{y1:m.t,y2:m.t+ih,stroke:'var(--axis)','stroke-width':1,visibility:'hidden'},svg);
+    const dots=series.map(s=>sv('circle',{r:4.5,fill:s.color,stroke:'var(--surface)','stroke-width':2,visibility:'hidden'},svg));
+    const hit=sv('rect',{x:m.l-12,y:m.t,width:iw+24,height:ih,fill:'transparent',class:'hit',tabindex:0},svg);
+    let cur=-1;
+    const show=(i,cx,cy)=>{cur=i;cross.setAttribute('x1',x(i));cross.setAttribute('x2',x(i));cross.setAttribute('visibility','visible');
+      series.forEach((s,k)=>{const v=s.values[i];if(v==null){dots[k].setAttribute('visibility','hidden');return;}dots[k].setAttribute('cx',x(i));dots[k].setAttribute('cy',y(v));dots[k].setAttribute('visibility','visible');});
+      const rows=series.filter(s=>s.values[i]!=null).map(s=>({color:s.color,value:fmt(s.values[i]),name:s.name,v:s.values[i]})).sort((a,b)=>b.v-a.v);
+      if(!rows.length){hideTip();return;}
+      const b=svg.getBoundingClientRect(); const px=cx??(b.left+x(i)*b.width/W), py=cy??(b.top+m.t*b.height/H+20);
+      showTip(px,py,years[i],rows,note?note(i):null);};
+    const hide=()=>{cur=-1;cross.setAttribute('visibility','hidden');dots.forEach(d=>d.setAttribute('visibility','hidden'));hideTip();};
+    hit.addEventListener('pointermove',e=>{const b=svg.getBoundingClientRect();const px=(e.clientX-b.left)*W/b.width;let i=Math.round((px-m.l)/(n===1?1:iw/(n-1)));i=Math.max(0,Math.min(n-1,i));show(i,e.clientX,e.clientY);});
+    hit.addEventListener('pointerleave',hide); hit.addEventListener('blur',hide);
+    hit.addEventListener('focus',()=>show(cur<0?n-1:cur));
+    hit.addEventListener('keydown',e=>{if(e.key==='ArrowRight'){show(Math.min(n-1,(cur<0?n-1:cur+1)));e.preventDefault();}if(e.key==='ArrowLeft'){show(Math.max(0,(cur<0?0:cur-1)));e.preventDefault();}if(e.key==='Escape')hide();});
+  });
+}
+
+/* ---------- horizontal bars (HTML) ---------- */
+function hbars(node, {items, fmt, color='var(--s1)', max, tipTitle, tipName}){
+  const g=el('div',{class:'bars'},node); const mx=max||Math.max(...items.map(i=>i.v));
+  items.forEach(it=>{
+    el('div',{class:'k'},g,it.k);
+    const tr=el('div',{class:'track',tabindex:0,'aria-label':`${it.k}: ${fmt(it.v)}`},g);
+    // leave room for the value label so a 100% bar never collides with it
+    el('div',{class:'bar',style:`width:calc((100% - 92px) * ${it.v/mx});background:${it.color||color}`},tr);
+    const v=el('div',{class:'v'},tr,fmt(it.v)); if(it.n) el('small',{},v,`n=${nf0.format(it.n)}`);
+    const t=(x,y)=>showTip(x,y,it.k,[{color:it.color||color,value:fmt(it.v),name:tipName||'',sq:true}],it.n?`${nf0.format(it.n)} respostas`:null);
+    tr.addEventListener('pointermove',e=>t(e.clientX,e.clientY)); tr.addEventListener('pointerleave',hideTip);
+    tr.addEventListener('focus',()=>{const [x,y]=rectCenter(tr);t(x,y);}); tr.addEventListener('blur',hideTip);
+  });
+}
+
+/* ---------- dumbbell (HTML) ---------- */
+function dumbbell(node, {items, fmt, tick, aName, bName, lo=0, hi, step, extra}){
+  const g=el('div',{class:'dumb'},node);
+  const pos=v=>((v-lo)/(hi-lo)*100).toFixed(2)+'%';
+  const ticks=[];for(let v=lo;v<=hi+1e-9;v+=step)ticks.push(v);
+  el('div',{},g); const ax=el('div',{class:'axis','aria-hidden':'true'},g); ticks.forEach(v=>el('span',{style:`left:${pos(v)}`},ax,tick(v)));
+  items.forEach(it=>{
+    el('div',{class:'k'},g,it.k);
+    const tr=el('div',{class:'track',tabindex:0,'aria-label':`${it.k}: ${aName} ${fmt(it.a)}, ${bName} ${fmt(it.b)}`},g);
+    ticks.forEach(v=>el('div',{class:'gl',style:`left:${pos(v)}`},tr));
+    if(it.a!=null&&it.b!=null){const l=Math.min(it.a,it.b),r=Math.max(it.a,it.b);el('div',{class:'seg',style:`left:${pos(l)};width:calc(${pos(r)} - ${pos(l)})`},tr);}
+    if(it.a!=null) el('div',{class:'pt a',style:`left:${pos(it.a)}`},tr);
+    if(it.b!=null) el('div',{class:'pt b',style:`left:${pos(it.b)}`},tr);
+    const right=Math.max(it.a??-Infinity,it.b);
+    el('div',{class:'lbl',style:`left:calc(${pos(right)} + 12px)`},tr,fmt(it.b));
+    const rows=[]; if(it.a!=null) rows.push({color:'var(--dumb-a)',value:fmt(it.a),name:aName,sq:true}); rows.push({color:'var(--s1)',value:fmt(it.b),name:bName,sq:true});
+    const t=(x,y)=>showTip(x,y,it.k,rows,extra?extra(it):null);
+    tr.addEventListener('pointermove',e=>t(e.clientX,e.clientY)); tr.addEventListener('pointerleave',hideTip);
+    tr.addEventListener('focus',()=>{const [x,y]=rectCenter(tr);t(x,y);}); tr.addEventListener('blur',hideTip);
+  });
+}
+
+/* ---------- 100% stacked rows (HTML) ---------- */
+function stack(node, {rows, keys, colors, text, note}){
+  const g=el('div',{class:'stack'},node); const segs=[];
+  rows.forEach(r=>{
+    el('div',{class:'k'},g,r.label);
+    const row=el('div',{class:'row'},g);
+    keys.forEach((k,i)=>{const v=r.parts[k]; if(!v) return;
+      const s=el('div',{class:'seg',tabindex:0,style:`flex:${v} 1 0;background:${colors[i]};color:${text[i]}`,'aria-label':`${r.label}, ${k}: ${P(v)}`},row);
+      const sp=el('span',{},s,PT(v)); segs.push([s,sp]);
+      const t=(x,y)=>showTip(x,y,r.label,[{color:colors[i],value:P(v),name:k,sq:true}],note?note(r):null);
+      s.addEventListener('pointermove',e=>t(e.clientX,e.clientY)); s.addEventListener('pointerleave',hideTip);
+      s.addEventListener('focus',()=>{const [x,y]=rectCenter(s);t(x,y);}); s.addEventListener('blur',hideTip);});
+  });
+  onResize(g,()=>segs.forEach(([s,sp])=>{sp.style.visibility='visible';if(sp.scrollWidth+8>s.clientWidth)sp.style.visibility='hidden';}));
+}
+
+
+
+/* ================= report ================= */
+const Y=D.years, L=Y.length-1;
+const SEN=['Júnior','Pleno','Sênior','Especialista/Staff+','Gestor'];
+const SC={'Júnior':'var(--s1)','Pleno':'var(--s2)','Sênior':'var(--s3)','Especialista/Staff+':'var(--s4)','Gestor':'var(--s5)'};
+const chg=(a,b)=>(b/a-1)*100;
+const sg=v=>(v>=0?'+':'−')+nf1.format(Math.abs(v))+'%';
+const sg0=v=>(v>=0?'+':'−')+nf0.format(Math.abs(v))+'%';
+
+// hero numbers
+(()=>{const r=D.overall_real.p50;
+  document.getElementById('d-all').textContent=sg0(chg(r[0],r[L]));
+  document.getElementById('d-all-cap').textContent=`de ${R(r[0])} para ${R(r[L])}, acima da inflação`;
+  const j=D.sen_real['Júnior']; document.getElementById('d-jr').textContent=sg0(chg(j[0],j[L]));
+  const c=document.getElementById('d-chips');
+  [['Pleno',chg(D.sen_real['Pleno'][0],D.sen_real['Pleno'][L])],['Sênior + Staff+',chg(D.sen_real['Sênior'][0],D.sr_staff_real_2526)],['Gestor',chg(D.sen_real['Gestor'][0],D.sen_real['Gestor'][L])]]
+    .forEach(([k,v])=>el('span',{class:'chip'},c,`${k} ${sg(v)}`));})();
+
+// hero dumbbell: real 2021 vs 2025/26
+(()=>{const it=[{k:'Mediana geral',a:D.overall_real.p50[0],b:D.overall_real.p50[L]},
+   {k:'Júnior',a:D.sen_real['Júnior'][0],b:D.sen_real['Júnior'][L]},
+   {k:'Pleno',a:D.sen_real['Pleno'][0],b:D.sen_real['Pleno'][L]},
+   {k:'Sênior',a:D.sen_real['Sênior'][0],b:D.sen_real['Sênior'][L]},
+   {k:'Sênior + Staff+',a:D.sen_real['Sênior'][0],b:D.sr_staff_real_2526},
+   {k:'Gestor',a:D.sen_real['Gestor'][0],b:D.sen_real['Gestor'][L]}];
+  const ch=card('f-hero',{title:'Salário mediano real, 2021 → 2025/26',sub:'Em reais de novembro de 2025. Mediana geral: todos que moram no Brasil. Níveis: só quem trabalha para empresa brasileira.',
+    legend:[{name:'2021 (corrigido pelo IPCA)',color:'var(--dumb-a)',kind:'dot'},{name:'2025/26',color:'var(--real)',kind:'dot'}],
+    note:'Sênior + Staff+ junta os dois grupos em 2025/26 e compara com o Sênior de 2021, quando Staff+ não existia.',
+    table:{head:['Grupo','2021 (R$ de nov/2025)','2025/26','Variação real'],rows:it.map(r=>[r.k,R(r.a),R(r.b),sg(chg(r.a,r.b))])}});
+  dumbbell(ch,{items:it,fmt:R,tick:RT,aName:'2021 real',bName:'2025/26',lo:0,hi:20000,step:5000,extra:r=>`variação real ${sg(chg(r.a,r.b))}`});})();
+
+// nominal vs real
+(()=>{const series=[{name:'Mediana nominal',short:'nominal',color:'var(--nominal)',values:D.overall.p50},
+  {name:'3º quartil (real)',short:'3º quartil',color:'var(--s2)',values:D.overall_real.p75},
+  {name:'Mediana (real)',short:'mediana real',color:'var(--real)',values:D.overall_real.p50},
+  {name:'1º quartil (real)',short:'1º quartil',color:'var(--s1)',values:D.overall_real.p25}];
+  const ch=card('f-nomreal',{title:'Mediana nominal x real, com quartis',sub:'R$/mês. Valores reais em reais de nov/2025. Todos que moram no Brasil.',
+    legend:series.map(s=>({name:s.name,color:s.color})),note:`n: ${Y.map((y,i)=>`${y} ${nf0.format(D.overall_n[i])}`).join(' · ')}.`,
+    table:{head:['Série',...Y],rows:[...series,{name:'1º quartil (nominal)',values:D.overall.p25},{name:'3º quartil (nominal)',values:D.overall.p75}].map(s=>[s.name,...s.values.map(R)])}});
+  lineChart(ch,{years:Y,series,fmt:R,tick:RT,yMax:20000,yStep:5000,endW:132,aria:'Salário nominal vs real'});})();
+(()=>{const K=['Até R$ 4k','R$ 4k a 8k','R$ 8k a 12k','R$ 12k a 20k','Acima de R$ 20k'];
+  const cols=['var(--o5)','var(--o4)','var(--o3)','var(--o2)','var(--o1)'], txt=['var(--o5t)','var(--o4t)','var(--o3t)','var(--o2t)','var(--o1t)'];
+  const ch=card('f-bands',{title:'Distribuição por faixa salarial (nominal)',sub:'% de quem mora no Brasil.',legend:K.map((k,i)=>({name:k,color:cols[i],kind:'rect'})),
+    note:'Faixas em reais correntes: parte do movimento para cima é só inflação.',
+    table:{head:['Edição',...K],rows:Y.map(y=>[y,...K.map(k=>P(D.bands[y][k]))])}});
+  stack(ch,{rows:Y.map(y=>({label:y,parts:D.bands[y]})),keys:K,colors:cols,text:txt});})();
+
+// seniority real lines
+(()=>{const series=SEN.map(s=>({name:s,short:s==='Especialista/Staff+'?'Staff+':s,color:SC[s],values:D.sen_real[s]}));
+  const ch=card('f-sen',{title:'Mediana real por nível',sub:'R$/mês de nov/2025. Só quem trabalha para empresa brasileira.',
+    legend:series.map(s=>({name:s.name,color:s.color})),note:'Staff+ existe só em 2025/26. Valores nominais na tabela.',
+    table:{head:['Nível',...Y.map(y=>y+' real'),...Y.map(y=>y+' nominal')],rows:SEN.map(s=>[s,...D.sen_real[s].map(R),...D.sen_nom[s].map(R)])}});
+  lineChart(ch,{years:Y,series,fmt:R,tick:RT,height:300,yMax:20000,yStep:5000,aria:'Mediana real por nível',
+    note:i=>'n: '+SEN.map(s=>D.sen_n[s][i]).filter(Boolean).map(nf0.format).join(' · ')});})();
+
+// experience
+(()=>{const EG=Object.keys(D.exp_real); const cols=['var(--s1)','var(--s2)','var(--s3)','var(--s4)','var(--s5)'];
+  const Y2=Y.slice(1);
+  const series=EG.map((e,i)=>({name:e,short:e.replace(' anos','a').replace('Menos de 1 ano','<1a').replace('Mais de 10a','10a+').replace('Mais de 10 anos','10a+'),color:cols[i],values:D.exp_real[e].slice(1)}));
+  const ch=card('f-exp-line',{title:'Mediana real por tempo de experiência em dados',sub:'R$/mês de nov/2025, de 2022 a 2025/26. Só quem trabalha para empresa brasileira.',
+    legend:series.map(s=>({name:s.name,color:s.color})),note:'2021 fica de fora porque usava outros cortes de experiência.',
+    table:{head:['Experiência',...Y2,'Variação real'],rows:EG.map(e=>{const v=D.exp_real[e].slice(1);return [e,...v.map(R),sg(chg(v[0],v[v.length-1]))];})}});
+  lineChart(ch,{years:Y2,series,fmt:R,tick:RT,yMax:20000,yStep:5000,endW:96,aria:'Salário real por experiência',
+    note:i=>'n: '+EG.map(e=>D.exp_n[e][i+1]).map(nf0.format).join(' · ')});})();
+(()=>{const it=D.exp_fine['2025/26'];
+  const ch=card('f-exp-curve',{title:'Curva de salário por experiência, 2025/26',sub:'Ponto = mediana; barra = do 1º ao 3º quartil (metade das pessoas está nesse intervalo). R$/mês.',
+    note:'Só quem trabalha para empresa brasileira.',
+    table:{head:['Experiência','1º quartil','Mediana','3º quartil','n'],rows:it.map(r=>[r.k,R(r.p25),R(r.v),R(r.p75),nf0.format(r.n)])}});
+  const g=el('div',{class:'dumb rng'},ch); const lo=0,hi=30000,step=10000; const pos=v=>(v-lo)/(hi-lo)*100+'%';
+  el('div',{},g); const ax=el('div',{class:'axis','aria-hidden':'true'},g); for(let v=lo;v<=hi;v+=step) el('span',{style:`left:${pos(v)}`},ax,RT(v));
+  it.forEach(r=>{el('div',{class:'k'},g,r.k.replace('de ',''));
+    const tr=el('div',{class:'track',tabindex:0,'aria-label':`${r.k}: mediana ${R(r.v)}, quartis ${R(r.p25)} a ${R(r.p75)}`},g);
+    for(let v=lo;v<=hi;v+=step) el('div',{class:'gl',style:`left:${pos(v)}`},tr);
+    el('div',{class:'seg',style:`left:${pos(r.p25)};width:calc(${pos(r.p75)} - ${pos(r.p25)})`},tr);
+    el('div',{class:'pt',style:`left:${pos(r.v)}`},tr);
+    el('div',{class:'lbl',style:`left:calc(${pos(r.p75)} + 8px)`},tr,R(r.v));
+    const t=(x,y)=>showTip(x,y,r.k,[{color:'var(--real)',value:R(r.v),name:'mediana',sq:true},{color:'var(--axis)',value:`${R(r.p25)} – ${R(r.p75)}`,name:'1º–3º quartil',sq:true}],`${nf0.format(r.n)} respostas`);
+    tr.addEventListener('pointermove',e=>t(e.clientX,e.clientY)); tr.addEventListener('pointerleave',hideTip);
+    tr.addEventListener('focus',()=>{const [x,y]=rectCenter(tr);t(x,y);}); tr.addEventListener('blur',hideTip);});})();
+(()=>{const c=D.cohorts[0], box=document.getElementById('cohort');
+  const a=el('div',{class:'side'},box); el('div',{class:'lab'},a,'1 a 2 anos de experiência em 2021'); el('div',{class:'v'},a,R(c.a_real)); el('div',{class:'lab'},a,`mediana em R$ de nov/2025 (nominal: ${R(c.a_nom)})`);
+  const m=el('div',{class:'arrow'},box); el('b',{},m,'×'+nf1.format(c.b_real/c.a_real)); m.appendChild(document.createTextNode('4 anos depois →'));
+  const b=el('div',{class:'side'},box); el('div',{class:'lab'},b,'5 a 6 anos de experiência em 2025/26'); el('div',{class:'v'},b,R(c.b_real)); el('div',{class:'lab'},b,'mediana em R$ de nov/2025');
+  const c2=D.cohorts[1];
+  el('p',{class:'note'},box,`Comparação entre grupos parecidos, não entre as mesmas pessoas: em 4 anos de carreira, a mediana real dobra. O mesmo vale para quem tinha menos de 1 ano em 2021 (${R(c2.a_real)}) e tem 3 a 4 anos em 2025/26 (${R(c2.b_real)}, ×${nf1.format(c2.b_real/c2.a_real)}). Respostas: ${c.n_a} e ${c.n_b}.`);})();
+
+// gender
+(()=>{const series=[{name:'Diferença bruta',short:'bruta',color:'var(--s2)',values:D.gap_raw},
+  {name:'Mesmo nível e experiência',short:'ajustada',color:'var(--real)',values:D.gap_adj}];
+  const ch=card('f-gap',{title:'Mediana das mulheres como % da mediana dos homens',sub:'100% = mesma mediana. Só quem trabalha para empresa brasileira.',
+    legend:[...series.map(s=>({name:s.name,color:s.color})),{name:'Mesma mediana',kind:'ref'}],
+    note:`Mulheres com salário informado: ${Y.map((y,i)=>`${y} ${nf0.format(D.gap_n[i])}`).join(' · ')}.`,
+    table:{head:['Série',...Y],rows:[...series.map(s=>[s.name,...s.values.map(P)]),...Object.entries(D.gap_exp).map(([e,v])=>['Experiência: '+e,...v.map(P)])]}});
+  lineChart(ch,{years:Y,series,fmt:P,tick:PT,yMin:80,yMax:105,yStep:5,ref:{v:100,label:'mesma mediana'},endW:118,aria:'Diferença salarial de gênero'});})();
+(()=>{const series=[{name:'Homens',color:'var(--s1)',values:D.top_share['Homens']},{name:'Mulheres',color:'var(--s2)',values:D.top_share['Mulheres']}];
+  const ch=card('f-top-gender',{title:'% que ganha mais de R$ 20k por mês, por gênero',sub:'Valor nominal. Só quem trabalha para empresa brasileira.',
+    legend:series.map(s=>({name:s.name,color:s.color})),note:'Os dois grupos sobem com a inflação, mas a distância aumentou de 2,9 para 6,8 pontos.',
+    table:{head:['Gênero',...Y],rows:series.map(s=>[s.name,...s.values.map(P)])}});
+  lineChart(ch,{years:Y,series,fmt:P,tick:PT,yMax:20,yStep:5,endW:96,aria:'Topo por gênero'});})();
+(()=>{const K=Object.keys(D.women_share_by_band_2526);
+  const ch=card('f-band-women',{title:'% de mulheres em cada faixa salarial, 2025/26',sub:'Quanto maior a faixa, menor a presença feminina.',
+    note:'Só quem trabalha para empresa brasileira e informou gênero masculino ou feminino.',
+    table:{head:['Faixa','% mulheres'],rows:K.map(k=>[k,P(D.women_share_by_band_2526[k])])}});
+  hbars(ch,{items:K.map(k=>({k,v:D.women_share_by_band_2526[k],color:'var(--s2)'})),fmt:P,max:35,tipName:'são mulheres'});})();
+
+// abroad
+(()=>{const V=Object.keys(D.vinc_med_real), cols=['var(--s1)','var(--s3)','var(--s2)'], sh={'Mora no Brasil, empresa brasileira':'empresa BR','Mora no Brasil, empresa estrangeira':'empresa estrangeira','Mora no exterior':'mora fora'};
+  const series=V.map((v,i)=>({name:v,short:sh[v],color:cols[i],values:D.vinc_med_real[v]}));
+  const ch=card('f-vinc',{title:'Mediana real por vínculo',sub:'R$/mês de nov/2025.',
+    legend:series.map(s=>({name:s.name,color:s.color})),note:'Mora no exterior: 27 respostas em 2021 (sem mediana) e entre 46 e 77 nas outras edições. % na faixa "acima de R$ 40k" (empresa estrangeira): '+D.vinc_top40['Mora no Brasil, empresa estrangeira'].map(P).join(' · '),
+    table:{head:['Vínculo',...Y,'n 2025/26'],rows:V.map(v=>[v,...D.vinc_med_real[v].map(R),nf0.format(D.vinc_n[v][L])])}});
+  lineChart(ch,{years:Y,series,fmt:R,tick:RT,yMax:35000,yStep:5000,endW:150,aria:'Salário por vínculo'});})();
+(()=>{const S=['Pleno','Sênior','Especialista/Staff+']; const it=S.map(s=>({k:s,a:D.foreign_by_sen_2526[s].dom,b:D.foreign_by_sen_2526[s].ext,n:D.foreign_by_sen_2526[s].n_ext}));
+  const ch=card('f-vinc-sen',{title:'Empresa brasileira x estrangeira, por nível, 2025/26',sub:'Mediana nominal, R$/mês, de quem mora no Brasil.',
+    legend:[{name:'Empresa brasileira',color:'var(--dumb-a)',kind:'dot'},{name:'Empresa estrangeira',color:'var(--real)',kind:'dot'}],
+    note:'Júnior (7) e Gestor (19) têm poucas respostas de empresa estrangeira e ficam de fora. Pleno tem só 20.',
+    table:{head:['Nível','Empresa BR','Estrangeira','Razão','n estrangeira'],rows:it.map(r=>[r.k,R(r.a),R(r.b),'×'+nf1.format(r.b/r.a),nf0.format(r.n)])}});
+  dumbbell(ch,{items:it,fmt:R,tick:RT,aName:'Empresa brasileira',bName:'Empresa estrangeira',lo:0,hi:40000,step:10000,extra:r=>`×${nf1.format(r.b/r.a)} · n=${r.n} em empresa estrangeira`});})();
+
+// top earners callout
+(()=>{const t=D.top20, c=document.getElementById('top-callout');
+  const cell=(big,small,txt)=>{const d=el('div',{},c);const b=el('b',{},d,big);if(small)el('small',{},b,small);el('span',{},d,txt);};
+  cell(P(t.sen['Gestor']),null,'dos que ganham mais de R$ 20k são gestores');
+  cell(P(t.foreign),`vs ${P(t.foreign_all)}`,'trabalham para empresa estrangeira (no topo vs na pesquisa toda)');
+  cell(P(t.women),`vs ${P(t.women_all)}`,'são mulheres (no topo vs na pesquisa toda)');
+  cell(P(t.sudeste),`vs ${P(t.sudeste_all)}`,'moram no Sudeste (no topo vs na pesquisa toda)');})();
+</script>
+
+</body></html>
